@@ -2,8 +2,7 @@
 package Persistencia;
 import java.sql.DriverManager;
 import java.sql.Connection;
-import java.sql.Statement ;
-
+import java.sql.Statement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -11,9 +10,10 @@ import javax.swing.JOptionPane;
 public class Conexion { 
     
     //(1)Atributo para la conexión
-    private String url ;
-    private String usuario ; //root
-    private String password ;// ""
+    private String url = "jdbc:mariadb://localhost/restotf";
+    private static String usuario = "root";
+    private static String password = "";
+    
     
     private static Connection conexion = null ; //conexion estatica, se crea una sola vez
   
