@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class MesaData {
@@ -122,6 +124,31 @@ public class MesaData {
         
     }
 
+     // Método para buscar mesas por situación
+    public List<Mesa> buscarMesasPorSituacion(String situacion) {
+        List<Mesa> mesas = new ArrayList<>();
+        String sql = "SELECT * FROM mesa WHERE situacion = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, situacion);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Mesa mesa = new Mesa(
+                    rs.getInt("idMesa"),
+                    rs.getInt("capacidad"),
+                    rs.getBoolean("estado"),
+                    rs.getString("sector"),
+                    rs.getString("situacion")
+                );
+                mesas.add(mesa);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar mesas por situación: " + ex.getMessage());
+        }
+
+        return mesas;
+    }
 
 
 }
