@@ -16,7 +16,8 @@ public class MesaData {
         this.connection = connection;
     }
 
-    // Guardar Mesa
+    
+    // 1. Guardar Mesa
     public void guardarMesa(Mesa mesa) {
         String sql = "INSERT INTO mesa (capacidad, estado, sector, situacion) VALUES (?, ?, ?, ?)";
 
@@ -34,7 +35,7 @@ public class MesaData {
         }
     }
 
-    // Buscar Mesa
+    // 2. Buscar Mesa por id
     public Mesa buscarMesa(int id) {
         Mesa mesa = null;
         String sql = "SELECT * FROM mesa WHERE idMesa = ?";
@@ -60,7 +61,7 @@ public class MesaData {
         return mesa;
     }
 
-    // Modificar Mesa
+    // 3. Modificar Mesa
     public void modificarMesa(Mesa mesa) {
         String sql = "UPDATE mesa SET capacidad = ?, estado = ?, sector = ?, situacion = ? WHERE idMesa = ?";
 
@@ -81,4 +82,46 @@ public class MesaData {
             JOptionPane.showMessageDialog(null, "Error al modificar mesa: " + ex.getMessage());
         }
     }
+
+    // 4. Baja logica Mesa
+    public void bajaLogicaMesa(int idMesa){
+        String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
+
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setBoolean(1, false); // Desactivamos la mesa (estado = false)
+        ps.setInt(2, idMesa);
+
+        int exito = ps.executeUpdate();
+        if (exito == 1) {
+            JOptionPane.showMessageDialog(null, "Mesa dada de baja lógicamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró la mesa para dar de baja.");
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al realizar la baja lógica de la mesa: " + ex.getMessage());
+    }
+    }
+    
+    // 5. Alta logica Mesa
+    public void altaLogicaMesa(int idMesa){
+          String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
+
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setBoolean(1, true); // Activamos la mesa (estado = true)
+        ps.setInt(2, idMesa);
+
+        int exito = ps.executeUpdate();
+        if (exito == 1) {
+            JOptionPane.showMessageDialog(null, "Mesa reactivada exitosamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró la mesa para reactivar.");
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al realizar el alta lógica de la mesa: " + ex.getMessage());
+    }   
+        
+    }
+
+
+
 }

@@ -5,9 +5,9 @@ package Modelo;
 public class Mesa {
     //atributo
     private int idMesa;
-    private int capacidad;
-    private boolean estado;
-    private String sector;
+    private int capacidad; //mesa para 2, mesa para 4, mesa para n
+    private boolean estado; //(true, false)
+    private String sector; // (abajo, arriba, adentro, afuera)
     private String situacion;
     
   //constructores
