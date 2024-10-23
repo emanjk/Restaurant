@@ -8,66 +8,71 @@ public class Mesa {
     private int capacidad;
     private boolean estado;
     private String sector;
+    private String situacion;
     
   //constructores
     public Mesa() {
     }
 
-    public Mesa(int idMesa, int capacidad, boolean estado, String sector) {
-        this.idMesa = idMesa;
-        this.capacidad = capacidad;
-        this.estado = estado;
-        this.sector =sector;
-    }
-
-    public Mesa(int capacidad, boolean estado, String sector) {
+    public Mesa(int capacidad, boolean estado, String sector, String situacion) {
         this.capacidad = capacidad;
         this.estado = estado;
         this.sector = sector;
+        this.situacion = situacion;
     }
 
-    //metodos getters
+    public Mesa(int idMesa, int capacidad, boolean estado, String sector, String situacion) {
+        this.idMesa = idMesa;
+        this.capacidad = capacidad;
+        this.estado = estado;
+        this.sector = sector;
+        this.situacion = situacion;
+    }
+
     public int getIdMesa() {
         return idMesa;
+    }
+
+    public void setIdMesa(int idMesa) {
+        this.idMesa = idMesa;
     }
 
     public int getCapacidad() {
         return capacidad;
     }
 
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public String getSector() {
-        return sector;
-    }
-
-    
-    //metodos setters
-    public void setIdMesa(int idMesa) {
-        this.idMesa = idMesa;
-    }
-
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public boolean isEstado() {
+        return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
+    public String getSector() {
+        return sector;
+    }
+
     public void setSector(String sector) {
         this.sector = sector;
     }
 
-    
-    
+    public String getSituacion() {
+        return situacion;
+    }
+
+    public void setSituacion(String situacion) {
+        this.situacion = situacion;
+    }
+
     @Override
     public String toString() {
-        return idMesa +" " + capacidad + " " + estado+" "+ sector;
+        return "Mesa{" + "idMesa=" + idMesa + ", capacidad=" + capacidad + ", estado=" + estado + ", sector=" + sector + ", situacion=" + situacion + '}';
     }
-    
-    
+
     
 }
