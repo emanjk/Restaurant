@@ -1,13 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Persistencia;
 
-/**
- *
- * @author Emanuel
- */
+import Modelo.Mesero;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+
 public class MeseroData {
+    
+    
+    private Connection connection;
+
+    // Constructor que recibe la conexión
+    public MeseroData(Connection connection) {
+        this.connection = connection;
+    }
+    
+    // Guardar Mesero nuevo
+    public void guardarMesero(Mesero mesero) {
+        String sql = "INSERT INTO mesero (idMesero, nombre, dni, telefono, email, fechaRegistro, turno, sector, estado)) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, mesero.getIdMesero());
+            ps.setString(2, mesero.getNombre());
+            ps.setInt(3, mesero.getDni());
+            ps.setString(4, mesero.getTelefono());
+            ps.setString(5, mesero.getEmail());
+            ps.setDate(6,java.sql.Date.valueOf( mesero.getFechaRegistro()));
+            ps.setString(7, mesero.getTurno());
+            ps.setString(8, mesero.getSector());
+            ps.setBoolean(9, mesero.getEstado());
+            
+
+            ps.executeUpdate();
+            System.out.println("Mesero guardado con éxito");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al guardar mesero: " + ex.getMessage());
+        }
+    }
+    
     
 }
