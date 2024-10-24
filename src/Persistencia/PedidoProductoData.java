@@ -14,21 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  *
- * @author Tomas
+ * @author Roma
  */
 public class PedidoProductoData {
 
-    private Connection connection;
+   private Connection con; // Conexión a la base de datos
 
+    // Constructor que recibe la conexión
     public PedidoProductoData(Connection connection) {
-        this.connection = connection;
+        this.con = connection; // Asigna la conexión proporcionada
     }
 
     // Método para agregar un PedidoProducto
     public void agregarPedidoProducto(PedidoProducto pedidoProducto) {
         String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, subotal) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pedidoProducto.getPedido().getIdPedido());
             ps.setInt(2, pedidoProducto.getProducto().getIdProducto());
             ps.setInt(3, pedidoProducto.getCantidad());
@@ -46,7 +47,7 @@ public class PedidoProductoData {
         String sql = "SELECT * FROM pedidoproducto WHERE idPedido = ?";
         List<PedidoProducto> lista = new ArrayList<>();
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pedido.getIdPedido());
             ResultSet rs = ps.executeQuery();
 
@@ -57,7 +58,7 @@ public class PedidoProductoData {
 
                 
                 String nombre = rs.getString("Nombre");
-                Producto producto = (Producto) new ProductoData(connection).buscarProductoPorNombre(nombre);
+                Producto producto = (Producto) new ProductoData(con).buscarProductoPorNombre(nombre);
 
                 pedidoProducto.setProducto(producto);
                 pedidoProducto.setCantidad(rs.getInt("cantidad"));

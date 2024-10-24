@@ -21,18 +21,18 @@ import javax.swing.JOptionPane;
 
 public class ProductoData {
 
-    private Connection connection;
+    private Connection con; // Conexión a la base de datos
 
     // Constructor que recibe la conexión
     public ProductoData(Connection connection) {
-        this.connection = connection;
+        this.con = connection; // Asigna la conexión proporcionada
     }
 
     // Método para dar de alta un producto (INSERT)
     public void altaProducto(Producto producto) {
         String sql = "INSERT INTO producto (codigo, nombre, tipo, descripcion, precio, stock, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, producto.getCodigo());
             ps.setString(2, producto.getNombre());
             ps.setString(3, producto.getTipo());
@@ -52,7 +52,7 @@ public class ProductoData {
     public void bajaProducto(int idProducto) {
         String sql = "UPDATE producto SET estado = false WHERE idProducto = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idProducto);
 
             int resultado = ps.executeUpdate();
@@ -70,7 +70,7 @@ public class ProductoData {
     public void modificarProducto(Producto producto) {
         String sql = "UPDATE producto SET codigo = ?, nombre = ?, tipo = ?, descripcion = ?, precio = ?, stock = ?, estado = ? WHERE idProducto = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, producto.getCodigo());
             ps.setString(2, producto.getNombre());
             ps.setString(3, producto.getTipo());
@@ -96,7 +96,7 @@ public class ProductoData {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE nombre LIKE ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, "%" + nombre + "%");
             ResultSet resultSet = ps.executeQuery();
 
@@ -116,7 +116,7 @@ public class ProductoData {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE precio BETWEEN ? AND ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDouble(1, precioMin);
             ps.setDouble(2, precioMax);
             ResultSet resultSet = ps.executeQuery();
@@ -137,7 +137,7 @@ public class ProductoData {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE tipo = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, tipo);
             ResultSet resultSet = ps.executeQuery();
 
@@ -157,7 +157,7 @@ public class ProductoData {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE stock BETWEEN ? AND ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, stockMin);
             ps.setInt(2, stockMax);
             ResultSet resultSet = ps.executeQuery();

@@ -23,18 +23,18 @@ import javax.swing.JOptionPane;
  */
 public class PedidoData {
   
-    private Connection connection;
+    private Connection con; // Conexión a la base de datos
 
     // Constructor que recibe la conexión
     public PedidoData(Connection connection) {
-        this.connection = connection;
+        this.con = connection; // Asigna la conexión proporcionada
     }
 
     // Método para crear un nuevo pedido
     public void crearPedido(Pedido pedido) {
         String sql = "INSERT INTO pedido (idMesa, idMesero, fechaHora, estado) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, pedido.getMesa().getIdMesa());
             ps.setInt(2, pedido.getMesero().getIdMesero());
             ps.setTimestamp(3, Timestamp.valueOf(pedido.getFechaHora()));
@@ -61,7 +61,7 @@ public class PedidoData {
     private void guardarProductosDelPedido(Pedido pedido) {
         String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, precioTotal) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             for (Producto producto : pedido.getProductos()) {
                 ps.setInt(1, pedido.getIdPedido());
                 ps.setInt(2, producto.getIdProducto());
@@ -80,17 +80,29 @@ public class PedidoData {
         Pedido pedido = null;
         String sql = "SELECT * FROM pedido WHERE idPedido = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPedido);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Mesa mesa = new MesaData(connection).buscarMesa(rs.getInt("idMesa"));
-                Mesero mesero = new MeseroData(connection).buscarMesero(rs.getInt("idMesero"));
+                // Obtener la mesa por ID
+                Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+
+                // Obtener el mesero por ID
+                int idMesero = rs.getInt("idMesero"); // Se asume que 'idMesero' es la columna en la tabla 'pedido'
+                Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
+
+                // Obtener fecha y hora
                 LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+
+                // Obtener el estado del pedido
                 boolean estado = rs.getBoolean("estado");
 
-                pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, obtenerProductosPorPedido(idPedido));
+                // Obtener los productos asociados al pedido
+                List<Producto> productos = obtenerProductosPorPedido(idPedido);
+
+                // Crear un nuevo objeto Pedido con los datos obtenidos
+                pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar el pedido: " + ex.getMessage());
@@ -99,6 +111,7 @@ public class PedidoData {
         return pedido;
     }
 
+
     // Método para obtener los productos de un pedido específico
     private List<Producto> obtenerProductosPorPedido(int idPedido) {
         List<Producto> productos = new ArrayList<>();
@@ -106,7 +119,7 @@ public class PedidoData {
                      "JOIN pedidoproducto pp ON p.idProducto = pp.idProducto " +
                      "WHERE pp.idPedido = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPedido);
             ResultSet rs = ps.executeQuery();
 
@@ -134,7 +147,7 @@ public class PedidoData {
     public void modificarPedido(Pedido pedido) {
         String sql = "UPDATE pedido SET idMesa = ?, idMesero = ?, fechaHora = ?, estado = ? WHERE idPedido = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pedido.getMesa().getIdMesa());
             ps.setInt(2, pedido.getMesero().getIdMesero());
             ps.setTimestamp(3, Timestamp.valueOf(pedido.getFechaHora()));
@@ -160,7 +173,7 @@ public class PedidoData {
     private void eliminarProductosDelPedido(int idPedido) {
         String sql = "DELETE FROM pedidoproducto WHERE idPedido = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPedido);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -172,7 +185,7 @@ public class PedidoData {
     public void eliminarPedido(int idPedido) {
         String sql = "UPDATE pedido SET estado = false WHERE idPedido = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPedido);
 
             int exito = ps.executeUpdate();

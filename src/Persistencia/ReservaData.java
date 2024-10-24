@@ -12,17 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservaData {
-    private Connection connection;
+    private Connection con; // Conexión a la base de datos
 
+    // Constructor que recibe la conexión
     public ReservaData(Connection connection) {
-        this.connection = connection;
+        this.con = connection; // Asigna la conexión proporcionada
     }
 
     // Método para agregar una nueva reserva
     public void agregarReserva(Reserva reserva) {
         String sql = "INSERT INTO reserva (fechaHora, idMesa, nombreCliente, cantidadPersonas) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
             ps.setInt(2, reserva.getMesa().getIdMesa());
             ps.setString(3, reserva.getNombreCliente());
@@ -47,7 +48,7 @@ public class ReservaData {
         String sql = "SELECT * FROM reserva WHERE idReserva = ?";
         Reserva reserva = null;
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -55,7 +56,7 @@ public class ReservaData {
                     reserva = new Reserva();
                     reserva.setIdReserva(rs.getInt("idReserva"));
                     reserva.setFechaHora(rs.getTimestamp("fechaHora").toLocalDateTime()); // Convertir Timestamp a LocalDateTime
-                    reserva.setMesa(new MesaData(connection).buscarMesa(rs.getInt("idMesa"))); // Obtener la mesa asociada
+                    reserva.setMesa(new MesaData(con).buscarMesa(rs.getInt("idMesa"))); // Obtener la mesa asociada
                     reserva.setNombreCliente(rs.getString("nombreCliente"));
                     reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
                 }
@@ -71,14 +72,14 @@ public class ReservaData {
         String sql = "SELECT * FROM reserva";
         List<Reserva> reservas = new ArrayList<>();
 
-        try (PreparedStatement ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Reserva reserva = new Reserva();
                 reserva.setIdReserva(rs.getInt("idReserva"));
                 reserva.setFechaHora(rs.getTimestamp("fechaHora").toLocalDateTime()); // Convertir Timestamp a LocalDateTime
-                reserva.setMesa(new MesaData(connection).buscarMesa(rs.getInt("idMesa"))); // Obtener la mesa asociada
+                reserva.setMesa(new MesaData(con).buscarMesa(rs.getInt("idMesa"))); // Obtener la mesa asociada
                 reserva.setNombreCliente(rs.getString("nombreCliente"));
                 reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
 
@@ -94,7 +95,7 @@ public class ReservaData {
     public void actualizarReserva(Reserva reserva) {
         String sql = "UPDATE reserva SET fechaHora = ?, idMesa = ?, nombreCliente = ?, cantidadPersonas = ? WHERE idReserva = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
             ps.setInt(2, reserva.getMesa().getIdMesa());
             ps.setString(3, reserva.getNombreCliente());
@@ -116,7 +117,7 @@ public class ReservaData {
     public void eliminarReserva(int id) {
         String sql = "DELETE FROM reserva WHERE idReserva = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
 
             int rowsDeleted = ps.executeUpdate();
