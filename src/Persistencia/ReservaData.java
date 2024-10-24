@@ -12,17 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservaData {
-    private Connection connection;
+     //(1) 'con' almacena la conexion a la bd
+    private Connection con=null ;
 
     public ReservaData(Connection connection) {
-        this.connection = connection;
+        this.con = connection;
     }
 
     // Método para agregar una nueva reserva
     public void agregarReserva(Reserva reserva) {
         String sql = "INSERT INTO reserva (fechaHora, idMesa, nombreCliente, cantidadPersonas) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
             ps.setInt(2, reserva.getMesa().getIdMesa());
             ps.setString(3, reserva.getNombreCliente());
@@ -47,7 +48,7 @@ public class ReservaData {
         String sql = "SELECT * FROM reserva WHERE idReserva = ?";
         Reserva reserva = null;
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -71,7 +72,7 @@ public class ReservaData {
         String sql = "SELECT * FROM reserva";
         List<Reserva> reservas = new ArrayList<>();
 
-        try (PreparedStatement ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {

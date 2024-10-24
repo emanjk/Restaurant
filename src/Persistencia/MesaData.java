@@ -1,19 +1,23 @@
 package Persistencia;
 
 import Modelo.Mesa;
+import Modelo.Conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.Date;
 
 public class MesaData {
+    
+    //(1) 'con' almacena la conexion a la bd
+    private Connection con=null ;
 
-    private Connection connection;
-
-    // Constructor que recibe la conexión
-    public MesaData(Connection connection) {
-        this.connection = connection;
+     //(2) constructor que recibe la conexion
+    public MesaData(Conexion conexion) {   
+        this.con = conexion.buscarConexion();           
     }
 
     
@@ -21,7 +25,7 @@ public class MesaData {
     public void guardarMesa(Mesa mesa) {
         String sql = "INSERT INTO mesa (capacidad, estado, sector, situacion) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, mesa.getCapacidad());
             ps.setBoolean(2, mesa.isEstado());
             ps.setString(3, mesa.getSector());
@@ -40,7 +44,7 @@ public class MesaData {
         Mesa mesa = null;
         String sql = "SELECT * FROM mesa WHERE idMesa = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -65,7 +69,7 @@ public class MesaData {
     public void modificarMesa(Mesa mesa) {
         String sql = "UPDATE mesa SET capacidad = ?, estado = ?, sector = ?, situacion = ? WHERE idMesa = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, mesa.getCapacidad());
             ps.setBoolean(2, mesa.isEstado());
             ps.setString(3, mesa.getSector());
@@ -83,11 +87,12 @@ public class MesaData {
         }
     }
 
+    
     // 4. Baja logica Mesa
     public void bajaLogicaMesa(int idMesa){
         String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
 
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setBoolean(1, false); // Desactivamos la mesa (estado = false)
         ps.setInt(2, idMesa);
 
@@ -102,11 +107,11 @@ public class MesaData {
     }
     }
     
-    // 5. Alta logica Mesa
+    // Alta logica Mesa
     public void altaLogicaMesa(int idMesa){
           String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
 
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setBoolean(1, true); // Activamos la mesa (estado = true)
         ps.setInt(2, idMesa);
 
