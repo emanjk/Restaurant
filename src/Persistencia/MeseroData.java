@@ -2,6 +2,7 @@
 package Persistencia;
 
 import Modelo.Mesero;
+import Modelo.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +12,11 @@ import javax.swing.JOptionPane;
 
 public class MeseroData {
     
-    
-    private Connection connection;
+    private Connection connection= null;
 
     // Constructor que recibe la conexión
-    public MeseroData(Connection connection) {
-        this.connection = connection;
+    public MeseroData(Conexion conexion) {
+        this.connection = conexion.buscarConexion();
     }
     
     // Guardar Mesero nuevo
@@ -29,6 +29,7 @@ public class MeseroData {
             ps.setInt(3, mesero.getDni());
             ps.setString(4, mesero.getTelefono());
             ps.setString(5, mesero.getEmail());
+            // Convertir java.sql.Date a LocalDate
             ps.setDate(6,java.sql.Date.valueOf( mesero.getFechaRegistro()));
             ps.setString(7, mesero.getTurno());
             ps.setString(8, mesero.getSector());
