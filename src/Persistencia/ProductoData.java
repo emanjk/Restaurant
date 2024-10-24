@@ -29,7 +29,7 @@ public class ProductoData {
     }
 
     // Método para dar de alta un producto (INSERT)
-    public void altaProducto(Producto producto) {
+    public void nuevoProducto(Producto producto) {
         String sql = "INSERT INTO producto (codigo, nombre, tipo, descripcion, precio, stock, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -48,23 +48,6 @@ public class ProductoData {
         }
     }
 
-    // Método para dar de baja un producto de manera lógica (UPDATE)
-    public void bajaProducto(int idProducto) {
-        String sql = "UPDATE producto SET estado = false WHERE idProducto = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idProducto);
-
-            int resultado = ps.executeUpdate();
-            if (resultado == 1) {
-                System.out.println("Producto dado de baja lógicamente.");
-            } else {
-                System.out.println("No se encontró el producto con ID: " + idProducto);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al dar de baja el producto: " + ex.getMessage());
-        }
-    }
 
     // Método para modificar un producto (UPDATE)
     public void modificarProducto(Producto producto) {
@@ -186,6 +169,49 @@ public class ProductoData {
             resultSet.getBoolean("estado")
         );
     }
+    
+    // Método para buscar un producto por ID
+    public Producto buscarProductoPorId(int idProducto) {
+        Producto producto = null;
+        String sql = "SELECT * FROM producto WHERE idProducto = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            // Establecer el ID del producto en la consulta
+            ps.setInt(1, idProducto);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Crear un objeto Producto con los datos obtenidos
+                    producto = crearProductoDesdeResultSet(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el producto por ID: " + ex.getMessage());
+        }
+
+        return producto;
+    }
+    // Método para listar todos los productos ordenados por tipo
+    public List<Producto> mostrarMenu() {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM producto ORDER BY tipo";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Crear un objeto Producto con los datos obtenidos
+                Producto producto = crearProductoDesdeResultSet(rs);
+                // Agregar el producto a la lista
+                productos.add(producto);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar los productos ordenados por tipo: " + ex.getMessage());
+        }
+
+        return productos;
+    }
+
 }
     
     

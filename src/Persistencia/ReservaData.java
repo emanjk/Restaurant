@@ -1,12 +1,11 @@
 package Persistencia;
 
-import Modelo.Reserva;
+
 import Modelo.Mesa;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import Modelo.Reserva;
+import Persistencia.MesaData;
+import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,22 +15,38 @@ public class ReservaData {
 
     // Constructor que recibe la conexión
     public ReservaData(Connection connection) {
-        this.con = connection; // Asigna la conexión proporcionada
+        this.con = connection;
+    }
+
+    // Método auxiliar para crear una Reserva desde el ResultSet
+    private Reserva crearReservaDesdeResultSet(ResultSet rs) throws SQLException {
+        Reserva reserva = new Reserva();
+        reserva.setIdReserva(rs.getInt("idReserva"));
+        reserva.setFechaHora(rs.getTimestamp("fechaHora").toLocalDateTime());
+        reserva.setMesa(new MesaData(con).buscarMesa(rs.getInt("idMesa")));
+        reserva.setNombreCliente(rs.getString("nombreCliente"));
+        reserva.setTelefono(rs.getString("telefono"));
+        reserva.setComensales(rs.getInt("comensales"));
+        reserva.setSector(rs.getString("sector"));
+        reserva.setEstado(rs.getBoolean("estado"));
+        return reserva;
     }
 
     // Método para agregar una nueva reserva
     public void agregarReserva(Reserva reserva) {
-        String sql = "INSERT INTO reserva (fechaHora, idMesa, nombreCliente, cantidadPersonas) VALUES (?, ?, ?, ?)";
-
+        String sql = "INSERT INTO reserva (fechaHora, idMesa, nombreCliente, telefono, comensales, sector, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        
         try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
+            ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora()));
             ps.setInt(2, reserva.getMesa().getIdMesa());
             ps.setString(3, reserva.getNombreCliente());
-            ps.setInt(4, reserva.getCantidadPersonas());
+            ps.setString(4, reserva.getTelefono());
+            ps.setInt(5, reserva.getComensales());
+            ps.setString(6, reserva.getSector());
+            ps.setBoolean(7, reserva.isEstado());
 
             ps.executeUpdate();
 
-            // Obtener el ID generado
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     reserva.setIdReserva(rs.getInt(1));
@@ -53,12 +68,7 @@ public class ReservaData {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    reserva = new Reserva();
-                    reserva.setIdReserva(rs.getInt("idReserva"));
-                    reserva.setFechaHora(rs.getTimestamp("fechaHora").toLocalDateTime()); // Convertir Timestamp a LocalDateTime
-                    reserva.setMesa(new MesaData(con).buscarMesa(rs.getInt("idMesa"))); // Obtener la mesa asociada
-                    reserva.setNombreCliente(rs.getString("nombreCliente"));
-                    reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
+                    reserva = crearReservaDesdeResultSet(rs);
                 }
             }
         } catch (SQLException e) {
@@ -76,14 +86,7 @@ public class ReservaData {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Reserva reserva = new Reserva();
-                reserva.setIdReserva(rs.getInt("idReserva"));
-                reserva.setFechaHora(rs.getTimestamp("fechaHora").toLocalDateTime()); // Convertir Timestamp a LocalDateTime
-                reserva.setMesa(new MesaData(con).buscarMesa(rs.getInt("idMesa"))); // Obtener la mesa asociada
-                reserva.setNombreCliente(rs.getString("nombreCliente"));
-                reserva.setCantidadPersonas(rs.getInt("cantidadPersonas"));
-
-                reservas.add(reserva);
+                reservas.add(crearReservaDesdeResultSet(rs));
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener las reservas: " + e.getMessage());
@@ -93,14 +96,17 @@ public class ReservaData {
 
     // Método para actualizar una reserva existente
     public void actualizarReserva(Reserva reserva) {
-        String sql = "UPDATE reserva SET fechaHora = ?, idMesa = ?, nombreCliente = ?, cantidadPersonas = ? WHERE idReserva = ?";
+        String sql = "UPDATE reserva SET fechaHora = ?, idMesa = ?, nombreCliente = ?, telefono = ?, comensales = ?, sector = ?, estado = ? WHERE idReserva = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
+            ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora()));
             ps.setInt(2, reserva.getMesa().getIdMesa());
             ps.setString(3, reserva.getNombreCliente());
-            ps.setInt(4, reserva.getCantidadPersonas());
-            ps.setInt(5, reserva.getIdReserva());
+            ps.setString(4, reserva.getTelefono());
+            ps.setInt(5, reserva.getComensales());
+            ps.setString(6, reserva.getSector());
+            ps.setBoolean(7, reserva.isEstado());
+            ps.setInt(8, reserva.getIdReserva());
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
@@ -113,18 +119,74 @@ public class ReservaData {
         }
     }
 
-    // Método para eliminar una reserva por ID
-    public void eliminarReserva(int id) {
+    // Método para obtener reservas por fecha
+    public List<Reserva> obtenerReservasPorFecha(LocalDate fecha) {
+        String sql = "SELECT * FROM reserva WHERE DATE(fechaHora) = ?";
+        List<Reserva> reservas = new ArrayList<>();
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    reservas.add(crearReservaDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las reservas por fecha: " + e.getMessage());
+        }
+        return reservas;
+    }
+
+    // Método para obtener reservas por estado
+    public List<Reserva> obtenerReservasPorEstado(boolean estado) {
+        String sql = "SELECT * FROM reserva WHERE estado = ?";
+        List<Reserva> reservas = new ArrayList<>();
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, estado);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    reservas.add(crearReservaDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las reservas por estado: " + e.getMessage());
+        }
+        return reservas;
+    }
+
+    // Método para obtener reservas por sector
+    public List<Reserva> obtenerReservasPorSector(String sector) {
+        String sql = "SELECT * FROM reserva WHERE sector = ?";
+        List<Reserva> reservas = new ArrayList<>();
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, sector);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    reservas.add(crearReservaDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las reservas por sector: " + e.getMessage());
+        }
+        return reservas;
+    }
+
+    // Método para eliminar físicamente una reserva
+    public void eliminarReserva(int idReserva) {
         String sql = "DELETE FROM reserva WHERE idReserva = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-
+            ps.setInt(1, idReserva);
             int rowsDeleted = ps.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Reserva eliminada exitosamente.");
+                System.out.println("Reserva eliminada físicamente.");
             } else {
-                System.out.println("No se encontró la reserva con ID: " + id);
+                System.out.println("No se encontró la reserva con ID: " + idReserva);
             }
         } catch (SQLException e) {
             System.out.println("Error al eliminar la reserva: " + e.getMessage());

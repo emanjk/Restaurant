@@ -13,8 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 /**
@@ -198,5 +201,176 @@ public class PedidoData {
             JOptionPane.showMessageDialog(null, "Error al eliminar el pedido: " + ex.getMessage());
         }
     }
+        // Método para buscar pedidos por mesa
+    public List<Pedido> buscarPedidosPorMesa(int idMesa) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE idMesa = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            // Establecer el ID de la mesa en la consulta
+            ps.setInt(1, idMesa);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Obtener el ID del pedido
+                    int idPedido = rs.getInt("idPedido");
+
+                    // Obtener la mesa por ID
+                    Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+
+                    // Obtener el mesero por ID
+                    int idMesero = rs.getInt("idMesero");
+                    Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
+
+                    // Obtener fecha y hora
+                    LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+
+                    // Obtener el estado del pedido
+                    boolean estado = rs.getBoolean("estado");
+
+                    // Obtener los productos asociados al pedido
+                    List<Producto> productos = obtenerProductosPorPedido(idPedido);
+
+                    // Crear un nuevo objeto Pedido con los datos obtenidos
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+
+                    // Agregar el pedido a la lista
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar los pedidos por mesa: " + ex.getMessage());
+        }
+
+        return pedidos;
+    }
+    // Método para buscar pedidos por mesero
+    public List<Pedido> buscarPedidosPorMesero(int idMesero) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE idMesero = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            // Establecer el ID del mesero en la consulta
+            ps.setInt(1, idMesero);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Obtener el ID del pedido
+                    int idPedido = rs.getInt("idPedido");
+
+                    // Obtener la mesa por ID
+                    Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+
+                    // Obtener el mesero por ID
+                    Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
+
+                    // Obtener fecha y hora
+                    LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+
+                    // Obtener el estado del pedido
+                    boolean estado = rs.getBoolean("estado");
+
+                    // Obtener los productos asociados al pedido
+                    List<Producto> productos = obtenerProductosPorPedido(idPedido);
+
+                    // Crear un nuevo objeto Pedido con los datos obtenidos
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+
+                    // Agregar el pedido a la lista
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar los pedidos por mesero: " + ex.getMessage());
+        }
+
+        return pedidos;
+    }
+    // Método para obtener todos los pedidos
+    public List<Pedido> obtenerTodosLosPedidos() {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Obtener el ID del pedido
+                int idPedido = rs.getInt("idPedido");
+
+                // Obtener la mesa por ID
+                Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+
+                // Obtener el mesero por ID
+                int idMesero = rs.getInt("idMesero");
+                Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
+
+                // Obtener fecha y hora
+                LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+
+                // Obtener el estado del pedido
+                boolean estado = rs.getBoolean("estado");
+
+                // Obtener los productos asociados al pedido
+                List<Producto> productos = obtenerProductosPorPedido(idPedido);
+
+                // Crear un nuevo objeto Pedido con los datos obtenidos
+                Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+
+                // Agregar el pedido a la lista
+                pedidos.add(pedido);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener todos los pedidos: " + ex.getMessage());
+        }
+
+        return pedidos;
+    }
+    // Método para buscar pedidos por fecha
+    public List<Pedido> buscarPedidosPorFecha(LocalDate fecha) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE DATE(fechaHora) = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            // Convertir LocalDate a java.sql.Date para la consulta SQL
+            ps.setDate(1, java.sql.Date.valueOf(fecha));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Obtener el ID del pedido
+                    int idPedido = rs.getInt("idPedido");
+
+                    // Obtener la mesa por ID
+                    Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+
+                    // Obtener el mesero por ID
+                    int idMesero = rs.getInt("idMesero");
+                    Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
+
+                    // Obtener fecha y hora
+                    LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+
+                    // Obtener el estado del pedido
+                    boolean estado = rs.getBoolean("estado");
+
+                    // Obtener los productos asociados al pedido
+                    List<Producto> productos = obtenerProductosPorPedido(idPedido);
+
+                    // Crear un nuevo objeto Pedido con los datos obtenidos
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+
+                    // Agregar el pedido a la lista
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar los pedidos por fecha: " + ex.getMessage());
+        }
+
+        return pedidos;
+    }
+
+    
 }
 
