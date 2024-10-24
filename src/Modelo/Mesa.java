@@ -29,6 +29,8 @@ public class Mesa {
         this.situacion = situacion;
     }
 
+    
+    
     public int getIdMesa() {
         return idMesa;
     }

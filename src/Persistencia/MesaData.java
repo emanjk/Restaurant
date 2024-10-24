@@ -18,6 +18,8 @@ public class MesaData {
     public MesaData(Connection connection) {
         this.con = connection; // Asigna la conexión proporcionada
     }
+    
+    
     // 1. Guardar Mesa
     public void guardarMesa(Mesa mesa) {
         String sql = "INSERT INTO mesa (capacidad, estado, sector, situacion) VALUES (?, ?, ?, ?)";
@@ -37,7 +39,7 @@ public class MesaData {
         }
     }
 
-        // Buscar Mesa por ID
+    // 2. Buscar Mesa por ID
     public Mesa buscarMesa(int id) {
         Mesa mesa = null;
         String sql = "SELECT * FROM mesa WHERE idMesa = ?";
@@ -94,10 +96,27 @@ public class MesaData {
         }
     }
 
-
-
    
-        // Baja lógica de una mesa
+     // 4. Alta lógica de una mesa
+    public void altaLogicaMesa(int idMesa) {
+        String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, true); // Cambiar el estado a activo (true)
+            ps.setInt(2, idMesa);
+
+            int filasActualizadas = ps.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println("Mesa reactivada exitosamente.");
+            } else {
+                System.out.println( "No se encontró la mesa con el ID proporcionado.");
+            }
+        } catch (SQLException ex) {
+            System.out.println( "Error al realizar el alta lógica de la mesa: " + ex.getMessage());
+        }
+    }
+    
+    // 5. Baja lógica de una mesa
     public void bajaLogicaMesa(int idMesa) {
         String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
 
@@ -116,28 +135,60 @@ public class MesaData {
         }
     }
 
+    // 6. Método: listar todas las mesas
+    public List<Mesa> listarMesas() {
+        List<Mesa> mesas = new ArrayList<>();
+        String sql = "SELECT * FROM mesa";
 
-    // 5. Alta lógica de una mesa
-    public void altaLogicaMesa(int idMesa) {
-        String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setBoolean(1, true); // Cambiar el estado a activo (true)
-            ps.setInt(2, idMesa);
-
-            int filasActualizadas = ps.executeUpdate();
-            if (filasActualizadas > 0) {
-                System.out.println("Mesa reactivada exitosamente.");
-            } else {
-                System.out.println( "No se encontró la mesa con el ID proporcionado.");
+            while (rs.next()) {
+                Mesa mesa = new Mesa(
+                    rs.getInt("idMesa"),
+                    rs.getInt("capacidad"),
+                    rs.getBoolean("estado"),
+                    rs.getString("sector"),
+                    rs.getString("situacion")
+                );
+                mesas.add(mesa);
             }
         } catch (SQLException ex) {
-            System.out.println( "Error al realizar el alta lógica de la mesa: " + ex.getMessage());
+            System.out.println( "Error al listar mesas: " + ex.getMessage());
         }
+
+        return mesas;
     }
+   
+    // 7. Metodo: listar mesas por sector
+    public List<Mesa> listarMesasPorSector(String sector){
+        List<Mesa> mesas = new ArrayList<>();
+        String sql = "SELECT * FROM mesa WHERE sector = ?";
 
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, sector);
+            ResultSet rs = ps.executeQuery();
 
-     // Método para buscar mesas por situación
+            while (rs.next()) {
+                Mesa mesa = new Mesa(
+                    rs.getInt("idMesa"),
+                    rs.getInt("capacidad"),
+                    rs.getBoolean("estado"),
+                    rs.getString("sector"),
+                    rs.getString("situacion")
+                );
+                mesas.add(mesa); 
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar mesas por sector: " + ex.getMessage());
+        }
+
+            return mesas; 
+        }
+    
+    
+    
+    // 8. Método: listar mesas por 'situacion'
     public List<Mesa> buscarMesasPorSituacion(String situacion) {
         List<Mesa> mesas = new ArrayList<>();
         String sql = "SELECT * FROM mesa WHERE situacion = ?";
@@ -163,31 +214,8 @@ public class MesaData {
         return mesas;
     }
     
-        // Método para listar todas las mesas
-    public List<Mesa> listarMesas() {
-        List<Mesa> mesas = new ArrayList<>();
-        String sql = "SELECT * FROM mesa";
-
-        try (PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                Mesa mesa = new Mesa(
-                    rs.getInt("idMesa"),
-                    rs.getInt("capacidad"),
-                    rs.getBoolean("estado"),
-                    rs.getString("sector"),
-                    rs.getString("situacion")
-                );
-                mesas.add(mesa);
-            }
-        } catch (SQLException ex) {
-            System.out.println( "Error al listar mesas: " + ex.getMessage());
-        }
-
-        return mesas;
-    }
-
     
 
+    
+    
 }

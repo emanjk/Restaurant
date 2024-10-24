@@ -14,54 +14,57 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Establecer la conexión a la base de datos usando el Singleton
-        connection = Conexion.getConexion();
-
-        // Verificar si la conexión fue exitosa
+        
+        connection = Conexion.getConexion(); //conexion a la bd
+        
         if (connection != null) {
-            // Inicializar MesaData con la conexión
-            mesaData = new MesaData(connection);
-            
-            // Mostrar el menú principal
-            int opcion;
-            do {
-                mostrarMenu();
-                opcion = scanner.nextInt();
-                scanner.nextLine(); // Consumir el salto de línea
-
-                switch (opcion) {
-                    case 1 -> agregarMesa();
-                    case 2 -> buscarMesa();
-                    case 3 -> modificarMesa();
-                    case 4 -> altaLogicaMesa();
-                    case 5 -> bajaLogicaMesa();
-                    case 6 -> listarMesas();
-                    case 7 -> buscarMesasPorSituacion();
-                    case 0 -> System.out.println("Saliendo...");
-                    default -> System.out.println("Opción no válida. Intente de nuevo.");
-                }
-            } while (opcion != 0);
-
-        } else {
+            mesaData = new MesaData(connection); // Inicializar MesaData con la conexión
+            menuPrincipal();
+        }else {
             System.out.println("No se pudo establecer la conexión con la base de datos.");
         }
     }
 
-    // Mostrar el menú principal
+    
+    private static void menuPrincipal(){
+         int opcion;
+        do {
+            mostrarMenu();
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            switch (opcion) {
+                case 1 -> agregarMesa();
+                case 2 -> buscarMesa();
+                case 3 -> modificarMesa();
+                case 4 -> altaLogicaMesa();
+                case 5 -> bajaLogicaMesa();
+                case 6 -> listarMesas();
+                case 7 ->  listarPorSector();
+                case 8 -> buscarMesasPorSituacion();
+                case 0 -> System.out.println("Saliendo...");
+                default -> System.out.println("Opcion no valida. Intente de nuevo.");
+            }
+        } while (opcion != 0);
+        
+    }
+    
+
+    // Menu de opciones
     private static void mostrarMenu() {
-        System.out.println("\n----- Menú de Gestión de Mesas -----");
+        System.out.println("\n ***MENU DE GESTION DE MESAS***");
         System.out.println("1. Agregar Mesa");
         System.out.println("2. Buscar Mesa por ID");
         System.out.println("3. Modificar Mesa");
         System.out.println("4. Dar de Alta Mesa");
         System.out.println("5. Dar de Baja Mesa");
         System.out.println("6. Listar Todas las Mesas");
-        System.out.println("7. Buscar Mesas por Situación");
+        System.out.println("7. Listar las mesas por sector");
+        System.out.println("8. Listar las mesas por  Situacion"); //chequaer tipo
         System.out.println("0. Salir");
-        System.out.print("Seleccione una opción: ");
     }
 
-    // Agregar una nueva mesa
+    // 1. Agregar una nueva mesa
     private static void agregarMesa() {
         if (mesaData == null) {
             System.out.println("Error: MesaData no está inicializado.");
@@ -83,7 +86,7 @@ public class Main {
         mesaData.guardarMesa(mesa);
     }
 
-    // Buscar una mesa por ID
+    // 2. Buscar una mesa por ID
     private static void buscarMesa() {
         if (mesaData == null) {
             System.out.println("Error: MesaData no está inicializado.");
@@ -102,7 +105,7 @@ public class Main {
         }
     }
 
-    // Modificar una mesa existente
+    // 3.  Modificar una mesa existente
     private static void modificarMesa() {
         if (mesaData == null) {
             System.out.println("Error: MesaData no está inicializado.");
@@ -131,7 +134,7 @@ public class Main {
         }
     }
 
-    // Dar de alta lógicamente una mesa
+    // 4. Dar de alta una mesa
     private static void altaLogicaMesa() {
         if (mesaData == null) {
             System.out.println("Error: MesaData no está inicializado.");
@@ -144,7 +147,7 @@ public class Main {
         mesaData.altaLogicaMesa(id);
     }
 
-    // Dar de baja lógicamente una mesa
+    // 5. Dar de baja una mesa
     private static void bajaLogicaMesa() {
         if (mesaData == null) {
             System.out.println("Error: MesaData no está inicializado.");
@@ -163,7 +166,7 @@ public class Main {
         }
     }
 
-    // Listar todas las mesas
+    // 6. Listar todas las mesas
     private static void listarMesas() {
         if (mesaData == null) {
             System.out.println("Error: MesaData no está inicializado.");
@@ -182,7 +185,31 @@ public class Main {
         }
     }
 
-    // Buscar mesas por situación
+    // 7. Listar mesas por sector
+    private static void listarPorSector(){ 
+         if (mesaData == null) {
+        System.out.println("Error: MesaData no está inicializado.");
+        return;
+        }
+
+        System.out.println("\n--- Listar Mesas por Sector ---");
+        System.out.print("Ingrese el sector (por ejemplo: terraza, interior, etc.): ");
+        String sector = scanner.nextLine();
+
+        List<Mesa> mesas = mesaData.listarMesasPorSector(sector);
+
+        if (!mesas.isEmpty()) {
+            for (Mesa mesa : mesas) {
+                System.out.println(mesa);
+            }
+        } else {
+            System.out.println("No se encontraron mesas en el sector: " + sector);
+        }
+
+        }
+    
+    
+    // 8. Buscar mesas por situación
     private static void buscarMesasPorSituacion() {
         if (mesaData == null) {
             System.out.println("Error: MesaData no está inicializado.");
