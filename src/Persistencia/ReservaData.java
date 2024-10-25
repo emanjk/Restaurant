@@ -176,20 +176,5 @@ public class ReservaData {
         return reservas;
     }
 
-    // Método para eliminar físicamente una reserva
-    public void eliminarReserva(int idReserva) {
-        String sql = "DELETE FROM reserva WHERE idReserva = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idReserva);
-            int rowsDeleted = ps.executeUpdate();
-            if (rowsDeleted > 0) {
-                System.out.println("Reserva eliminada físicamente.");
-            } else {
-                System.out.println("No se encontró la reserva con ID: " + idReserva);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al eliminar la reserva: " + e.getMessage());
-        }
-    }
+  
 }
