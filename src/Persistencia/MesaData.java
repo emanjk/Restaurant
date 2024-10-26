@@ -18,9 +18,7 @@ public class MesaData {
     public MesaData(Connection connection) {
         this.con = connection; // Asigna la conexión proporcionada
     }
-    
-    
-    
+      
     
     // 1. Guardar Mesa
     public void guardarMesa(Mesa mesa) {
@@ -99,46 +97,7 @@ public class MesaData {
         }
     }
 
-   
-     // 4. Alta lógica de una mesa
-    public void altaLogicaMesa(int idMesa) {
-        String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setBoolean(1, true); // Cambiar el estado a activo (true)
-            ps.setInt(2, idMesa);
-
-            int filasActualizadas = ps.executeUpdate();
-            if (filasActualizadas > 0) {
-                System.out.println("Mesa reactivada exitosamente.");
-            } else {
-                System.out.println( "No se encontró la mesa con el ID proporcionado.");
-            }
-        } catch (SQLException ex) {
-            System.out.println( "Error al realizar el alta lógica de la mesa: " + ex.getMessage());
-        }
-    }
-    
-    // 5. Baja lógica de una mesa
-    public void bajaLogicaMesa(int idMesa) {
-        String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setBoolean(1, false); // Cambiar el estado a inactivo (false)
-            ps.setInt(2, idMesa);
-
-            int filasActualizadas = ps.executeUpdate();
-            if (filasActualizadas > 0) {
-                System.out.println( "Mesa dada de baja lógicamente.");
-            } else {
-                System.out.println( "No se encontró la mesa con el ID proporcionado.");
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error al realizar la baja lógica de la mesa: " + ex.getMessage());
-        }
-    }
-
-    // 6. Listar todas las mesas
+    // 4. Listar todas las mesas
     public List<Mesa> listarMesas() {
         List<Mesa> mesas = new ArrayList<>();
         String sql = "SELECT * FROM mesa";
@@ -163,7 +122,7 @@ public class MesaData {
         return mesas;
     }
    
-    // 7. Listar mesas por 'sector'
+    // 5. Listar mesas por 'sector'
     public List<Mesa> listarMesasPorSector(String sector){
         List<Mesa> mesas = new ArrayList<>();
         String sql = "SELECT * FROM mesa WHERE sector = ?";
@@ -190,7 +149,7 @@ public class MesaData {
         }
     
    
-    // 8. Listar mesas por 'situacion'
+    // 6. Listar mesas por 'situacion'
     public List<Mesa> buscarMesasPorSituacion(String situacion) {
         List<Mesa> mesas = new ArrayList<>();
         String sql = "SELECT * FROM mesa WHERE situacion = ?";
@@ -215,6 +174,46 @@ public class MesaData {
 
         return mesas;
     }
+    
+    
+    // 7. Alta lógica de una mesa
+    public void altaLogicaMesa(int idMesa) {
+        String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, true); // Cambiar el estado a activo (true)
+            ps.setInt(2, idMesa);
+
+            int filasActualizadas = ps.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println("Mesa reactivada exitosamente.");
+            } else {
+                System.out.println( "No se encontró la mesa con el ID proporcionado.");
+            }
+        } catch (SQLException ex) {
+            System.out.println( "Error al realizar el alta lógica de la mesa: " + ex.getMessage());
+        }
+    }
+    
+    // 8. Baja lógica de una mesa
+    public void bajaLogicaMesa(int idMesa) {
+        String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, false); // Cambiar el estado a inactivo (false)
+            ps.setInt(2, idMesa);
+
+            int filasActualizadas = ps.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println( "Mesa dada de baja lógicamente.");
+            } else {
+                System.out.println( "No se encontró la mesa con el ID proporcionado.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al realizar la baja lógica de la mesa: " + ex.getMessage());
+        }
+    }
+    
     
     // 9. Eliminar mesa por ID
     public void eliminarMesa(int id){

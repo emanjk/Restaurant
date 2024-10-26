@@ -15,14 +15,17 @@ public class ProductoData {
 
     //Constructor
     public ProductoData(Connection connection) {
-        this.con = connection; //Ahora podemos usar productoData para realizar operaciones en la BDS
+        this.con = connection; //Conexión a la base de datos
     }
 
-    // Método para dar de alta un producto (INSERT)
-    public void nuevoProducto(Producto producto) {
+    
+    
+    
+    // 1. Guardar 'producto'
+    public void guardarProducto(Producto producto) {
         String sql = "INSERT INTO producto (codigo, nombre, tipo, descripcion, precio, stock, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, producto.getCodigo());
             ps.setString(2, producto.getNombre());
             ps.setString(3, producto.getTipo());
@@ -32,15 +35,52 @@ public class ProductoData {
             ps.setBoolean(7, producto.isEstado());
 
             ps.executeUpdate();
-            System.out.println("Producto dado de alta con éxito.");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al dar de alta el producto: " + ex.getMessage());
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    producto.setIdProducto(rs.getInt(1)); //asignar el ID
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Producto guardado exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al guardar el producto: " + e.getMessage());
         }
     }
 
+    
+    // 2. Buscar 'producto' por ID
+    public Producto buscarProductoPorId(int idProducto) {
+        String sql = "SELECT * FROM producto WHERE idProducto = ?";
+        Producto producto = null;
 
-    // Método para modificar un producto (UPDATE)
-    public void modificarProducto(Producto producto) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idProducto); 
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Crea y llena el objeto Producto con los datos de la base de datos
+                    producto = new Producto();
+                    producto.setIdProducto(rs.getInt("idProducto"));
+                    producto.setCodigo(rs.getInt("codigo"));
+                    producto.setNombre(rs.getString("nombre"));
+                    producto.setTipo(rs.getString("tipo"));
+                    producto.setDescripcion(rs.getString("descripcion"));
+                    producto.setPrecio(rs.getDouble("precio"));
+                    producto.setStock(rs.getInt("stock"));
+                    producto.setEstado(rs.getBoolean("estado"));
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el producto: " + e.getMessage());
+        }
+
+        return producto; // Retorna 'producto' o 'null' si no lo encontro.
+}
+    
+ 
+    // 3. Modificar 'producto'
+    public void modificarProducto(Producto producto){
         String sql = "UPDATE producto SET codigo = ?, nombre = ?, tipo = ?, descripcion = ?, precio = ?, stock = ?, estado = ? WHERE idProducto = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -51,20 +91,21 @@ public class ProductoData {
             ps.setDouble(5, producto.getPrecio());
             ps.setInt(6, producto.getStock());
             ps.setBoolean(7, producto.isEstado());
-            ps.setInt(8, producto.getIdProducto());
+            ps.setInt(8, producto.getIdProducto()); // ID del producto a modificar
 
-            int resultado = ps.executeUpdate();
-            if (resultado == 1) {
-                System.out.println("Producto modificado con éxito.");
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Producto modificado exitosamente.");
             } else {
-                System.out.println("No se encontró el producto con ID: " + producto.getIdProducto());
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con ID: " + producto.getIdProducto());
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al modificar el producto: " + ex.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el producto: " + e.getMessage());
         }
     }
+   
     
-     // Método para buscar productos por nombre (LIKE)
+     // 4. Buscar 'producto' por nombre (LIKE)
     public List<Producto> buscarProductoPorNombre(String nombre) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE nombre LIKE ?";
@@ -84,7 +125,8 @@ public class ProductoData {
         return productos;
     }
 
-    // Método para buscar productos por precio (RANGO)
+    
+    // 5. Buscar 'producto' por precio (Rango)
     public List<Producto> buscarProductoPorPrecio(double precioMin, double precioMax) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE precio BETWEEN ? AND ?";
@@ -105,7 +147,8 @@ public class ProductoData {
         return productos;
     }
 
-    // Método para buscar productos por tipo
+    
+    // 6. Buscar 'producto' por tipo
     public List<Producto> buscarProductoPorTipo(String tipo) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE tipo = ?";
@@ -125,7 +168,8 @@ public class ProductoData {
         return productos;
     }
 
-    // Método para buscar productos por stock (RANGO)
+    
+    // 7. Buscar 'producto' por stock
     public List<Producto> buscarProductoPorStock(int stockMin, int stockMax) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE stock BETWEEN ? AND ?";
@@ -146,7 +190,8 @@ public class ProductoData {
         return productos;
     }
 
-    // Método auxiliar para crear un objeto Producto desde el ResultSet
+    
+    // 8. Método auxiliar para crear un objeto Producto desde el ResultSet
     private Producto crearProductoDesdeResultSet(ResultSet resultSet) throws SQLException {
         return new Producto(
             resultSet.getInt("idProducto"),
@@ -160,28 +205,8 @@ public class ProductoData {
         );
     }
     
-    // Método para buscar un producto por ID
-    public Producto buscarProductoPorId(int idProducto) {
-        Producto producto = null;
-        String sql = "SELECT * FROM producto WHERE idProducto = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            // Establecer el ID del producto en la consulta
-            ps.setInt(1, idProducto);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    // Crear un objeto Producto con los datos obtenidos
-                    producto = crearProductoDesdeResultSet(rs);
-                }
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar el producto por ID: " + ex.getMessage());
-        }
-
-        return producto;
-    }
-    // Método para listar todos los productos ordenados por tipo
+    
+    // 9. Método para listar todos los productos ordenados por tipo
     public List<Producto> mostrarMenu() {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto ORDER BY tipo";
@@ -201,7 +226,68 @@ public class ProductoData {
 
         return productos;
     }
+    
 
+    // 10. Alta logica producto
+    public void altaLogicaProducto(int id){
+        String sql = "UPDATE producto SET estado = ? WHERE idProducto = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, true); // Cambia el estado a activo
+            ps.setInt(2, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Producto activado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con ID: " + id);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al activar el producto: " + e.getMessage());
+        }
+    }
+    
+    
+    // 11. Baja logica producto
+    public void bajaLogicaProducto(int id){
+        String sql = "UPDATE producto SET estado = ? WHERE idProducto = ?"; // Suponiendo que 'estado' es un booleano
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, false); // cambia a false
+            ps.setInt(2, id); 
+
+            int filasActualizadas = ps.executeUpdate();
+            if (filasActualizadas > 0) {
+                JOptionPane.showMessageDialog(null, "Producto dado de baja exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con el ID proporcionado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al dar de baja el producto: " + e.getMessage());
+        }
+
+    }
+    
+    
+    //12. Eliminar producto
+    public void eliminarProducto(int id){
+        String sql = "DELETE FROM producto WHERE idProducto = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id); // ID del producto a eliminar.
+
+            int filasEliminadas = ps.executeUpdate();
+            if (filasEliminadas > 0) {
+                JOptionPane.showMessageDialog(null, "Producto eliminado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con el ID proporcionado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el producto: " + e.getMessage());
+        }
+    }
+    
+    
 }
     
     

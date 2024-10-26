@@ -20,10 +20,12 @@ public class ReservaData {
 
    //Constructor
     public ReservaData(Connection connection) {
-        this.con = connection; 
-        this.mesaData= new MesaData(con);// Unica instancia.
+        this.con = connection; //inicializar 'con'.
+        this.mesaData= new MesaData(con);// ambas clases comparten la misma instancia de conexión.
     }
 
+    
+    
     // Método auxiliar para crear una Reserva desde el ResultSet
     private Reserva crearReservaDesdeResultSet(ResultSet rs) throws SQLException {
         Reserva reserva = new Reserva();
@@ -225,8 +227,45 @@ public class ReservaData {
         return reservas;
 }
 
- 
-    // 8. Eliminar reserva
+    // 8. Alta logica reserva
+    public void altaLogicaReserva(int id){
+        String sql = "UPDATE reserva SET estado = TRUE WHERE idReserva = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            int filasAfectadas = ps.executeUpdate();
+
+            //verificaciones de cambios
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Reserva activada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró la reserva con ID: " + id);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al activar la reserva: " + e.getMessage());
+        }
+    }
+    
+    // 9. Baja logica reserva
+    public void bajaLogicaReserva(int id){
+        String sql = "UPDATE reserva SET estado = FALSE WHERE idReserva = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id); // Asigna el id de la reserva a desactivar
+            int filasAfectadas = ps.executeUpdate(); 
+
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Reserva desactivada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró la reserva con ID: " + id);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al desactivar la reserva: " + e.getMessage());
+        }
+    }
+    
+    
+    // 10. Eliminar reserva
     public void eliminarReserva(int id){
         String sql = "DELETE FROM reserva WHERE idReserva = ?";
 
