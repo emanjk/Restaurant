@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Persistencia;
 import Modelo.Producto;
 import java.sql.Connection;
@@ -12,27 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-
-/**
- *
- * @author Emanuel
- */
-
-
 public class ProductoData {
+    //Atributo
+    private Connection con; 
 
-    private Connection connection;
-
-    // Constructor que recibe la conexión
+    //Constructor
     public ProductoData(Connection connection) {
-        this.connection = connection;
+        this.con = connection; //Conexión a la base de datos
     }
 
-    // Método para dar de alta un producto (INSERT)
-    public void altaProducto(Producto producto) {
+    
+    
+    
+    // 1. Guardar 'producto'
+    public void guardarProducto(Producto producto) {
         String sql = "INSERT INTO producto (codigo, nombre, tipo, descripcion, precio, stock, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, producto.getCodigo());
             ps.setString(2, producto.getNombre());
             ps.setString(3, producto.getTipo());
@@ -42,35 +35,55 @@ public class ProductoData {
             ps.setBoolean(7, producto.isEstado());
 
             ps.executeUpdate();
-            System.out.println("Producto dado de alta con éxito.");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al dar de alta el producto: " + ex.getMessage());
-        }
-    }
 
-    // Método para dar de baja un producto de manera lógica (UPDATE)
-    public void bajaProducto(int idProducto) {
-        String sql = "UPDATE producto SET estado = false WHERE idProducto = ?";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, idProducto);
-
-            int resultado = ps.executeUpdate();
-            if (resultado == 1) {
-                System.out.println("Producto dado de baja lógicamente.");
-            } else {
-                System.out.println("No se encontró el producto con ID: " + idProducto);
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    producto.setIdProducto(rs.getInt(1)); //asignar el ID
+                }
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al dar de baja el producto: " + ex.getMessage());
+
+            JOptionPane.showMessageDialog(null, "Producto guardado exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al guardar el producto: " + e.getMessage());
         }
     }
 
-    // Método para modificar un producto (UPDATE)
-    public void modificarProducto(Producto producto) {
+    
+    // 2. Buscar 'producto' por ID
+    public Producto buscarProductoPorId(int idProducto) {
+        String sql = "SELECT * FROM producto WHERE idProducto = ?";
+        Producto producto = null;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idProducto); 
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Crea y llena el objeto Producto con los datos de la base de datos
+                    producto = new Producto();
+                    producto.setIdProducto(rs.getInt("idProducto"));
+                    producto.setCodigo(rs.getInt("codigo"));
+                    producto.setNombre(rs.getString("nombre"));
+                    producto.setTipo(rs.getString("tipo"));
+                    producto.setDescripcion(rs.getString("descripcion"));
+                    producto.setPrecio(rs.getDouble("precio"));
+                    producto.setStock(rs.getInt("stock"));
+                    producto.setEstado(rs.getBoolean("estado"));
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el producto: " + e.getMessage());
+        }
+
+        return producto; // Retorna 'producto' o 'null' si no lo encontro.
+}
+    
+ 
+    // 3. Modificar 'producto'
+    public void modificarProducto(Producto producto){
         String sql = "UPDATE producto SET codigo = ?, nombre = ?, tipo = ?, descripcion = ?, precio = ?, stock = ?, estado = ? WHERE idProducto = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, producto.getCodigo());
             ps.setString(2, producto.getNombre());
             ps.setString(3, producto.getTipo());
@@ -78,25 +91,26 @@ public class ProductoData {
             ps.setDouble(5, producto.getPrecio());
             ps.setInt(6, producto.getStock());
             ps.setBoolean(7, producto.isEstado());
-            ps.setInt(8, producto.getIdProducto());
+            ps.setInt(8, producto.getIdProducto()); // ID del producto a modificar
 
-            int resultado = ps.executeUpdate();
-            if (resultado == 1) {
-                System.out.println("Producto modificado con éxito.");
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Producto modificado exitosamente.");
             } else {
-                System.out.println("No se encontró el producto con ID: " + producto.getIdProducto());
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con ID: " + producto.getIdProducto());
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al modificar el producto: " + ex.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el producto: " + e.getMessage());
         }
     }
+   
     
-     // Método para buscar productos por nombre (LIKE)
+     // 4. Buscar 'producto' por nombre (LIKE)
     public List<Producto> buscarProductoPorNombre(String nombre) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE nombre LIKE ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, "%" + nombre + "%");
             ResultSet resultSet = ps.executeQuery();
 
@@ -111,12 +125,13 @@ public class ProductoData {
         return productos;
     }
 
-    // Método para buscar productos por precio (RANGO)
+    
+    // 5. Buscar 'producto' por precio (Rango)
     public List<Producto> buscarProductoPorPrecio(double precioMin, double precioMax) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE precio BETWEEN ? AND ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDouble(1, precioMin);
             ps.setDouble(2, precioMax);
             ResultSet resultSet = ps.executeQuery();
@@ -132,12 +147,13 @@ public class ProductoData {
         return productos;
     }
 
-    // Método para buscar productos por tipo
+    
+    // 6. Buscar 'producto' por tipo
     public List<Producto> buscarProductoPorTipo(String tipo) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE tipo = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, tipo);
             ResultSet resultSet = ps.executeQuery();
 
@@ -152,12 +168,13 @@ public class ProductoData {
         return productos;
     }
 
-    // Método para buscar productos por stock (RANGO)
+    
+    // 7. Buscar 'producto' por stock
     public List<Producto> buscarProductoPorStock(int stockMin, int stockMax) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE stock BETWEEN ? AND ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, stockMin);
             ps.setInt(2, stockMax);
             ResultSet resultSet = ps.executeQuery();
@@ -173,7 +190,8 @@ public class ProductoData {
         return productos;
     }
 
-    // Método auxiliar para crear un objeto Producto desde el ResultSet
+    
+    // 8. Método auxiliar para crear un objeto Producto desde el ResultSet
     private Producto crearProductoDesdeResultSet(ResultSet resultSet) throws SQLException {
         return new Producto(
             resultSet.getInt("idProducto"),
@@ -186,6 +204,90 @@ public class ProductoData {
             resultSet.getBoolean("estado")
         );
     }
+    
+    
+    // 9. Método para listar todos los productos ordenados por tipo
+    public List<Producto> mostrarMenu() {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM producto ORDER BY tipo";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Crear un objeto Producto con los datos obtenidos
+                Producto producto = crearProductoDesdeResultSet(rs);
+                // Agregar el producto a la lista
+                productos.add(producto);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar los productos ordenados por tipo: " + ex.getMessage());
+        }
+
+        return productos;
+    }
+    
+
+    // 10. Alta logica producto
+    public void altaLogicaProducto(int id){
+        String sql = "UPDATE producto SET estado = ? WHERE idProducto = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, true); // Cambia el estado a activo
+            ps.setInt(2, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Producto activado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con ID: " + id);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al activar el producto: " + e.getMessage());
+        }
+    }
+    
+    
+    // 11. Baja logica producto
+    public void bajaLogicaProducto(int id){
+        String sql = "UPDATE producto SET estado = ? WHERE idProducto = ?"; // Suponiendo que 'estado' es un booleano
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, false); // cambia a false
+            ps.setInt(2, id); 
+
+            int filasActualizadas = ps.executeUpdate();
+            if (filasActualizadas > 0) {
+                JOptionPane.showMessageDialog(null, "Producto dado de baja exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con el ID proporcionado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al dar de baja el producto: " + e.getMessage());
+        }
+
+    }
+    
+    
+    //12. Eliminar producto
+    public void eliminarProducto(int id){
+        String sql = "DELETE FROM producto WHERE idProducto = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id); // ID del producto a eliminar.
+
+            int filasEliminadas = ps.executeUpdate();
+            if (filasEliminadas > 0) {
+                JOptionPane.showMessageDialog(null, "Producto eliminado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el producto con el ID proporcionado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el producto: " + e.getMessage());
+        }
+    }
+    
+    
 }
     
     

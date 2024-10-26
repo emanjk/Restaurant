@@ -6,9 +6,9 @@ public class Mesa {
     //atributo
     private int idMesa;
     private int capacidad; //mesa para 2, mesa para 4, mesa para n
-    private boolean estado; //(true, false)
+    private boolean estado; //(disponible=true, ocupado=false)
     private String sector; // (abajo, arriba, adentro, afuera)
-    private String situacion;
+    private String situacion; //estado actual: (libre, ocupada) //chequear opc.
     
   //constructores
     public Mesa() {
@@ -29,6 +29,8 @@ public class Mesa {
         this.situacion = situacion;
     }
 
+    
+    
     public int getIdMesa() {
         return idMesa;
     }
@@ -71,8 +73,13 @@ public class Mesa {
 
     @Override
     public String toString() {
-        return "Mesa{" + "idMesa=" + idMesa + ", capacidad=" + capacidad + ", estado=" + estado + ", sector=" + sector + ", situacion=" + situacion + '}';
-    }
+    return "Mesa: \n"+
+           "ID: " + idMesa + "\n" +
+           "Capacidad: " + capacidad + " personas\n" +
+           "Estado: " + estado + "\n" +
+           "Sector: " + sector + "\n" +
+           "Situación Actual: " + situacion;
+}
 
     
 }

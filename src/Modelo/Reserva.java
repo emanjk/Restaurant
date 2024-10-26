@@ -1,60 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 import java.time.LocalDateTime;
 
-/**
- *
- * @author Emanuel
- */
-
-
 public class Reserva {
     private int idReserva;
-    private LocalDateTime fechaHora;
     private Mesa mesa; // Relación con la clase Mesa
     private String nombreCliente; // Nombre del cliente que realiza la reserva
-    private int cantidadPersonas; // Cantidad de personas para la reserva
+    private String telefono; // Teléfono del cliente
+    private int comensales; // Cantidad de personas para la reserva
+    private String sector; // Sector donde se realiza la reserva
+    private LocalDateTime fechaHora;
+    private boolean estado; 
+
 
     // Constructor vacío
     public Reserva() {
     }
 
-    // Constructor con parámetros sin idReserva
-    public Reserva(LocalDateTime fechaHora, Mesa mesa, String nombreCliente, int cantidadPersonas) {
-        this.fechaHora = fechaHora;
+    public Reserva(Mesa mesa, String nombreCliente, String telefono, int comensales, String sector, LocalDateTime fechaHora, boolean estado) {
         this.mesa = mesa;
         this.nombreCliente = nombreCliente;
-        this.cantidadPersonas = cantidadPersonas;
+        this.telefono = telefono;
+        this.comensales = comensales;
+        this.sector = sector;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
     }
 
-    // Constructor con todos los parámetros
-    public Reserva(int idReserva, LocalDateTime fechaHora, Mesa mesa, String nombreCliente, int cantidadPersonas) {
+    public Reserva(int idReserva, Mesa mesa, String nombreCliente, String telefono, int comensales, String sector, LocalDateTime fechaHora, boolean estado) {
         this.idReserva = idReserva;
-        this.fechaHora = fechaHora;
         this.mesa = mesa;
         this.nombreCliente = nombreCliente;
-        this.cantidadPersonas = cantidadPersonas;
+        this.telefono = telefono;
+        this.comensales = comensales;
+        this.sector = sector;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
     }
 
-    // Getters y Setters
     public int getIdReserva() {
         return idReserva;
     }
 
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
-    }
-
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
     }
 
     public Mesa getMesa() {
@@ -73,54 +63,59 @@ public class Reserva {
         this.nombreCliente = nombreCliente;
     }
 
-    public int getCantidadPersonas() {
-        return cantidadPersonas;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setCantidadPersonas(int cantidadPersonas) {
-        this.cantidadPersonas = cantidadPersonas;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    // Métodos adicionales para la clase Reserva
-
-    // Método para confirmar la reserva
-    public void confirmarReserva() {
-        System.out.println("La reserva para " + nombreCliente + " ha sido confirmada en la mesa " + mesa.getIdMesa() + " para " + cantidadPersonas + " personas.");
+    public int getComensales() {
+        return comensales;
     }
 
-    // Método para cancelar la reserva
-    public void cancelarReserva() {
-        System.out.println("La reserva para " + nombreCliente + " ha sido cancelada.");
-        this.mesa = null; // Liberar la mesa asociada
+    public void setComensales(int comensales) {
+        this.comensales = comensales;
     }
 
-    // Método para verificar si la reserva está activa
-    public boolean esActiva() {
-        return LocalDateTime.now().isBefore(fechaHora);
+    public String getSector() {
+        return sector;
     }
 
-    // Método para cambiar la fecha y hora de la reserva
-    public void cambiarFechaHora(LocalDateTime nuevaFechaHora) {
-        this.fechaHora = nuevaFechaHora;
-        System.out.println("La fecha y hora de la reserva ha sido cambiada a: " + nuevaFechaHora);
+    public void setSector(String sector) {
+        this.sector = sector;
     }
 
-    // Método para cambiar la mesa de la reserva
-    public void cambiarMesa(Mesa nuevaMesa) {
-        this.mesa = nuevaMesa;
-        System.out.println("La mesa de la reserva ha sido cambiada a la mesa número: " + nuevaMesa.getIdMesa());
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     // Método toString para mostrar la información de la reserva
+    
     @Override
     public String toString() {
-        return "Reserva{" +
-                "idReserva=" + idReserva +
-                ", fechaHora=" + fechaHora +
-                ", mesa=" + (mesa != null ? mesa.getIdMesa() : "Sin asignar") +
-                ", nombreCliente='" + nombreCliente + '\'' +
-                ", cantidadPersonas=" + cantidadPersonas +
-                '}';
+    return "Reserva: \n" +
+           "ID Reserva: " + idReserva + "\n" +
+           "Mesa: " + (mesa != null ? mesa.getIdMesa() : "No asignada") + "\n" +  // Muestra el ID de la mesa si está asignada
+           "Nombre Cliente: " + nombreCliente + "\n" +
+           "Teléfono: " + telefono + "\n" +
+           "Comensales: " + comensales + "\n" +
+           "Sector: " + sector + "\n" +
+           "Fecha y Hora: " + fechaHora + "\n" +
+           "Estado: " + (estado ? "Activa" : "Inactiva"); 
     }
 }
 

@@ -105,18 +105,18 @@ public class Producto {
 
     // Método toString 
     @Override
-    public String toString() {
-        return "Producto{" +
-                "idProducto=" + idProducto +
-                ", codigo=" + codigo +
-                ", nombre=" + nombre +
-                ", tipo=" + tipo +
-                ", descripcion=" + descripcion +
-                ", precio=" + precio +
-                ", stock=" + stock +
-                ", estado=" + (estado ? "Inactivo" : "Agotado") +
-                '}';
-    }
+   public String toString() {
+        return "Producto:\n" + 
+               "ID=" + idProducto + "\n" + 
+               "Código=" + codigo + "\n" + 
+               "Nombre=" + nombre + "\n" + 
+               "Tipo=" + tipo + "\n" + 
+               "Descripción=" + descripcion + "\n" + 
+               "Precio=" + precio + "\n" + 
+               "Stock=" + stock + "\n" + 
+               "Estado=" + (estado ? "Inactivo" : "Agotado") + 
+               "\n";
+   }
 }
 
     

@@ -114,8 +114,17 @@ public class Mesero {
 
     @Override
     public String toString() {
-        return "Mesero{" + "idMesero=" + idMesero + ", nombre=" + nombre + ", dni=" + dni + ", telefono=" + telefono + ", email=" + email + ", fechaRegistro=" + fechaRegistro + ", turno=" + turno + ", sector=" + sector + ", estado=" + estado + '}';
-    }
+    return "Mesero: \n" +
+           "ID: " + idMesero + "\n" +
+           "Nombre: " + nombre + "\n" +
+           "DNI: " + dni + "\n" +
+           "Teléfono: " + telefono + "\n" +
+           "Email: " + email + "\n" +
+           "Fecha de Registro: " + fechaRegistro + "\n" +
+           "Turno: " + turno + "\n" +
+           "Sector: " + sector + "\n" +
+           "Estado: " + (estado ? "Activo" : "Inactivo");
+}
 
     
 
