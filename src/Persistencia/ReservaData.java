@@ -3,19 +3,25 @@ package Persistencia;
 
 import Modelo.Mesa;
 import Modelo.Reserva;
-import Persistencia.MesaData;
+import Persistencia.MesaData; 
+
+//clases de la API JDBC
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ReservaData {
-    private Connection con; // Conexión a la base de datos
+    //Atributo
+    private Connection con; 
+    private MesaData mesaData;
 
-    // Constructor que recibe la conexión
+   //Constructor
     public ReservaData(Connection connection) {
-        this.con = connection;
+        this.con = connection; 
+        this.mesaData= new MesaData(con);// Unica instancia.
     }
 
     // Método auxiliar para crear una Reserva desde el ResultSet
@@ -32,7 +38,9 @@ public class ReservaData {
         return reserva;
     }
 
-    // Método para agregar una nueva reserva
+    
+    
+    // 1. Guardar Reserva
     public void agregarReserva(Reserva reserva) {
         String sql = "INSERT INTO reserva (fechaHora, idMesa, nombreCliente, telefono, comensales, sector, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
@@ -52,14 +60,14 @@ public class ReservaData {
                     reserva.setIdReserva(rs.getInt(1));
                 }
             }
-            System.out.println("Reserva agregada exitosamente.");
+            JOptionPane.showMessageDialog(null, "Reserva agregada exitosamente.");
         } catch (SQLException e) {
-            System.out.println("Error al agregar la reserva: " + e.getMessage());
+            JOptionPane.showConfirmDialog(null, "Error al agregar la reserva: " + e.getMessage());
         }
     }
 
-    // Método para obtener una reserva por ID
-    public Reserva obtenerReservaPorId(int id) {
+    // 2. Buscar reserva por ID
+    public Reserva buscarReservaPorId(int id) {
         String sql = "SELECT * FROM reserva WHERE idReserva = ?";
         Reserva reserva = null;
 
@@ -77,104 +85,166 @@ public class ReservaData {
         return reserva;
     }
 
-    // Método para obtener todas las reservas
-    public List<Reserva> obtenerReservas() {
-        String sql = "SELECT * FROM reserva";
-        List<Reserva> reservas = new ArrayList<>();
+    // 3. Listar reservas
+    public List<Reserva> listarReservas() {
+        List<Reserva> reservas = new ArrayList<>(); 
+        String sql = "SELECT * FROM reserva";   
 
-        try (PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery(); // Ejecutar la consulta
 
             while (rs.next()) {
-                reservas.add(crearReservaDesdeResultSet(rs));
+                // Crear un objeto Reserva y agregarlo a la lista
+                Reserva reserva = new Reserva(
+                    rs.getInt("idReserva"),
+                    mesaData.buscarMesa(rs.getInt("idMesa")), // Obtener la mesa asociada
+                    rs.getString("nombreCliente"),
+                    rs.getString("telefono"),
+                    rs.getInt("comensales"),
+                    rs.getString("sector"),
+                    rs.getTimestamp("fechaHora").toLocalDateTime(),
+                    rs.getBoolean("estado")
+                );
+                reservas.add(reserva); // Agregar la reserva a la lista
             }
-        } catch (SQLException e) {
-            System.out.println("Error al obtener las reservas: " + e.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar reservas: " + ex.getMessage());
         }
+
         return reservas;
     }
-
-    // Método para actualizar una reserva existente
-    public void actualizarReserva(Reserva reserva) {
-        String sql = "UPDATE reserva SET fechaHora = ?, idMesa = ?, nombreCliente = ?, telefono = ?, comensales = ?, sector = ?, estado = ? WHERE idReserva = ?";
+    
+    // 4. Modificar reserva 
+    public void modificarReserva(Reserva reserva){
+        String sql = "UPDATE reserva SET idMesa = ?, nombreCliente = ?, telefono = ?, comensales = ?, sector = ?, fechaHora = ?, estado = ? WHERE idReserva = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora()));
-            ps.setInt(2, reserva.getMesa().getIdMesa());
-            ps.setString(3, reserva.getNombreCliente());
-            ps.setString(4, reserva.getTelefono());
-            ps.setInt(5, reserva.getComensales());
-            ps.setString(6, reserva.getSector());
+            ps.setInt(1, reserva.getMesa().getIdMesa());
+            ps.setString(2, reserva.getNombreCliente());
+            ps.setString(3, reserva.getTelefono());
+            ps.setInt(4, reserva.getComensales());
+            ps.setString(5, reserva.getSector());
+            ps.setTimestamp(6, Timestamp.valueOf(reserva.getFechaHora()));
             ps.setBoolean(7, reserva.isEstado());
-            ps.setInt(8, reserva.getIdReserva());
+            ps.setInt(8, reserva.getIdReserva()); // ID de la reserva que se va a actualizar
 
-            int rowsUpdated = ps.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Reserva actualizada exitosamente.");
-            } else {
-                System.out.println("No se encontró la reserva con ID: " + reserva.getIdReserva());
-            }
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Reserva actualizada exitosamente.");
         } catch (SQLException e) {
-            System.out.println("Error al actualizar la reserva: " + e.getMessage());
+            JOptionPane.showMessageDialog(null,"Error al actualizar la reserva: " + e.getMessage());
         }
     }
-
-    // Método para obtener reservas por fecha
-    public List<Reserva> obtenerReservasPorFecha(LocalDate fecha) {
-        String sql = "SELECT * FROM reserva WHERE DATE(fechaHora) = ?";
+    
+    // 5. Obtener reserva por Nombre del Cliente
+    public List<Reserva> obtenerReservaPorNombre(String nombreCliente) {
         List<Reserva> reservas = new ArrayList<>();
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setDate(1, java.sql.Date.valueOf(fecha));
+        String sql = "SELECT * FROM reserva WHERE nombreCliente LIKE ?";
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    reservas.add(crearReservaDesdeResultSet(rs));
-                }
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, "%" + nombreCliente + "%"); 
+
+            ResultSet rs = ps.executeQuery(); // Ejecutar la consulta
+
+            while (rs.next()) {
+                Reserva reserva = new Reserva(
+                    rs.getInt("idReserva"),
+                    mesaData.buscarMesa(rs.getInt("idMesa")), // Usando la instancia de mesaData
+                    rs.getString("nombreCliente"),
+                    rs.getString("telefono"),
+                    rs.getInt("comensales"),
+                    rs.getString("sector"),
+                    rs.getTimestamp("fechaHora").toLocalDateTime(),
+                    rs.getBoolean("estado")
+                );
+                reservas.add(reserva); // Agregar la reserva a la lista
             }
-        } catch (SQLException e) {
-            System.out.println("Error al obtener las reservas por fecha: " + e.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar reservas por nombre: " + ex.getMessage());
         }
-        return reservas;
+
+        return reservas; // retorna null o true si encontro o no la reserva.
     }
 
-    // Método para obtener reservas por estado
+    // 6. Obtener reserva por estado
     public List<Reserva> obtenerReservasPorEstado(boolean estado) {
+        List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT * FROM reserva WHERE estado = ?";
-        List<Reserva> reservas = new ArrayList<>();
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setBoolean(1, estado);
+            ps.setBoolean(1, estado); 
+            ResultSet rs = ps.executeQuery(); // Ejecutar la consulta
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    reservas.add(crearReservaDesdeResultSet(rs));
-                }
+            while (rs.next()) {
+               
+                Reserva reserva = new Reserva(
+                    rs.getInt("idReserva"),
+                    mesaData.buscarMesa(rs.getInt("idMesa")), // Usar mesaData para obtener la mesa
+                    rs.getString("nombreCliente"),
+                    rs.getString("telefono"),
+                    rs.getInt("comensales"),
+                    rs.getString("sector"),
+                    rs.getTimestamp("fechaHora").toLocalDateTime(),
+                    rs.getBoolean("estado")
+                );
+                reservas.add(reserva); // Agregar la reserva a la lista
             }
-        } catch (SQLException e) {
-            System.out.println("Error al obtener las reservas por estado: " + e.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar reservas por estado: " + ex.getMessage());
         }
+
         return reservas;
     }
-
-    // Método para obtener reservas por sector
-    public List<Reserva> obtenerReservasPorSector(String sector) {
-        String sql = "SELECT * FROM reserva WHERE sector = ?";
+    
+    // 7. Obtener reservas por fecha y hora
+    public List<Reserva> obtenerReservasPorFecha(LocalDateTime fechaHora) {
         List<Reserva> reservas = new ArrayList<>();
+        String sql = "SELECT * FROM reserva WHERE fechaHora = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, sector);
+            ps.setTimestamp(1, java.sql.Timestamp.valueOf(fechaHora)); // Conversión a Timestamp
+            ResultSet rs = ps.executeQuery();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    reservas.add(crearReservaDesdeResultSet(rs));
-                }
+            while (rs.next()) {
+                Reserva reserva = new Reserva(
+                    rs.getInt("idReserva"),
+                   mesaData.buscarMesa(rs.getInt("idMesa")), // Método que debes implementar
+                    rs.getString("nombreCliente"),
+                    rs.getString("telefono"),
+                    rs.getInt("comensales"),
+                    rs.getString("sector"),
+                    rs.getTimestamp("fechaHora").toLocalDateTime(),
+                    rs.getBoolean("estado")
+                );
+                reservas.add(reserva);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar reservas por fecha: " + ex.getMessage());
+        }
+
+        return reservas;
+}
+
+ 
+    // 8. Eliminar reserva
+    public void eliminarReserva(int id){
+        String sql = "DELETE FROM reserva WHERE idReserva = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id); 
+            int filasAfectadas = ps.executeUpdate(); 
+
+            if (filasAfectadas > 0) {
+                System.out.println("Reserva eliminada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null,"No se encontró una reserva con el ID especificado.");
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener las reservas por sector: " + e.getMessage());
+           JOptionPane.showMessageDialog(null,"Error al eliminar la reserva: " + e.getMessage());
         }
-        return reservas;
     }
+            
+   
 
   
 }

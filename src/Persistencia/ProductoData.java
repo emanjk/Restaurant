@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Persistencia;
 import Modelo.Producto;
 import java.sql.Connection;
@@ -12,20 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-
-/**
- *
- * @author Emanuel
- */
-
-
 public class ProductoData {
+    //Atributo
+    private Connection con; 
 
-    private Connection con; // Conexión a la base de datos
-
-    // Constructor que recibe la conexión
+    //Constructor
     public ProductoData(Connection connection) {
-        this.con = connection; // Asigna la conexión proporcionada
+        this.con = connection; //Ahora podemos usar productoData para realizar operaciones en la BDS
     }
 
     // Método para dar de alta un producto (INSERT)

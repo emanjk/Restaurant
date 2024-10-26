@@ -1,16 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 import java.time.LocalDateTime;
-
-/**
- *
- * @author Emanuel
- */
-
 
 public class Reserva {
     private int idReserva;
@@ -113,18 +104,18 @@ public class Reserva {
     }
 
     // Método toString para mostrar la información de la reserva
+    
     @Override
     public String toString() {
-        return "Reserva{" +
-                "idReserva=" + idReserva +
-                ", fechaHora=" + fechaHora +
-                ", mesa=" + (mesa != null ? mesa.getIdMesa() : "Sin asignar") +
-                ", nombreCliente='" + nombreCliente + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", cantidadPersonas=" + comensales +
-                ", sector='" + sector + '\'' +
-                ", estado=" + estado +
-                '}';
+    return "Reserva: \n" +
+           "ID Reserva: " + idReserva + "\n" +
+           "Mesa: " + (mesa != null ? mesa.getIdMesa() : "No asignada") + "\n" +  // Muestra el ID de la mesa si está asignada
+           "Nombre Cliente: " + nombreCliente + "\n" +
+           "Teléfono: " + telefono + "\n" +
+           "Comensales: " + comensales + "\n" +
+           "Sector: " + sector + "\n" +
+           "Fecha y Hora: " + fechaHora + "\n" +
+           "Estado: " + (estado ? "Activa" : "Inactiva"); 
     }
 }
 

@@ -20,6 +20,8 @@ public class MesaData {
     }
     
     
+    
+    
     // 1. Guardar Mesa
     public void guardarMesa(Mesa mesa) {
         String sql = "INSERT INTO mesa (capacidad, estado, sector, situacion) VALUES (?, ?, ?, ?)";
@@ -79,8 +81,9 @@ public class MesaData {
             ps.setString(4, mesa.getSituacion());
             ps.setInt(5, mesa.getIdMesa());
 
-            // Ejecutar la actualización
+            // devuelve 0 si no se modifico.
             int filasActualizadas = ps.executeUpdate();
+            
             if (filasActualizadas > 0) {
                 System.out.println("Mesa modificada exitosamente.");
                 System.out.println("Mesa modificada: ID=" + mesa.getIdMesa() +
@@ -135,7 +138,7 @@ public class MesaData {
         }
     }
 
-    // 6. Método: listar todas las mesas
+    // 6. Listar todas las mesas
     public List<Mesa> listarMesas() {
         List<Mesa> mesas = new ArrayList<>();
         String sql = "SELECT * FROM mesa";
@@ -160,7 +163,7 @@ public class MesaData {
         return mesas;
     }
    
-    // 7. Metodo: listar mesas por sector
+    // 7. Listar mesas por 'sector'
     public List<Mesa> listarMesasPorSector(String sector){
         List<Mesa> mesas = new ArrayList<>();
         String sql = "SELECT * FROM mesa WHERE sector = ?";
@@ -186,9 +189,8 @@ public class MesaData {
             return mesas; 
         }
     
-    
-    
-    // 8. Método: listar mesas por 'situacion'
+   
+    // 8. Listar mesas por 'situacion'
     public List<Mesa> buscarMesasPorSituacion(String situacion) {
         List<Mesa> mesas = new ArrayList<>();
         String sql = "SELECT * FROM mesa WHERE situacion = ?";
@@ -214,8 +216,25 @@ public class MesaData {
         return mesas;
     }
     
-    
+    // 9. Eliminar mesa por ID
+    public void eliminarMesa(int id){
+        String sql = "DELETE FROM mesa WHERE idMesa = ?";
 
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id); // id de mesa.
+
+            int filasAfectadas = ps.executeUpdate();//Ejecucion.
+
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Mesa eliminada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró una mesa con el ID: " + id);
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar la mesa: " + ex.getMessage());
+          }
+
+    }
     
     
 }
