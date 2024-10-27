@@ -1,4 +1,4 @@
-package Modelo;
+package Persistencia;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,7 +25,7 @@ public class Conexion {
         if (conexion == null) {
             try {
                 conexion = DriverManager.getConnection(url, usuario, password);
-                System.out.println("  Conexion Exitosa!  ");
+                System.out.println("  Conexion Exitosa!  \n");
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error de conexión: " + ex.getMessage());
             }

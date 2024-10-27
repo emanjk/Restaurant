@@ -1,6 +1,5 @@
 package Persistencia;
 
-import Modelo.Conexion;
 import Modelo.Mesa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -225,9 +224,9 @@ public class MesaData {
             int filasAfectadas = ps.executeUpdate();//Ejecucion.
 
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Mesa eliminada correctamente.");
+                System.out.println("Mesa eliminada correctamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró una mesa con el ID: " + id);
+                System.out.println("No se encontró una mesa con el ID: " + id);
             }
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar la mesa: " + ex.getMessage());

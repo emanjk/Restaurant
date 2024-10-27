@@ -3,9 +3,12 @@ package Persistencia;
 
 import Modelo.Mesero;
 import java.sql.Connection;
+/*Clases de la API JDBC*/
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date ;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,7 @@ public class MeseroData {
     
     // 1. Guardar Mesero nuevo
     public void guardarMesero(Mesero mesero) {
-        String sql = "INSERT INTO mesero (idMesero, nombre, dni, telefono, email, fechaRegistro, turno, sector, estado)) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO mesero (idMesero, nombre, dni, telefono, email, fechaRegistro, turno, sector, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, mesero.getIdMesero());
@@ -31,17 +34,20 @@ public class MeseroData {
             ps.setInt(3, mesero.getDni());
             ps.setString(4, mesero.getTelefono());
             ps.setString(5, mesero.getEmail());
-            ps.setDate(6,java.sql.Date.valueOf( mesero.getFechaRegistro()));
+
+            // Conversión correcta de LocalDate a java.sql.Date
+            ps.setDate(6, java.sql.Date.valueOf(mesero.getFechaRegistro())); // Asegúrate que mesero.getFechaRegistro() es de tipo LocalDate
+
             ps.setString(7, mesero.getTurno());
             ps.setString(8, mesero.getSector());
             ps.setBoolean(9, mesero.getEstado());
-           
+
             ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null,"Mesero guardado con éxito");
+
+            System.out.println("Mesero registrado exitosamente\n");
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al guardar mesero: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al registrar mesero: " + ex.getMessage());
         }
     }
  
@@ -67,7 +73,7 @@ public class MeseroData {
                     rs.getBoolean("estado")
                 );
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un mesero con el ID: " + idMesero);
+                System.out.println("No se encontró un mesero con el ID: " + idMesero); 
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar el mesero por ID: " + ex.getMessage());
@@ -97,9 +103,7 @@ public class MeseroData {
                     rs.getString("sector"),
                     rs.getBoolean("estado")
                 );
-            } else {
-                JOptionPane.showMessageDialog(null,"No se encontró un mesero con el DNI: " + dni);
-            }
+            } 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar el mesero por DNI: " + ex.getMessage());
         }
@@ -129,36 +133,36 @@ public class MeseroData {
 
 
             if (filasAfectadas > 0) {
-                 JOptionPane.showMessageDialog(null, "Mesero modificado exitosamente. ");
+                 System.out.println("Mesero modificado exitosamente. \n");
             } else {
-               JOptionPane.showMessageDialog(null, "No se encontró un mesero con el ID: " + mesero.getIdMesero());
+                System.out.println("No se encontró un mesero con el ID: " + mesero.getIdMesero());
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al modificar el mesero: " + ex.getMessage());
         }
 
 
-        }
+    }
 
 
     // 5. Alta logica Mesero
     public void altaLogicaMesero(int id){
-          String sql = "UPDATE mesero SET estado = ? WHERE idMesero = ?";
+        String sql = "UPDATE mesero SET estado = ? WHERE idMesero = ?";
 
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setBoolean(1, true); //mesero activo
-        ps.setInt(2, id);
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, true); //mesero activo
+            ps.setInt(2, id);
 
-        int filasAfectadas = ps.executeUpdate();
+            int filasAfectadas = ps.executeUpdate();
 
-        if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(null, "Mesero dado de alta correctamente.");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró un mesero con el ID: " + id);
+            if (filasAfectadas > 0) {
+                System.out.println("Mesero dado de alta correctamente. \n");
+            } else {
+                System.out.println("No se encontró un mesero con el ID: " + id);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al dar de alta el mesero: " + ex.getMessage());
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al dar de alta el mesero: " + ex.getMessage());
-    }
     }
 
     // 6. Baja logica Mesero
@@ -172,9 +176,9 @@ public class MeseroData {
             int filasAfectadas = ps.executeUpdate();
 
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Mesero dado de baja correctamente.");
+                System.out.println("Mesero dado de baja correctamente. \n");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un mesero con el ID: " + id);
+                System.out.println("No se encontró un mesero con el ID: " + id);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al dar de baja el mesero: " + ex.getMessage());
@@ -224,9 +228,9 @@ public class MeseroData {
             int filasAfectadas = ps.executeUpdate();  // Ejecutamos la eliminación
 
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Mesero eliminado correctamente.");
+                System.out.println("Mesero eliminado correctamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un mesero con el ID: " + id);
+                System.out.println("No se encontró un mesero con el ID: " + id);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar el mesero: " + ex.getMessage());
