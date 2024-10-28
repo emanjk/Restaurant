@@ -1,7 +1,7 @@
 
 package Modelo;
 
-public class Producto {
+public class Producto implements Comparable<Producto>{
     private int idProducto;
     private int codigo; 
     private String nombre;
@@ -107,18 +107,54 @@ public class Producto {
     @Override
    public String toString() {
         return "Producto:\n" + 
-               "ID=" + idProducto + "\n" + 
-               "Código=" + codigo + "\n" + 
-               "Nombre=" + nombre + "\n" + 
-               "Tipo=" + tipo + "\n" + 
-               "Descripción=" + descripcion + "\n" + 
-               "Precio=" + precio + "\n" + 
-               "Stock=" + stock + "\n" + 
-               "Estado=" + (estado ? "Inactivo" : "Agotado") + 
-               "\n";
+               "ID: " + idProducto + "\n" + 
+               "Codigo: " + codigo + "\n" + 
+               "Nombre: " + nombre + "\n" + 
+               "Tipo: " + tipo + "\n" + 
+               "Descripcion: " + descripcion + "\n" + 
+               "Precio: " + precio + "\n" + 
+               "Stock: " + stock + "\n" + 
+               "Estado: " + (estado ? "Inactivo" : "Agotado") + 
+               "\n\n";
    }
-}
 
+    @Override
+    public int compareTo(Producto o) {
+        if(codigo == o.codigo){
+            return 0;
+        }else if(codigo > o.codigo){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.idProducto;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Producto other = (Producto) obj;
+        if (this.idProducto!= other.idProducto){
+            return false;
+        }
+        return true;
+    }
+}
     
     
     

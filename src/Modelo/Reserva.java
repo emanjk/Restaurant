@@ -39,6 +39,8 @@ public class Reserva {
         this.estado = estado;
     }
 
+    
+    //metodos getters y setters
     public int getIdReserva() {
         return idReserva;
     }
@@ -111,11 +113,11 @@ public class Reserva {
            "ID Reserva: " + idReserva + "\n" +
            "Mesa: " + (mesa != null ? mesa.getIdMesa() : "No asignada") + "\n" +  // Muestra el ID de la mesa si está asignada
            "Nombre Cliente: " + nombreCliente + "\n" +
-           "Teléfono: " + telefono + "\n" +
+           "Telefono: " + telefono + "\n" +
            "Comensales: " + comensales + "\n" +
            "Sector: " + sector + "\n" +
            "Fecha y Hora: " + fechaHora + "\n" +
-           "Estado: " + (estado ? "Activa" : "Inactiva"); 
+           "Estado: " + (estado ? "Activa" : "Inactiva \n \n"); 
     }
 }
 

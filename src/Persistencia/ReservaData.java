@@ -44,32 +44,35 @@ public class ReservaData {
     
     // 1. Guardar Reserva
     public void agregarReserva(Reserva reserva) {
-        String sql = "INSERT INTO reserva (fechaHora, idMesa, nombreCliente, telefono, comensales, sector, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        
-        try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            ps.setTimestamp(1, Timestamp.valueOf(reserva.getFechaHora()));
-            ps.setInt(2, reserva.getMesa().getIdMesa());
-            ps.setString(3, reserva.getNombreCliente());
-            ps.setString(4, reserva.getTelefono());
-            ps.setInt(5, reserva.getComensales());
-            ps.setString(6, reserva.getSector());
-            ps.setBoolean(7, reserva.isEstado());
+       String sql = "INSERT INTO reserva (idMesa, nombreCliente, telefono, comensales, sector, fechaHora, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            ps.executeUpdate();
+    try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        // Cambia el orden de los parámetros aquí para que coincidan con la consulta SQL
+        ps.setInt(1, reserva.getMesa().getIdMesa()); // Primero idMesa
+        ps.setString(2, reserva.getNombreCliente());
+        ps.setString(3, reserva.getTelefono());
+        ps.setInt(4, reserva.getComensales());
+        ps.setString(5, reserva.getSector());
+        ps.setTimestamp(6, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
+        ps.setBoolean(7, reserva.isEstado());
 
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    reserva.setIdReserva(rs.getInt(1));
-                }
+        // Ejecutar la inserción
+        ps.executeUpdate();
+
+        // Obtener el ID generado
+        try (ResultSet rs = ps.getGeneratedKeys()) {
+            if (rs.next()) {
+                reserva.setIdReserva(rs.getInt(1)); // Establecer el ID de la reserva
             }
-            JOptionPane.showMessageDialog(null, "Reserva agregada exitosamente.");
-        } catch (SQLException e) {
-            JOptionPane.showConfirmDialog(null, "Error al agregar la reserva: " + e.getMessage());
         }
+        System.out.println("Reserva agregada con éxito");
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al agregar la reserva: " + ex.getMessage());
+    }
     }
 
     // 2. Buscar reserva por ID
-    public Reserva buscarReservaPorId(int id) {
+    public Reserva obtenerReservaPorId(int id) {
         String sql = "SELECT * FROM reserva WHERE idReserva = ?";
         Reserva reserva = null;
 
@@ -131,7 +134,7 @@ public class ReservaData {
             ps.setInt(8, reserva.getIdReserva()); // ID de la reserva que se va a actualizar
 
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Reserva actualizada exitosamente.");
+            System.out.println("Reserva actualizada exitosamente.");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"Error al actualizar la reserva: " + e.getMessage());
         }
@@ -227,7 +230,29 @@ public class ReservaData {
         return reservas;
 }
 
-    // 8. Alta logica reserva
+    
+    // 8. verifificar la disponibilidad de una mesa (chequear)
+    public boolean verificarDisponibilidad(int idMesa, LocalDateTime fechaHora) {
+       String sql = "SELECT COUNT(*) FROM reserva " +
+                 "WHERE idMesa = ? AND fechaHora = ? AND estado = true";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idMesa);
+            ps.setTimestamp(2, Timestamp.valueOf(fechaHora)); // Convertir LocalDateTime a Timestamp
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) == 0; // Retorna true si no hay reservas activas
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al verificar disponibilidad: " + ex.getMessage());
+        }
+
+        return false; // Retorna false en caso de error o si hay reservas activas
+    }
+    
+   
+    // 9. Alta logica reserva
     public void altaLogicaReserva(int id){
         String sql = "UPDATE reserva SET estado = TRUE WHERE idReserva = ?";
 
@@ -237,16 +262,16 @@ public class ReservaData {
 
             //verificaciones de cambios
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Reserva activada exitosamente.");
+                System.out.println("Se dio de alta la reserva ");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró la reserva con ID: " + id);
+                System.out.println("No se encontro la reserva");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al activar la reserva: " + e.getMessage());
         }
     }
     
-    // 9. Baja logica reserva
+    // 10. Baja logica reserva
     public void bajaLogicaReserva(int id){
         String sql = "UPDATE reserva SET estado = FALSE WHERE idReserva = ?";
 
@@ -255,17 +280,17 @@ public class ReservaData {
             int filasAfectadas = ps.executeUpdate(); 
 
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Reserva desactivada exitosamente.");
+                System.out.println("La reserva "+id+" due dada de alta");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró la reserva con ID: " + id);
+                System.out.println("No se encontró la reserva con ID :"  + id);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al desactivar la reserva: " + e.getMessage());
         }
     }
     
-    
-    // 10. Eliminar reserva
+
+    // 11. Eliminar reserva
     public void eliminarReserva(int id){
         String sql = "DELETE FROM reserva WHERE idReserva = ?";
 

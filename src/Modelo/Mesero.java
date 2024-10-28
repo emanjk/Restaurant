@@ -118,12 +118,13 @@ public class Mesero {
            "ID: " + idMesero + "\n" +
            "Nombre: " + nombre + "\n" +
            "DNI: " + dni + "\n" +
-           "Teléfono: " + telefono + "\n" +
+           "Telefono: " + telefono + "\n" +
            "Email: " + email + "\n" +
            "Fecha de Registro: " + fechaRegistro + "\n" +
            "Turno: " + turno + "\n" +
            "Sector: " + sector + "\n" +
-           "Estado: " + (estado ? "Activo" : "Inactivo");
+           "Estado: " + (estado ? "Activo" : "Inactivo")+"\n\n";
+           
 }
 
     
