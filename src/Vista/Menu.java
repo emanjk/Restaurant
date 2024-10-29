@@ -2,16 +2,24 @@
 package Vista;
 
 import javax.swing.JInternalFrame;
+import javax.swing.table.DefaultTableModel;
 
 
 public class Menu extends javax.swing.JFrame {
-
+   //Atributo
+   private DefaultTableModel modelo = new DefaultTableModel(); // (2). tabla
     
+   
+    //Constructor
     public Menu() {
-        initComponents();
-       this.setLocationRelativeTo(this);
+       initComponents();
+       this.setLocationRelativeTo(this); //Centrar Menu
+       this.setResizable(false); //no alargar
+      
     }
 
+    
+    
     
     @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -19,92 +27,114 @@ public class Menu extends javax.swing.JFrame {
 
     jPanel3 = new javax.swing.JPanel();
     escritorio = new javax.swing.JDesktopPane();
-    jPanel1 = new javax.swing.JPanel();
-    jBAdmin = new javax.swing.JButton();
-    jBCliente = new javax.swing.JButton();
-    jBMesero = new javax.swing.JButton();
-    jPanel2 = new javax.swing.JPanel();
+    panel1 = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
+    jBAdmin = new javax.swing.JButton();
+    jSeparator1 = new javax.swing.JSeparator();
+    jLabel2 = new javax.swing.JLabel();
+    jBMesero = new javax.swing.JButton();
+    jBCliente = new javax.swing.JButton();
+    jLabel3 = new javax.swing.JLabel();
+
+    jPanel3.setForeground(new java.awt.Color(255, 153, 153));
+
+    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+    jPanel3.setLayout(jPanel3Layout);
+    jPanel3Layout.setHorizontalGroup(
+      jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 750, Short.MAX_VALUE)
+    );
+    jPanel3Layout.setVerticalGroup(
+      jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 279, Short.MAX_VALUE)
+    );
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-    jPanel3.setForeground(new java.awt.Color(255, 153, 153));
-    jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+    panel1.setBackground(new java.awt.Color(255, 255, 255));
+    panel1.setForeground(new java.awt.Color(204, 204, 204));
+    panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    escritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+    jLabel1.setFont(new java.awt.Font("Segoe Print", 1, 24)); // NOI18N
+    jLabel1.setForeground(new java.awt.Color(153, 96, 0));
+    jLabel1.setText("Bienvenido");
+    panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 166, 28));
 
-    jPanel1.setBackground(new java.awt.Color(0, 153, 204));
-    jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+    jBAdmin.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+    jBAdmin.setText("Administrador");
+    panel1.add(jBAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 140, 46));
 
-    jBAdmin.setBackground(new java.awt.Color(255, 51, 51));
-    jBAdmin.setForeground(new java.awt.Color(255, 255, 255));
-    jBAdmin.setText("ADMINISTRADOR");
-    jBAdmin.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jBAdminActionPerformed(evt);
-      }
-    });
-    jPanel1.add(jBAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 28, 161, 58));
+    jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
+    panel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 292, 10));
 
-    jBCliente.setBackground(new java.awt.Color(255, 51, 51));
-    jBCliente.setForeground(new java.awt.Color(255, 255, 255));
-    jBCliente.setText("CLIENTE");
-    jPanel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 191, 161, 58));
+    jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+    jLabel2.setForeground(new java.awt.Color(153, 96, 0));
+    jLabel2.setText("Menú Principal");
+    panel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
 
-    jBMesero.setBackground(new java.awt.Color(255, 51, 51));
-    jBMesero.setForeground(new java.awt.Color(255, 255, 255));
-    jBMesero.setText("MESERO");
+    jBMesero.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+    jBMesero.setText("Mesero");
     jBMesero.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jBMeseroActionPerformed(evt);
       }
     });
-    jPanel1.add(jBMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 115, 161, 58));
+    panel1.add(jBMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 140, 46));
 
-    escritorio.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 280));
+    jBCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+    jBCliente.setText("Cliente");
+    panel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 140, 46));
 
-    jPanel2.setBackground(new java.awt.Color(255, 204, 204));
-    jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+    jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Menu.png"))); // NOI18N
 
-    jLabel1.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
-    jLabel1.setText("BIENVENIDO");
-    jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 130, -1, 26));
+    escritorio.setLayer(panel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    escritorio.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-    escritorio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 0, 490, 280));
-
-    jPanel3.add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 280));
+    javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
+    escritorio.setLayout(escritorioLayout);
+    escritorioLayout.setHorizontalGroup(
+      escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(escritorioLayout.createSequentialGroup()
+        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 376, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+    escritorioLayout.setVerticalGroup(
+      escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+      .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+    );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(escritorio)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addComponent(escritorio)
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-    //1. Ingresar como 'Mesero'
+  
+  // 1. Ingreso: Mesero
   private void jBMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMeseroActionPerformed
-    escritorio.removeAll();  // Limpia cualquier ventana interna existente
-    escritorio.repaint();
-    
-    LoginMesero loginMesero = new LoginMesero();  // Asegúrate de que LoginMesero extienda JInternalFrame
-    loginMesero.setVisible(true);
-    
-     escritorio.add(loginMesero);
-     escritorio.moveToFront(loginMesero);
+
+    MeseroGestion gestionA = new MeseroGestion();
+    gestionA.setVisible(true); 
+    escritorio.add(gestionA); 
+    escritorio.moveToFront(gestionA); 
+    gestionA.requestFocus(); 
    
   }//GEN-LAST:event_jBMeseroActionPerformed
 
-  private void jBAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdminActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_jBAdminActionPerformed
-
+  
+    
+  
     
     
     
@@ -146,8 +176,18 @@ public class Menu extends javax.swing.JFrame {
   private javax.swing.JButton jBCliente;
   private javax.swing.JButton jBMesero;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
+  private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel jLabel3;
   private javax.swing.JPanel jPanel3;
+  private javax.swing.JSeparator jSeparator1;
+  private javax.swing.JPanel panel1;
   // End of variables declaration//GEN-END:variables
+
+
+
+
+
+
+
+
 }

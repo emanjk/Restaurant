@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
-/**
- *
- * @author Roma
- */
+
 public class PedidoProducto {
    
     private int idPedidoProducto; // ID único para la tabla intermedia (opcional)
