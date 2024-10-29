@@ -1,137 +1,113 @@
 
 package Vista;
-import javax.swing.*;
-/** @author Roma
- */
+
+import javax.swing.JInternalFrame;
+
+
 public class Menu extends javax.swing.JFrame {
 
     
     public Menu() {
         initComponents();
-        setLocationRelativeTo(null); // Centrar la ventana principal
+       this.setLocationRelativeTo(this);
     }
+
     
-@SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    @SuppressWarnings("unchecked")
+  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+  private void initComponents() {
 
-        Escritorio = new javax.swing.JDesktopPane();
-        jPUsers = new javax.swing.JPanel();
-        jBAdmin = new javax.swing.JButton();
-        jBMesero = new javax.swing.JButton();
-        jBCliente = new javax.swing.JButton();
+    jPanel3 = new javax.swing.JPanel();
+    escritorio = new javax.swing.JDesktopPane();
+    jPanel1 = new javax.swing.JPanel();
+    jBAdmin = new javax.swing.JButton();
+    jBCliente = new javax.swing.JButton();
+    jBMesero = new javax.swing.JButton();
+    jPanel2 = new javax.swing.JPanel();
+    jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jBAdmin.setText("ADMINISTRACION");
-        jBAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBAdminActionPerformed(evt);
-            }
-        });
+    jPanel3.setForeground(new java.awt.Color(255, 153, 153));
+    jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jBMesero.setText("MESERO");
-        jBMesero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBMeseroActionPerformed(evt);
-            }
-        });
+    escritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jBCliente.setText("CLIENTE");
-        jBCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBClienteActionPerformed(evt);
-            }
-        });
+    jPanel1.setBackground(new java.awt.Color(0, 153, 204));
+    jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPUsersLayout = new javax.swing.GroupLayout(jPUsers);
-        jPUsers.setLayout(jPUsersLayout);
-        jPUsersLayout.setHorizontalGroup(
-            jPUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPUsersLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBAdmin)
-                    .addComponent(jBMesero)
-                    .addComponent(jBCliente))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPUsersLayout.setVerticalGroup(
-            jPUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPUsersLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jBAdmin)
-                .addGap(59, 59, 59)
-                .addComponent(jBMesero)
-                .addGap(56, 56, 56)
-                .addComponent(jBCliente)
-                .addContainerGap(61, Short.MAX_VALUE))
-        );
+    jBAdmin.setBackground(new java.awt.Color(255, 51, 51));
+    jBAdmin.setForeground(new java.awt.Color(255, 255, 255));
+    jBAdmin.setText("ADMINISTRADOR");
+    jBAdmin.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBAdminActionPerformed(evt);
+      }
+    });
+    jPanel1.add(jBAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 28, 161, 58));
 
-        Escritorio.setLayer(jPUsers, javax.swing.JLayeredPane.DEFAULT_LAYER);
+    jBCliente.setBackground(new java.awt.Color(255, 51, 51));
+    jBCliente.setForeground(new java.awt.Color(255, 255, 255));
+    jBCliente.setText("CLIENTE");
+    jPanel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 191, 161, 58));
 
-        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
-        Escritorio.setLayout(EscritorioLayout);
-        EscritorioLayout.setHorizontalGroup(
-            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                .addComponent(jPUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(275, Short.MAX_VALUE))
-        );
-        EscritorioLayout.setVerticalGroup(
-            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+    jBMesero.setBackground(new java.awt.Color(255, 51, 51));
+    jBMesero.setForeground(new java.awt.Color(255, 255, 255));
+    jBMesero.setText("MESERO");
+    jBMesero.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBMeseroActionPerformed(evt);
+      }
+    });
+    jPanel1.add(jBMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 115, 161, 58));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio)
-        );
+    escritorio.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 280));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+    jPanel2.setBackground(new java.awt.Color(255, 204, 204));
+    jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    jLabel1.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
+    jLabel1.setText("BIENVENIDO");
+    jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 130, -1, 26));
+
+    escritorio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 0, 490, 280));
+
+    jPanel3.add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 280));
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+    );
+    layout.setVerticalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+    );
+
+    pack();
+  }// </editor-fold>//GEN-END:initComponents
+
+    //1. Ingresar como 'Mesero'
+  private void jBMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMeseroActionPerformed
+    escritorio.removeAll();  // Limpia cualquier ventana interna existente
+    escritorio.repaint();
     
+    LoginMesero loginMesero = new LoginMesero();  // Asegúrate de que LoginMesero extienda JInternalFrame
+    loginMesero.setVisible(true);
     
-    private void jBAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdminActionPerformed
-       // Abrir la ventana de administración
-        Admin adminFrame = new Admin();
-        Escritorio.add(adminFrame); // Agregar el JInternalFrame al JDesktopPane
-        adminFrame.setVisible(true); // Hacer visible el JInternalFrame
-       
-    }//GEN-LAST:event_jBAdminActionPerformed
+     escritorio.add(loginMesero);
+     escritorio.moveToFront(loginMesero);
+   
+  }//GEN-LAST:event_jBMeseroActionPerformed
 
-    private void jBMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMeseroActionPerformed
-        MeseroMenu meseroFrame = new MeseroMenu ();
-        Escritorio.add(meseroFrame); // Agregar el JInternalFrame al JDesktopPane
-        meseroFrame.setVisible(true); // Hacer visible el JInternalFrame
-       
-    }//GEN-LAST:event_jBMeseroActionPerformed
-
-    private void jBClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClienteActionPerformed
-        ClienteMenu clienteFrame = new  ClienteMenu();
-        Escritorio.add(clienteFrame); // Agregar el JInternalFrame al JDesktopPane
-        clienteFrame.setVisible(true); // Hacer visible el JInternalFrame
-       
-    }//GEN-LAST:event_jBClienteActionPerformed
+  private void jBAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdminActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_jBAdminActionPerformed
 
     
     
     
-    
-    
-    
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -164,11 +140,14 @@ public class Menu extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane Escritorio;
-    private javax.swing.JButton jBAdmin;
-    private javax.swing.JButton jBCliente;
-    private javax.swing.JButton jBMesero;
-    private javax.swing.JPanel jPUsers;
-    // End of variables declaration//GEN-END:variables
+  // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JDesktopPane escritorio;
+  private javax.swing.JButton jBAdmin;
+  private javax.swing.JButton jBCliente;
+  private javax.swing.JButton jBMesero;
+  private javax.swing.JLabel jLabel1;
+  private javax.swing.JPanel jPanel1;
+  private javax.swing.JPanel jPanel2;
+  private javax.swing.JPanel jPanel3;
+  // End of variables declaration//GEN-END:variables
 }
