@@ -7,10 +7,13 @@ import Modelo.Producto;
 import Persistencia.ProductoData;
 import Persistencia.Conexion;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.ButtonGroup;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,6 +37,79 @@ public class GProductos extends javax.swing.JPanel {
      */
     public GProductos() {
         initComponents();
+        // Configurar un SpinnerNumberModel con mínimo de 0, sin límite máximo, y paso de 1 en 1.
+        jSStock.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        jSId1.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        jSId2.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        StockMin.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        StockMax.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+
+        
+        jTFCodigo.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten números en el campo de Código.");
+                }
+            }
+        });
+        jTFCodigo1.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten números en el campo de Código.");
+                }
+            }
+        });
+        jTFCodigo2.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten números en el campo de Código.");
+                }
+            }
+        });
+
+        jTPrecio.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.') {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten números en el campo de Precio.");
+                }
+            }
+        });
+        jTPrecio1.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.') {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten números en el campo de Precio.");
+                }
+            }
+        });
+        PrecioMin.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.') {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten números en el campo de Precio.");
+                }
+            }
+        });
+        PrecioMax.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.') {
+                    evt.consume();
+                    JOptionPane.showMessageDialog(null, "Solo se permiten números en el campo de Precio.");
+                }
+            }
+        });
+
         grupoEstado = new ButtonGroup();
         grupoEstado.add(jRON);
         grupoEstado.add(jROFF);
@@ -247,7 +323,7 @@ public class GProductos extends javax.swing.JPanel {
                     .addComponent(jROFF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBGuardar1)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 102));
@@ -345,75 +421,73 @@ public class GProductos extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(exit)
-                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRON2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jROFF2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel31)
-                                .addComponent(jLabel28))
-                            .addComponent(jLabel29)
-                            .addComponent(jLabel32))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PrecioMin)
-                            .addComponent(PrecioMax)
-                            .addComponent(StockMax)
-                            .addComponent(StockMin, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRON2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jROFF2))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel31)
+                                        .addComponent(jLabel28))
+                                    .addComponent(jLabel29)
+                                    .addComponent(jLabel32)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel30)
+                                    .addComponent(jLabel33)
+                                    .addComponent(jLabel27))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTFNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTFCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSId2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCBTipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(PrecioMin)
+                                        .addComponent(PrecioMax)
+                                        .addComponent(StockMin, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                                        .addComponent(StockMax)))))
+                        .addGap(0, 22, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel30)
-                            .addComponent(jLabel33))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTFNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel2)
-                                .addComponent(jTFCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel27)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSId2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCBTipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(68, 68, 68)
+                        .addComponent(exit)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(exit))
-                .addGap(2, 2, 2)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jSId2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
-                    .addComponent(jTFCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel30)
-                    .addComponent(jTFNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel27)
-                    .addComponent(jCBTipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel11))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSId2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTFCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel33))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTFNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jCBTipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel27))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
                     .addComponent(PrecioMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -624,59 +698,60 @@ public class GProductos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardar1ActionPerformed
-        // Crear una nueva instancia de Producto
-        Producto pr = new Producto();
+          Producto pr = new Producto();
 
         try {
-            // Obtener los valores ingresados en la interfaz y asignarlos al objeto Producto
-            pr.setCodigo(Integer.parseInt(jTFCodigo.getText()));  
-            pr.setNombre(jTFNombre.getText());                   
-            pr.setTipo(jCBTipo.getSelectedItem().toString());                                               
-            pr.setDescripcion(jTDesc.getText());          
-            pr.setPrecio(Double.parseDouble(jTPrecio.getText())); 
-            pr.setStock((int) jSStock.getValue());     
-            pr.setEstado(jRON.isSelected());                 
+            // Validaciones de campos vacíos y correcta conversión de datos
+            if (jTFCodigo.getText().isEmpty() || jTFNombre.getText().isEmpty() || jTPrecio.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos requeridos.");
+                return;
+            }            
+            pr.setCodigo(Integer.parseInt(jTFCodigo.getText()));// Código debe ser un número entero
+            pr.setNombre(jTFNombre.getText());// Nombre debe ser texto
+            pr.setTipo(jCBTipo.getSelectedItem().toString());
+            pr.setDescripcion(jTDesc.getText());
+            pr.setPrecio(Double.parseDouble(jTPrecio.getText()));// Precio debe ser un número decimal
+            pr.setStock((int) jSStock.getValue());// Stock debe ser un número entero
+            pr.setEstado(jRON.isSelected());
 
-            // Guardar el producto en la base de datos
             productoData.guardarProducto(pr);
 
-            // Recargar la tabla con los datos actualizados
             cargarDatos();
 
-            // Opcional: Mensaje de confirmación
             JOptionPane.showMessageDialog(this, "Producto guardado correctamente.");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Error en el formato de los datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error en el formato de los datos numéricos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar el producto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    
 
     }//GEN-LAST:event_jBGuardar1ActionPerformed
 
     private void jBModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificar1ActionPerformed
-        // Obtener el ID del producto a modificar
         int idProducto = (int) jSId1.getValue();
-        Producto producto = productoData.buscarProductoPorId(idProducto); // Buscar el producto por ID
+        Producto producto = productoData.buscarProductoPorId(idProducto);
 
-        // Verificar si el producto existe
         if (producto != null) {
-            // Asignar los valores modificados al producto
-            producto.setCodigo(Integer.parseInt(jTFCodigo1.getText()));
-            producto.setNombre(jTFNombre1.getText());
-            producto.setTipo(jCBTipo1.getSelectedItem().toString());
-            producto.setDescripcion(jTDesc1.getText());
-            producto.setPrecio(Double.parseDouble(jTPrecio1.getText()));
-            producto.setStock((int) jSStock1.getValue());
-            producto.setEstado(jRON1.isSelected());
+            try {
+                producto.setCodigo(Integer.parseInt(jTFCodigo1.getText()));
+                producto.setNombre(jTFNombre1.getText());
+                producto.setTipo(jCBTipo1.getSelectedItem().toString());
+                producto.setDescripcion(jTDesc1.getText());
+                producto.setPrecio(Double.parseDouble(jTPrecio1.getText()));
+                producto.setStock((int) jSStock1.getValue());
+                producto.setEstado(jRON1.isSelected());
 
-            // Actualizar el producto en la base de datos
-            productoData.modificarProducto(producto);
+                productoData.modificarProducto(producto);
 
-            // Recargar la tabla con los datos actualizados
-            cargarDatos();
+                cargarDatos();
 
-            // Opcional: Mensaje de confirmación
-            JOptionPane.showMessageDialog(this, "Producto modificado correctamente.");
+                JOptionPane.showMessageDialog(this, "Producto modificado correctamente.");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Error en el formato de los datos numéricos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al modificar el producto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "No se encontró el producto con el ID especificado.");
         }
@@ -691,51 +766,51 @@ public class GProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_jRON2ActionPerformed
 
     private void jTFNombre2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFNombre2KeyReleased
-        borrarFilas(); // Limpia la tabla al iniciar la búsqueda.
-        String textoBusqueda = jTFNombre.getText().trim(); // Obtiene el texto ingresado y elimina espacios en blanco.
+        borrarFilas(); // Limpia la tabla antes de agregar nuevos resultados.
+        String textoBusqueda = jTFNombre2.getText().trim(); // Obtiene el texto del campo de búsqueda y elimina espacios en blanco.
 
-        if (!textoBusqueda.isEmpty()) { // Solo busca si hay texto en el campo.
-            for (Producto p : productoData.listarProductos()) {
-                if (p.getNombre().toLowerCase().startsWith(textoBusqueda.toLowerCase())) { // Compara ignorando mayúsculas/minúsculas.
-                    modelo.addRow(new Object[]{
-                        p.getIdProducto(),        
-                        p.getNombre(),    
-                        p.getDescripcion(),         
-                        p.getTipo(),
-                        p.getPrecio(),         
-                        p.getStock(),
-                        p.isEstado()  ? "Alta" : "Baja"
-                    });
-                }
+        if (!textoBusqueda.isEmpty()) { // Solo realiza la búsqueda si el campo no está vacío.
+            // Usa el método buscarProductoPorNombre para obtener productos que coinciden con el texto ingresado.
+            List<Producto> productosFiltrados = productoData.buscarProductoPorNombre(textoBusqueda);
+
+            for (Producto p : productosFiltrados) { // Agrega cada producto encontrado a la tabla.
+                modelo.addRow(new Object[]{
+                    p.getIdProducto(),        
+                    p.getNombre(),    
+                    p.getDescripcion(),         
+                    p.getTipo(),
+                    p.getPrecio(),         
+                    p.getStock(),
+                    p.isEstado() ? "Alta" : "Baja"
+                });
             }
         }
     }//GEN-LAST:event_jTFNombre2KeyReleased
 
     private void PrecioMaxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PrecioMaxKeyReleased
-        borrarFilas(); // Limpia la tabla al iniciar la búsqueda.
-        String textoMin = PrecioMin.getText().trim(); // Precio mínimo ingresado
-        String textoMax = PrecioMax.getText().trim(); // Precio máximo ingresado
+        borrarFilas();
+        String textoMin = PrecioMin.getText().trim();
+        String textoMax = PrecioMax.getText().trim();
 
         if (!textoMin.isEmpty() && !textoMax.isEmpty()) {
             try {
                 double precioMin = Double.parseDouble(textoMin);
                 double precioMax = Double.parseDouble(textoMax);
-
                 List<Producto> productosFiltrados = productoData.buscarProductoPorPrecio(precioMin, precioMax);
 
                 for (Producto p : productosFiltrados) {
                     modelo.addRow(new Object[]{
-                        p.getIdProducto(),        
-                        p.getNombre(),    
-                        p.getDescripcion(),         
+                        p.getIdProducto(),
+                        p.getNombre(),
+                        p.getDescripcion(),
                         p.getTipo(),
-                        p.getPrecio(),         
+                        p.getPrecio(),
                         p.getStock(),
-                        p.isEstado()  ? "Alta" : "Baja"
+                        p.isEstado() ? "Alta" : "Baja"
                     });
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Por favor ingresa valores numéricos válidos para el rango de precio.");
+                JOptionPane.showMessageDialog(this, "Por favor ingresa valores numéricos válidos para el rango de precio.");
             }
         }
     }//GEN-LAST:event_PrecioMaxKeyReleased
@@ -775,11 +850,7 @@ public class GProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_jTFCodigo2KeyReleased
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        // Obtener el contenedor del JPanel y removerlo
-        this.getParent().remove(this);
-        // Redibujar el contenedor después de eliminar el JPanel
-        this.getParent().revalidate();
-        this.getParent().repaint();
+        this.setVisible(false);  // Oculta el panel actual
     }//GEN-LAST:event_exitActionPerformed
     
      

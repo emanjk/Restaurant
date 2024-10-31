@@ -11,6 +11,7 @@ import java.sql.Connection;
 import javax.swing.ButtonGroup;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,6 +35,10 @@ public class GMesas extends javax.swing.JPanel {
      */
     public GMesas() {
         initComponents();
+        
+        jSCapacidad.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        jSCapacidad1.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        jSId1.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         
         grupoEstado = new ButtonGroup();
         grupoEstado.add(jRON);
@@ -101,6 +106,7 @@ public class GMesas extends javax.swing.JPanel {
         filtroSit = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jRON2 = new javax.swing.JRadioButton();
+        exit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTMesas = new javax.swing.JTable();
 
@@ -119,7 +125,7 @@ public class GMesas extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("CAPACIDAD");
 
-        jCBSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupado", "Reservado" }));
+        jCBSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupada", "Reservada" }));
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("ESTADO");
@@ -155,7 +161,7 @@ public class GMesas extends javax.swing.JPanel {
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("CAPACIDAD");
 
-        jCBSituacion1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupado", "Reservado" }));
+        jCBSituacion1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupada", "Reservada" }));
 
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("ESTADO");
@@ -327,7 +333,7 @@ public class GMesas extends javax.swing.JPanel {
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("POR SITUACION");
 
-        filtroSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupado", "Reservado" }));
+        filtroSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupada", "Reservada" }));
         filtroSit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filtroSitActionPerformed(evt);
@@ -342,6 +348,13 @@ public class GMesas extends javax.swing.JPanel {
         jRON2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRON2ActionPerformed(evt);
+            }
+        });
+
+        exit.setText("X");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
             }
         });
 
@@ -362,23 +375,29 @@ public class GMesas extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(filtroSit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(filtroSec, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(filtroSec, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jRON2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jROFF2)))
-                .addContainerGap(195, Short.MAX_VALUE))
+                        .addComponent(jROFF2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exit)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel15)
-                    .addComponent(jRON2)
-                    .addComponent(jROFF2))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel15)
+                            .addComponent(jRON2)
+                            .addComponent(jROFF2)))
+                    .addComponent(exit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filtroSec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -415,7 +434,7 @@ public class GMesas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -424,9 +443,7 @@ public class GMesas extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -492,6 +509,10 @@ public class GMesas extends javax.swing.JPanel {
         cargarMesasPorEstado(true);
     }//GEN-LAST:event_jRON2ActionPerformed
 
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        this.setVisible(false);  // Oculta el panel actual
+    }//GEN-LAST:event_exitActionPerformed
+
     private void cargarMesasPorEstado(boolean estado) {
     modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
     List<Mesa> mesas = mesaData.listarMesasPorEstado(estado); // Obtener mesas por estado
@@ -541,6 +562,7 @@ public class GMesas extends javax.swing.JPanel {
    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton exit;
     private javax.swing.JComboBox<String> filtroSec;
     private javax.swing.JComboBox<String> filtroSit;
     private javax.swing.JButton jBGuardar1;
