@@ -308,7 +308,26 @@ public class ProductoData {
         }
     }
     
-    
+    //14. Listar tipos de productos 
+        public List<String> mostrarTipos() {
+        List<String> tipos = new ArrayList<>();
+        String sql = "SELECT tipo FROM producto";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Crear un objeto Producto con los datos obtenidos
+                String tipo = rs.getString("tipo");
+                // Agregar el producto a la lista
+                tipos.add(tipo);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar los tipos de productos: " + ex.getMessage());
+        }
+
+        return tipos;
+    }
 }
     
     
