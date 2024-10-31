@@ -15,12 +15,7 @@ public class Menu extends javax.swing.JFrame {
        initComponents();
        this.setLocationRelativeTo(this); //Centrar Menu
        this.setResizable(false); //no alargar
-    jBAdmin.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jBAdminActionPerformed(evt);
-        }
-    });
-
+      
     }
 
     
@@ -88,6 +83,11 @@ public class Menu extends javax.swing.JFrame {
 
         jBCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jBCliente.setText("Cliente");
+        jBCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBClienteActionPerformed(evt);
+            }
+        });
         panel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 140, 46));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Menu.png"))); // NOI18N
@@ -136,38 +136,16 @@ public class Menu extends javax.swing.JFrame {
     gestionA.requestFocus(); 
    
   }//GEN-LAST:event_jBMeseroActionPerformed
-    
-  private void jBAdminActionPerformed(java.awt.event.ActionEvent evt) {
-    escritorio.removeAll();
-    escritorio.repaint();                                          
-    // Crear una nueva instancia de Admin
-    Admin adminFrame = new Admin();
-    
-    // Agregar el JInternalFrame (Admin) al JDesktopPane (escritorio)
-    escritorio.add(adminFrame);
-    
-    // Configurar el tamaño y visibilidad del frame interno
-    adminFrame.setVisible(true);
-    adminFrame.setSize(escritorio.getWidth(), escritorio.getHeight()); // Ajustar al tamaño de escritorio
-    adminFrame.setLocation(0, 0); // Ubicarlo en la esquina superior izquierda
-    escritorio.revalidate();
-    escritorio.repaint();
-  }
 
-
-
+    private void jBClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClienteActionPerformed
+       ClienteMenu clienteFrame = new ClienteMenu (); // Suponiendo que tienes un JInternalFrame para ver menu de productos
+       escritorio.add(clienteFrame);
+       clienteFrame.setVisible(true);
+    }//GEN-LAST:event_jBClienteActionPerformed
 
   
-
-  private void jBClienteActionPerformed(java.awt.event.ActionEvent evt) {
-      // Abrir la ventana de cliente
-      ClienteMenu clienteFrame = new ClienteMenu();
-      escritorio.add(clienteFrame); 
-      clienteFrame.setVisible(true); 
-  }
-
+    
   
-
     
     
     
