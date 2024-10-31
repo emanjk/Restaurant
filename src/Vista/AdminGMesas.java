@@ -1,20 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
-package Vista;
 
+package Vista;
+import Modelo.Mesa;
+import Persistencia.Conexion;
+import Persistencia.MesaData;
+import java.sql.Connection;
+import javax.swing.ButtonGroup;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Tomas
  */
 public class AdminGMesas extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form AdminGMesas
-     */
+    private  Connection con; /* variable q tendra la conexion */ 
+    private  MesaData mesaData; 
+    private DefaultTableModel modelo; 
+    private ButtonGroup grupoEstado;
+    private ButtonGroup grupoEstado1;
+    private ButtonGroup grupoEstado2;
+
     public AdminGMesas() {
         initComponents();
+        
+        grupoEstado = new ButtonGroup();
+        grupoEstado.add(jRON);
+        grupoEstado.add(jROFF);
+        
+        grupoEstado1 = new ButtonGroup();
+        grupoEstado.add(jRON1);
+        grupoEstado.add(jROFF1);
+        
+        grupoEstado2 = new ButtonGroup();
+        grupoEstado.add(jRON2);
+        grupoEstado.add(jROFF2);
+        
+        this.con = Conexion.getConexion(); // Obtener la conexión y guardarla
+        this.mesaData = new MesaData(con);
+        this.modelo = new DefaultTableModel(); // Inicializar el modelo de la tabla
+
+        armarCabecera(); // Configurar cabecera de la tabla
+        cargarDatos();   // Cargar todos los datos en la tabla
     }
 
     /**
@@ -26,21 +53,557 @@ public class AdminGMesas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jCBSector = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSCapacidad = new javax.swing.JSpinner();
+        jCBSituacion = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jRON = new javax.swing.JRadioButton();
+        jROFF = new javax.swing.JRadioButton();
+        jBGuardar1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jCBSector1 = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jSCapacidad1 = new javax.swing.JSpinner();
+        jCBSituacion1 = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jBModificar1 = new javax.swing.JButton();
+        jRON1 = new javax.swing.JRadioButton();
+        jROFF1 = new javax.swing.JRadioButton();
+        jSId1 = new javax.swing.JSpinner();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTMesas = new javax.swing.JTable();
+        filtroSec = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        filtroSit = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jRON2 = new javax.swing.JRadioButton();
+        jROFF2 = new javax.swing.JRadioButton();
+
+        jLabel1.setText("AGREGAR MESA");
+
+        jCBSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor", "Privado", "Interior" }));
+
+        jLabel3.setText("SECTOR");
+
+        jLabel4.setText("CAPACIDAD");
+
+        jCBSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupado", "Reservado" }));
+
+        jLabel5.setText("ESTADO");
+
+        jLabel6.setText("SITUACION");
+
+        jRON.setText("Alta");
+
+        jROFF.setText("Baja");
+
+        jBGuardar1.setText("GUARDAR");
+        jBGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGuardar1ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("MODIFICAR MESA");
+
+        jCBSector1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor", "Privado", "Interior" }));
+
+        jLabel10.setText("NRO");
+
+        jLabel11.setText("SECTOR");
+
+        jLabel12.setText("CAPACIDAD");
+
+        jCBSituacion1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupado", "Reservado" }));
+
+        jLabel13.setText("ESTADO");
+
+        jLabel14.setText("SITUACION");
+
+        jBModificar1.setText("MODIFICAR");
+        jBModificar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBModificar1ActionPerformed(evt);
+            }
+        });
+
+        jRON1.setText("Alta");
+
+        jROFF1.setText("Baja");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(29, 29, 29)
+                                .addComponent(jBModificar1))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel13))
+                                .addGap(36, 36, 36)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jRON1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jROFF1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSId1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSCapacidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCBSector1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCBSituacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel11))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jBModificar1))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jSId1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jSCapacidad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jRON1)
+                    .addComponent(jROFF1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jCBSector1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jCBSituacion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(28, 28, 28)
+                        .addComponent(jBGuardar1))
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCBSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jRON)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jROFF, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jCBSector, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jBGuardar1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jSCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jRON)
+                    .addComponent(jROFF))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jCBSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jCBSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTMesas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTMesas);
+
+        filtroSec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor", "Privado", "Interior" }));
+        filtroSec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroSecActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("POR SECTOR");
+
+        jLabel15.setText("POR ESTADO");
+
+        jLabel16.setText("POR SITUACION");
+
+        filtroSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupado", "Reservado" }));
+        filtroSit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtroSitActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("FILTRAR:");
+
+        jRON2.setText("Alta");
+        jRON2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRON2ActionPerformed(evt);
+            }
+        });
+
+        jROFF2.setText("Baja");
+        jROFF2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jROFF2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel2)
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(filtroSit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(filtroSec, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jRON2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jROFF2)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel15)
+                    .addComponent(jRON2)
+                    .addComponent(jROFF2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filtroSec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(filtroSit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void filtroSitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroSitActionPerformed
+       String situacionSeleccionada = (String) filtroSit.getSelectedItem(); // Obtener la situación seleccionada
+        if (situacionSeleccionada != null && !situacionSeleccionada.isEmpty()) {
+            cargarMesasPorSituacion(situacionSeleccionada); // Cargar mesas por situación
+        }
+    }//GEN-LAST:event_filtroSitActionPerformed
 
+    private void jROFF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jROFF2ActionPerformed
+        cargarMesasPorEstado(false);
+    }//GEN-LAST:event_jROFF2ActionPerformed
+
+    private void jRON2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRON2ActionPerformed
+        cargarMesasPorEstado(true); 
+    }//GEN-LAST:event_jRON2ActionPerformed
+
+    private void filtroSecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroSecActionPerformed
+        String sectorSeleccionado = (String) filtroSec.getSelectedItem(); // Obtener el sector seleccionado
+        if (sectorSeleccionado != null && !sectorSeleccionado.isEmpty()) {
+            cargarMesasPorSector(sectorSeleccionado); // Cargar mesas por sector
+        }
+    }//GEN-LAST:event_filtroSecActionPerformed
+
+    private void jBGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardar1ActionPerformed
+            // Crear una nueva instancia de Mesa
+            Mesa mesa = new Mesa();
+            mesa.setCapacidad((int) jSCapacidad.getValue()); // Establecer capacidad
+            mesa.setEstado(jRON.isSelected()); // Establecer estado según el botón seleccionado (Alta/Baja)
+            mesa.setSector(jCBSector.getSelectedItem().toString()); // Establecer sector seleccionado
+            mesa.setSituacion(jCBSituacion.getSelectedItem().toString()); // Establecer situación seleccionada
+
+            // Guardar la mesa en la base de datos
+            mesaData.guardarMesa(mesa);
+            cargarDatos(); // Recargar la tabla con los datos actualizados
+
+            // Opcional: Mensaje de confirmación
+            JOptionPane.showMessageDialog(this, "Mesa guardada correctamente.");
+        
+    }//GEN-LAST:event_jBGuardar1ActionPerformed
+
+    private void jBModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificar1ActionPerformed
+        // Obtener el ID de la mesa a modificar
+        int idMesa = (int) jSId1.getValue();
+        Mesa mesa = mesaData.buscarMesa(idMesa); // Buscar la mesa por ID
+
+        // Verificar si la mesa existe
+        if (mesa != null) {
+            mesa.setCapacidad((int) jSCapacidad1.getValue()); // Establecer nueva capacidad
+            mesa.setEstado(jRON1.isSelected()); // Establecer nuevo estado (Alta/Baja)
+            mesa.setSector(jCBSector1.getSelectedItem().toString()); // Establecer nuevo sector
+            mesa.setSituacion(jCBSituacion1.getSelectedItem().toString()); // Establecer nueva situación
+
+            // Modificar la mesa en la base de datos
+            mesaData.modificarMesa(mesa);
+            cargarDatos(); // Recargar la tabla con los datos actualizados
+
+            // Opcional: Mensaje de confirmación
+            JOptionPane.showMessageDialog(this, "Mesa modificada correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró la mesa con el ID especificado.");
+        }
+    }//GEN-LAST:event_jBModificar1ActionPerformed
+    
+   
+
+    // 1. GUARDAR Mesa
+    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        jSId1.setEnabled(false); // Deshabilitar el jSId para que no sea editable
+        Mesa mesa = new Mesa();
+        mesa.setCapacidad((int) jSCapacidad.getValue());
+        mesa.setEstado(jRON.isSelected());
+        mesa.setSector(jCBSector.getSelectedItem().toString());
+        mesa.setSituacion(jCBSituacion.getSelectedItem().toString());
+
+        mesaData.guardarMesa(mesa); // Guarda la mesa en la base de datos
+        cargarDatos(); // Recarga la tabla para mostrar la nueva mesa
+       
+        
+    }
+
+    
+    // 3. MODIFICAR Mesa
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {
+        int idMesa = (int) jSId1.getValue();
+        Mesa mesa = mesaData.buscarMesa(idMesa);
+
+        if (mesa != null) {
+            mesa.setCapacidad((int) jSCapacidad1.getValue());
+            mesa.setEstado(jRON1.isSelected());
+            mesa.setSector(jCBSector1.getSelectedItem().toString());
+            mesa.setSituacion(jCBSituacion1.getSelectedItem().toString());
+
+            mesaData.modificarMesa(mesa); // Actualiza la mesa en la base de datos
+            cargarDatos(); // Recarga la tabla con los datos actualizados
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró la mesa a modificar.");
+        }
+    }
+
+    
+    private void cargarMesasPorEstado(boolean estado) {
+    modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+    List<Mesa> mesas = mesaData.listarMesasPorEstado(estado); // Obtener mesas por estado
+
+    // Agregar cada mesa a la tabla
+        for (Mesa m : mesas) {
+            modelo.addRow(new Object[]{
+                m.getIdMesa(),
+                m.getCapacidad(),
+                m.isEstado() ? "Habilitada" : "Deshabilitada",
+                m.getSector(),
+                m.getSituacion()
+            });
+        }
+    }
+
+
+    private void cargarMesasPorSector(String sector) {
+        modelo.setRowCount(0); // Limpiar la tabla
+        List<Mesa> mesas = mesaData.listarMesasPorSector(sector); // Obtener mesas por sector
+
+        for (Mesa m : mesas) {
+            modelo.addRow(new Object[]{
+                m.getIdMesa(),
+                m.getCapacidad(),
+                m.isEstado() ? "Habilitada" : "Deshabilitada",
+                m.getSector(),
+                m.getSituacion()
+            });
+        }
+    }
+
+    private void cargarMesasPorSituacion(String situacion) {
+        modelo.setRowCount(0); // Limpiar la tabla
+        List<Mesa> mesas = mesaData.buscarMesasPorSituacion(situacion); // Obtener mesas por situación
+
+        for (Mesa m : mesas) {
+            modelo.addRow(new Object[]{
+                m.getIdMesa(),
+                m.getCapacidad(),
+                m.isEstado() ? "Habilitada" : "Deshabilitada",
+                m.getSector(),
+                m.getSituacion()
+            });
+        }
+    }
+
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> filtroSec;
+    private javax.swing.JComboBox<String> filtroSit;
+    private javax.swing.JButton jBGuardar1;
+    private javax.swing.JButton jBModificar1;
+    private javax.swing.JComboBox<String> jCBSector;
+    private javax.swing.JComboBox<String> jCBSector1;
+    private javax.swing.JComboBox<String> jCBSituacion;
+    private javax.swing.JComboBox<String> jCBSituacion1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton jROFF;
+    private javax.swing.JRadioButton jROFF1;
+    private javax.swing.JRadioButton jROFF2;
+    private javax.swing.JRadioButton jRON;
+    private javax.swing.JRadioButton jRON1;
+    private javax.swing.JRadioButton jRON2;
+    private javax.swing.JSpinner jSCapacidad;
+    private javax.swing.JSpinner jSCapacidad1;
+    private javax.swing.JSpinner jSId1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTMesas;
     // End of variables declaration//GEN-END:variables
+    
+    //  Cabecera de la 'tabla'
+    private void armarCabecera() {
+        modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace que todas las celdas no sean editables
+            }
+        };
+
+        // Agregar columnas al modelo de la tabla
+        modelo.addColumn("N° MESA");
+        modelo.addColumn("CAPACIDAD");
+        modelo.addColumn("ESTADO");
+        modelo.addColumn("SECTOR");
+        modelo.addColumn("SITUACION");
+
+        // Establecer el modelo de la tabla y opciones
+        jTMesas.setModel(modelo);
+        jTMesas.getTableHeader().setReorderingAllowed(false); // Impide mover las columnas
+    }
+
+    //  Cargar datos a la 'tabla'
+    private void cargarDatos() {
+        modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+        List<Mesa> mesas = mesaData.listarMesas(); // Obtener la lista de mesas desde la fuente de datos
+
+        for (Mesa m : mesas) {
+            modelo.addRow(new Object[]{
+                m.getIdMesa(),         // Obtener el ID de la mesa
+                m.getCapacidad(),      // Obtener la capacidad
+                m.isEstado() ? "Habilitada" : "Deshabilitada", // Convertir el estado booleano a texto
+                m.getSector(),         // Obtener el sector
+                m.getSituacion()       // Obtener la situación
+            });
+        }
+    }
+
+
+
+
 }

@@ -4,6 +4,11 @@
  */
 package Vista;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.time.LocalDate;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Tomas
@@ -14,8 +19,47 @@ public class Admin extends javax.swing.JInternalFrame {
      * Creates new form Admin
      */
     public Admin() {
-        initComponents();
+    initComponents();
+    
+    // Código para ajustar dinámicamente el tamaño y eliminar el espacio en blanco
+    ajustarComponentes();
+
+    LocalDate now = LocalDate.now();
+    int year = now.getYear();
+    int dia = now.getDayOfMonth();
+    int month = now.getMonthValue();
+    String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+    fecha.setText("Hoy es " + dia + " de " + meses[month - 1] + " de " + year);
+
+    // Quitar borde del JInternalFrame
+    this.setBorder(null);
+    ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+}
+
+    // Método para ajustar componentes después de la inicialización
+    private void ajustarComponentes() {
+        // Ajusta el tamaño de EscritorioAdmin para que ocupe todo el espacio disponible
+        this.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                ajustarEscritorio();
+            }
+        });
     }
+
+    private void ajustarEscritorio() {
+        // Ajustar tamaño de EscritorioAdmin según el tamaño del JInternalFrame
+        barraUp.setSize(getWidth() - barraPanel.getWidth(), barraUp.getHeight());
+        EscritorioAdmin.setSize(getWidth() - barraPanel.getWidth(), getHeight() - barraUp.getHeight());
+        EscritorioAdmin.setLocation(barraPanel.getWidth(), barraUp.getHeight());
+    }
+
+    private void exitMouseClicked(java.awt.event.MouseEvent evt) {                                  
+        System.exit(0);
+    }                                 
+
+    private void exitMouseEntered(java.awt.event.MouseEvent evt) {                                  
+        exit.setBackground(Color.red);
+    }        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,86 +71,139 @@ public class Admin extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         EscritorioAdmin = new javax.swing.JDesktopPane();
-        jPanel1 = new javax.swing.JPanel();
+        barraPanel = new javax.swing.JPanel();
         jBGMesas = new javax.swing.JButton();
         jBGMesero = new javax.swing.JButton();
         jBGProducto = new javax.swing.JButton();
         jBGPedidos = new javax.swing.JButton();
         jBGReservas = new javax.swing.JButton();
+        Resto = new javax.swing.JLabel();
+        barraUp = new javax.swing.JPanel();
+        fecha = new javax.swing.JLabel();
+        exit = new javax.swing.JButton();
+
+        setBorder(new javax.swing.border.MatteBorder(null));
+        setClosable(true);
+        setAlignmentX(0.0F);
+        setAutoscrolls(true);
+
+        EscritorioAdmin.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout EscritorioAdminLayout = new javax.swing.GroupLayout(EscritorioAdmin);
         EscritorioAdmin.setLayout(EscritorioAdminLayout);
         EscritorioAdminLayout.setHorizontalGroup(
             EscritorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 482, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         EscritorioAdminLayout.setVerticalGroup(
             EscritorioAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 343, Short.MAX_VALUE)
         );
 
-        jBGMesas.setText("GESTION DE MESAS");
+        barraPanel.setBackground(new java.awt.Color(255, 255, 153));
+
+        jBGMesas.setText("MESAS");
         jBGMesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBGMesasActionPerformed(evt);
             }
         });
 
-        jBGMesero.setText("GESTION DE MESERO");
+        jBGMesero.setText("MESEROS");
         jBGMesero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBGMeseroActionPerformed(evt);
             }
         });
 
-        jBGProducto.setText("GESTION DE PRODUCTOS");
+        jBGProducto.setText("PRODUCTOS");
         jBGProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBGProductoActionPerformed(evt);
             }
         });
 
-        jBGPedidos.setText("GESTION DE PEDIDOS");
+        jBGPedidos.setText("PEDIDOS");
         jBGPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBGPedidosActionPerformed(evt);
             }
         });
 
-        jBGReservas.setText("GESTION DE RESERVAS");
+        jBGReservas.setText("RESERVAS");
         jBGReservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBGReservasActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBGMesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBGMesero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBGProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBGPedidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBGReservas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        Resto.setFont(new java.awt.Font("Felix Titling", 3, 24)); // NOI18N
+        Resto.setForeground(new java.awt.Color(0, 0, 0));
+        Resto.setText("RESTO");
+
+        javax.swing.GroupLayout barraPanelLayout = new javax.swing.GroupLayout(barraPanel);
+        barraPanel.setLayout(barraPanelLayout);
+        barraPanelLayout.setHorizontalGroup(
+            barraPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(barraPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Resto, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(barraPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jBGMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBGMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBGProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBGPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBGReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jBGMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(28, 28, 28)
-                .addComponent(jBGMesero, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(28, 28, 28)
-                .addComponent(jBGProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(28, 28, 28)
-                .addComponent(jBGPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(28, 28, 28)
-                .addComponent(jBGReservas, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                .addGap(25, 25, 25))
+        barraPanelLayout.setVerticalGroup(
+            barraPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraPanelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(Resto, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBGMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(jBGMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jBGProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBGPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBGReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
+        );
+
+        barraUp.setBackground(new java.awt.Color(153, 255, 51));
+
+        fecha.setBackground(new java.awt.Color(204, 153, 255));
+        fecha.setForeground(new java.awt.Color(0, 0, 0));
+
+        exit.setText("X");
+
+        javax.swing.GroupLayout barraUpLayout = new javax.swing.GroupLayout(barraUp);
+        barraUp.setLayout(barraUpLayout);
+        barraUpLayout.setHorizontalGroup(
+            barraUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraUpLayout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                .addComponent(exit)
+                .addContainerGap())
+        );
+        barraUpLayout.setVerticalGroup(
+            barraUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraUpLayout.createSequentialGroup()
+                .addGroup(barraUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(barraUpLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(barraUpLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(exit)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -114,27 +211,50 @@ public class Admin extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(barraPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EscritorioAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EscritorioAdmin)
+                    .addComponent(barraUp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(EscritorioAdmin)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(barraPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(barraUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EscritorioAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBGMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGMesasActionPerformed
-        AdminGMesas mesasFrame = new AdminGMesas (); // Suponiendo que tienes un JInternalFrame para gestionar mesas
-        EscritorioAdmin.add(mesasFrame);
-        mesasFrame.setVisible(true);
+                // Crear una instancia de AdminGMesas
+    AdminGMesas mesasFrame = new AdminGMesas();
+
+    // Eliminar todos los frames anteriores si es necesario
+    EscritorioAdmin.removeAll();
+    EscritorioAdmin.repaint();
+
+    // Agregar AdminGMesas al EscritorioAdmin (JDesktopPane)
+    EscritorioAdmin.add(mesasFrame);
+    
+    // Configurar el tamaño y maximizar el frame
+    try {
+        mesasFrame.setMaximum(true); // Maximizar el JInternalFrame
+    } catch (java.beans.PropertyVetoException e) {
+        e.printStackTrace();
+    }
+    
+    mesasFrame.setVisible(true);
+    EscritorioAdmin.revalidate();
+    EscritorioAdmin.repaint();
     }//GEN-LAST:event_jBGMesasActionPerformed
 
     private void jBGMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGMeseroActionPerformed
@@ -164,11 +284,15 @@ public class Admin extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane EscritorioAdmin;
+    private javax.swing.JLabel Resto;
+    private javax.swing.JPanel barraPanel;
+    private javax.swing.JPanel barraUp;
+    private javax.swing.JButton exit;
+    private javax.swing.JLabel fecha;
     private javax.swing.JButton jBGMesas;
     private javax.swing.JButton jBGMesero;
     private javax.swing.JButton jBGPedidos;
     private javax.swing.JButton jBGProducto;
     private javax.swing.JButton jBGReservas;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

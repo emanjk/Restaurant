@@ -214,25 +214,32 @@ public class MesaData {
     }
     
     
-    // 9. Eliminar mesa por ID
-    public void eliminarMesa(int id){
-        String sql = "DELETE FROM mesa WHERE idMesa = ?";
+    
+    // 9. Listar mesas por estado
+    public List<Mesa> listarMesasPorEstado(boolean estado) {
+        List<Mesa> mesas = new ArrayList<>();
+        String sql = "SELECT * FROM mesa WHERE estado = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id); // id de mesa.
+            ps.setBoolean(1, estado); // Filtrar por el estado proporcionado
+            ResultSet rs = ps.executeQuery();
 
-            int filasAfectadas = ps.executeUpdate();//Ejecucion.
-
-            if (filasAfectadas > 0) {
-                System.out.println("Mesa eliminada correctamente.");
-            } else {
-                System.out.println("No se encontró una mesa con el ID: " + id);
+            while (rs.next()) {
+                Mesa mesa = new Mesa(
+                    rs.getInt("idMesa"),
+                    rs.getInt("capacidad"),
+                    rs.getBoolean("estado"),
+                    rs.getString("sector"),
+                    rs.getString("situacion")
+                );
+                mesas.add(mesa);
             }
-        }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar la mesa: " + ex.getMessage());
-          }
+        } catch (SQLException ex) {
+            System.out.println("Error al listar mesas por estado: " + ex.getMessage());
+        }
 
+        return mesas;
     }
-    
+
     
 }
