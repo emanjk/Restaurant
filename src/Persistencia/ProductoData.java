@@ -81,23 +81,23 @@ public class ProductoData {
  
     //3. Buscar producto por codigo
     public Producto buscarProductoPorCodigo(int codigo) {
-      String sql = "SELECT * FROM producto WHERE codigo = ?";
-      Producto producto = null;
+        String sql = "SELECT * FROM producto WHERE codigo = ?";
+        Producto producto = null;
 
-      try (PreparedStatement ps = con.prepareStatement(sql)) {
-          ps.setInt(1, codigo);
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, codigo);
 
-          try (ResultSet rs = ps.executeQuery()) {
-              if (rs.next()) {
-                  producto = crearProductoDesdeResultSet(rs); // Crea y llena el objeto Producto
-              }
-          }
-      } catch (SQLException e) {
-          JOptionPane.showMessageDialog(null, "Error al buscar el producto: " + e.getMessage());
-      }
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    producto = crearProductoDesdeResultSet(rs); // Crea y llena el objeto Producto
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el producto: " + e.getMessage());
+        }
 
-      return producto; // Retorna el producto o null si no lo encontró
-}
+        return producto; // Retorna el producto o null si no lo encontró
+    }
     
     
     // 4. Modificar 'producto'
@@ -327,6 +327,50 @@ public class ProductoData {
         }
 
         return tipos;
+    }
+        
+        // Método para listar todos los productos
+    public List<Producto> listarProductos() {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM producto";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Crear un objeto Producto con los datos obtenidos
+                Producto producto = crearProductoDesdeResultSet(rs);
+                // Agregar el producto a la lista
+                productos.add(producto);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar los productos: " + ex.getMessage());
+        }
+
+        return productos;
+    }
+
+    
+    public List<Producto> listarProductosPorEstado(boolean estado) {
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM producto WHERE estado = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, estado); // Establece el estado como parámetro de búsqueda
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Crear un objeto Producto con los datos obtenidos
+                    Producto producto = crearProductoDesdeResultSet(rs);
+                    // Agregar el producto a la lista
+                    productos.add(producto);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar productos por estado: " + ex.getMessage());
+        }
+
+        return productos;
     }
 }
     

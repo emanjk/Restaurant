@@ -15,7 +15,11 @@ public class Menu extends javax.swing.JFrame {
        initComponents();
        this.setLocationRelativeTo(this); //Centrar Menu
        this.setResizable(false); //no alargar
-      
+        jBAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jBAdminActionPerformed(evt);
+            }
+        });
     }
 
     
@@ -58,19 +62,24 @@ public class Menu extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe Print", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 96, 0));
         jLabel1.setText("Bienvenido");
-        panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 166, 28));
+        panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 166, 28));
 
         jBAdmin.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jBAdmin.setText("Administrador");
-        panel1.add(jBAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 140, 46));
+        jBAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAdminActionPerformed(evt);
+            }
+        });
+        panel1.add(jBAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 140, 46));
 
         jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
-        panel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 292, 10));
+        panel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 292, 10));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 96, 0));
         jLabel2.setText("Menú Principal");
-        panel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, -1, -1));
+        panel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, -1, -1));
 
         jBMesero.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jBMesero.setText("Mesero");
@@ -79,7 +88,7 @@ public class Menu extends javax.swing.JFrame {
                 jBMeseroActionPerformed(evt);
             }
         });
-        panel1.add(jBMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 140, 46));
+        panel1.add(jBMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 140, 46));
 
         jBCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jBCliente.setText("Cliente");
@@ -88,7 +97,7 @@ public class Menu extends javax.swing.JFrame {
                 jBClienteActionPerformed(evt);
             }
         });
-        panel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 140, 46));
+        panel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 140, 46));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Menu.png"))); // NOI18N
 
@@ -100,14 +109,14 @@ public class Menu extends javax.swing.JFrame {
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
-                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                 .addContainerGap())
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
@@ -143,8 +152,20 @@ public class Menu extends javax.swing.JFrame {
        clienteFrame.setVisible(true);
     }//GEN-LAST:event_jBClienteActionPerformed
 
-  
+    private void jBAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdminActionPerformed
+         Admin adminFrame = new Admin();  
+        escritorio.removeAll(); // Limpia el escritorio antes de abrir una nueva ventana
+        escritorio.add(adminFrame); // Agrega Admin al escritorio
+        adminFrame.setVisible(true);
+        escritorio.moveToFront(adminFrame); // Lleva Admin al frente
+        adminFrame.requestFocus();
+    }//GEN-LAST:event_jBAdminActionPerformed
+
     
+     
+  
+
+
   
     
     

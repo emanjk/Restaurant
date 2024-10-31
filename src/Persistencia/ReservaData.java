@@ -25,7 +25,36 @@ public class ReservaData {
     }
 
     
+  
     
+    // 1. Guardar Reserva
+    public void agregarReserva(Reserva reserva) {
+       String sql = "INSERT INTO reserva (idMesa, nombreCliente, telefono, comensales, sector, fechaHora, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            // Cambia el orden de los parámetros aquí para que coincidan con la consulta SQL
+            ps.setInt(1, reserva.getMesa().getIdMesa()); // Primero idMesa
+            ps.setString(2, reserva.getNombreCliente());
+            ps.setString(3, reserva.getTelefono());
+            ps.setInt(4, reserva.getComensales());
+            ps.setString(5, reserva.getSector());
+            ps.setTimestamp(6, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
+            ps.setBoolean(7, reserva.isEstado());
+
+            // Ejecutar la inserción
+            ps.executeUpdate();
+
+            // Obtener el ID generado
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    reserva.setIdReserva(rs.getInt(1)); // Establecer el ID de la reserva
+                }
+            }
+            System.out.println("Reserva agregada con éxito");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al agregar la reserva: " + ex.getMessage());
+        }
+    }
     // Método auxiliar para crear una Reserva desde el ResultSet
     private Reserva crearReservaDesdeResultSet(ResultSet rs) throws SQLException {
         Reserva reserva = new Reserva();
@@ -39,38 +68,7 @@ public class ReservaData {
         reserva.setEstado(rs.getBoolean("estado"));
         return reserva;
     }
-
     
-    
-    // 1. Guardar Reserva
-    public void agregarReserva(Reserva reserva) {
-       String sql = "INSERT INTO reserva (idMesa, nombreCliente, telefono, comensales, sector, fechaHora, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-    try (PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-        // Cambia el orden de los parámetros aquí para que coincidan con la consulta SQL
-        ps.setInt(1, reserva.getMesa().getIdMesa()); // Primero idMesa
-        ps.setString(2, reserva.getNombreCliente());
-        ps.setString(3, reserva.getTelefono());
-        ps.setInt(4, reserva.getComensales());
-        ps.setString(5, reserva.getSector());
-        ps.setTimestamp(6, Timestamp.valueOf(reserva.getFechaHora())); // Convertir LocalDateTime a Timestamp
-        ps.setBoolean(7, reserva.isEstado());
-
-        // Ejecutar la inserción
-        ps.executeUpdate();
-
-        // Obtener el ID generado
-        try (ResultSet rs = ps.getGeneratedKeys()) {
-            if (rs.next()) {
-                reserva.setIdReserva(rs.getInt(1)); // Establecer el ID de la reserva
-            }
-        }
-        System.out.println("Reserva agregada con éxito");
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al agregar la reserva: " + ex.getMessage());
-    }
-    }
-
     // 2. Buscar reserva por ID
     public Reserva obtenerReservaPorId(int id) {
         String sql = "SELECT * FROM reserva WHERE idReserva = ?";
