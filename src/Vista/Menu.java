@@ -97,7 +97,7 @@ public class Menu extends javax.swing.JFrame {
                 jBClienteActionPerformed(evt);
             }
         });
-        panel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 140, 46));
+        panel1.add(jBCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 140, 50));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/Menu.png"))); // NOI18N
 
@@ -147,13 +147,15 @@ public class Menu extends javax.swing.JFrame {
   }//GEN-LAST:event_jBMeseroActionPerformed
 
     private void jBClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBClienteActionPerformed
-       ClienteMenu clienteFrame = new ClienteMenu (); // Suponiendo que tienes un JInternalFrame para ver menu de productos
+       ClienteVerMenu clienteFrame = new ClienteVerMenu (); // Suponiendo que tienes un JInternalFrame para ver menu de productos
        escritorio.add(clienteFrame);
        clienteFrame.setVisible(true);
+       escritorio.moveToFront(clienteFrame); // Lleva Admin al frente
+       clienteFrame.requestFocus();
     }//GEN-LAST:event_jBClienteActionPerformed
 
     private void jBAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdminActionPerformed
-         Admin adminFrame = new Admin();  
+        Admin adminFrame = new Admin();  
         escritorio.removeAll(); // Limpia el escritorio antes de abrir una nueva ventana
         escritorio.add(adminFrame); // Agrega Admin al escritorio
         adminFrame.setVisible(true);
