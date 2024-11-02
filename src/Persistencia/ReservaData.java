@@ -55,6 +55,7 @@ public class ReservaData {
             JOptionPane.showMessageDialog(null, "Error al agregar la reserva: " + ex.getMessage());
         }
     }
+    
     // Método auxiliar para crear una Reserva desde el ResultSet
     private Reserva crearReservaDesdeResultSet(ResultSet rs) throws SQLException {
         Reserva reserva = new Reserva();
