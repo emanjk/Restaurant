@@ -306,7 +306,67 @@ public class ReservaData {
         }
     }
             
-   
+   // 12. Obtener reservas por sector
+    public List<Reserva> obtenerReservasPorSector(String sector) {
+        List<Reserva> reservas = new ArrayList<>();
+        String sql = "SELECT * FROM reserva WHERE sector = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, sector);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserva reserva = crearReservaDesdeResultSet(rs);
+                reservas.add(reserva);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener reservas por sector: " + ex.getMessage());
+        }
+
+        return reservas;
+    }
+
+    // 13. Obtener reservas por cantidad de comensales
+    public List<Reserva> obtenerReservasPorComensales(int comensales) {
+        List<Reserva> reservas = new ArrayList<>();
+        String sql = "SELECT * FROM reserva WHERE comensales = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, comensales);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserva reserva = crearReservaDesdeResultSet(rs);
+                reservas.add(reserva);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener reservas por comensales: " + ex.getMessage());
+        }
+
+        return reservas;
+    }
+
+    // 14. Obtener reservas por rango de fecha y hora
+    public List<Reserva> obtenerReservasPorRangoFechaHora(LocalDateTime inicio, LocalDateTime fin) {
+        List<Reserva> reservas = new ArrayList<>();
+        String sql = "SELECT * FROM reserva WHERE fechaHora BETWEEN ? AND ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTimestamp(1, Timestamp.valueOf(inicio));
+            ps.setTimestamp(2, Timestamp.valueOf(fin));
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserva reserva = crearReservaDesdeResultSet(rs);
+                reservas.add(reserva);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener reservas por rango de fecha y hora: " + ex.getMessage());
+        }
+
+        return reservas;
+    }
+
 
   
 }

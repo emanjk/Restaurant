@@ -8,18 +8,23 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.time.LocalDate;
 import javax.swing.JPanel;
+import java.sql.Connection;
+import Persistencia.Conexion;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Roma
  */
 public class Admin extends javax.swing.JInternalFrame {
+    private Connection  connection;
 
     /**
      * Creates new form Admin
      */
     public Admin() {
     initComponents();
+    this.connection = Conexion.getConexion();
     
     // Código para ajustar dinámicamente el tamaño y eliminar el espacio en blanco
     ajustarComponentes();
@@ -303,15 +308,27 @@ public class Admin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBGPedidosActionPerformed
 
     private void jBGReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGReservasActionPerformed
-        GReservas reservasFrame = new GReservas (); 
-        EscritorioAdmin.add(reservasFrame,BorderLayout.CENTER);
-        reservasFrame.setVisible(true);
-        reservasFrame.setSize(780, 560);
-        reservasFrame.setLocation(0, 0);
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo establecer conexión con la base de datos.");
+            return;
+        }
+        GReservas reservasFrame = new GReservas (connection); 
+        // Remover todos los componentes anteriores en el escritorio y limpiar
+        
         EscritorioAdmin.removeAll();
-        EscritorioAdmin.revalidate();
         EscritorioAdmin.repaint();
 
+        // Agregar el panel GProductos al EscritorioAdmin
+        EscritorioAdmin.add(reservasFrame, BorderLayout.CENTER);
+
+        // Configurar tamaño y visibilidad del panel
+        reservasFrame.setVisible(true);
+        reservasFrame.setSize(EscritorioAdmin.getWidth(), EscritorioAdmin.getHeight());
+        reservasFrame.setLocation(0, 0);
+
+        // Revalidar y repintar para asegurar que el nuevo panel se vea correctamente
+        EscritorioAdmin.revalidate();
+        EscritorioAdmin.repaint();
     }//GEN-LAST:event_jBGReservasActionPerformed
 
 

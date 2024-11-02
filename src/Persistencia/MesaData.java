@@ -241,5 +241,29 @@ public class MesaData {
         return mesas;
     }
 
-    
+    public void actualizarMesa(int idMesa, String situacion, boolean estado) {
+        String sql = "UPDATE mesa SET situacion = ?, estado = ? WHERE idMesa = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, situacion);
+            ps.setBoolean(2, estado);
+            ps.setInt(3, idMesa);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar la mesa con ID " + idMesa + ": " + ex.getMessage());
+        }
+    }
+
+    public void actualizarTodasLasMesas(String situacion, boolean estado) {
+        String sql = "UPDATE mesa SET situacion = ?, estado = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, situacion);
+            ps.setBoolean(2, estado);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar todas las mesas: " + ex.getMessage());
+        }
+    }
+
 }
