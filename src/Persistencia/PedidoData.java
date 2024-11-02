@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Persistencia;
 import Modelo.Pedido;
 import Modelo.Producto;
@@ -20,10 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-/**
- *
- * @author Roma
- */
+
 public class PedidoData {
   
     private Connection con; // Conexión a la base de datos
@@ -33,7 +27,9 @@ public class PedidoData {
         this.con = connection; // Asigna la conexión proporcionada
     }
 
-    // Método para crear un nuevo pedido
+    
+    
+    // 1. Método para crear un nuevo pedido
     public void crearPedido(Pedido pedido) {
         String sql = "INSERT INTO pedido (idMesa, idMesero, fechaHora, estado) VALUES (?, ?, ?, ?)";
 
@@ -60,7 +56,7 @@ public class PedidoData {
         }
     }
 
-    // Método para guardar los productos de un pedido en la tabla intermedia
+    // 2. Método para guardar los productos de un pedido en la tabla intermedia
     private void guardarProductosDelPedido(Pedido pedido) {
         String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, precioTotal) VALUES (?, ?, ?, ?)";
 
@@ -78,7 +74,7 @@ public class PedidoData {
         }
     }
 
-    // Método para buscar un pedido por ID
+    // 3. Método para buscar un pedido por ID
     public Pedido buscarPedido(int idPedido) {
         Pedido pedido = null;
         String sql = "SELECT * FROM pedido WHERE idPedido = ?";
@@ -115,7 +111,7 @@ public class PedidoData {
     }
 
 
-    // Método para obtener los productos de un pedido específico
+    // 4..Método para obtener los productos de un pedido específico
     private List<Producto> obtenerProductosPorPedido(int idPedido) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT p.* FROM producto p " +
@@ -146,7 +142,7 @@ public class PedidoData {
         return productos;
     }
 
-    // Método para modificar un pedido
+    // 5. Método para modificar un pedido
     public void modificarPedido(Pedido pedido) {
         String sql = "UPDATE pedido SET idMesa = ?, idMesero = ?, fechaHora = ?, estado = ? WHERE idPedido = ?";
 
@@ -172,7 +168,7 @@ public class PedidoData {
         }
     }
 
-    // Método para eliminar los productos de un pedido antes de actualizarlos
+    // 6. Método para eliminar los productos de un pedido antes de actualizarlos
     private void eliminarProductosDelPedido(int idPedido) {
         String sql = "DELETE FROM pedidoproducto WHERE idPedido = ?";
 
@@ -184,7 +180,8 @@ public class PedidoData {
         }
     }
 
-    // Método para eliminar un pedido (baja lógica)
+    
+    // 7. Método para eliminar un pedido (baja lógica)
     public void eliminarPedido(int idPedido) {
         String sql = "UPDATE pedido SET estado = false WHERE idPedido = ?";
 
@@ -201,7 +198,8 @@ public class PedidoData {
             JOptionPane.showMessageDialog(null, "Error al eliminar el pedido: " + ex.getMessage());
         }
     }
-        // Método para buscar pedidos por mesa
+    
+    // 8. Método para buscar pedidos por mesa
     public List<Pedido> buscarPedidosPorMesa(int idMesa) {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido WHERE idMesa = ?";
@@ -244,7 +242,8 @@ public class PedidoData {
 
         return pedidos;
     }
-    // Método para buscar pedidos por mesero
+    
+    // 9. Método para buscar pedidos por mesero
     public List<Pedido> buscarPedidosPorMesero(int idMesero) {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido WHERE idMesero = ?";
@@ -286,7 +285,8 @@ public class PedidoData {
 
         return pedidos;
     }
-    // Método para obtener todos los pedidos
+    
+    // 10. Método para obtener todos los pedidos
     public List<Pedido> obtenerTodosLosPedidos() {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido";
@@ -327,7 +327,8 @@ public class PedidoData {
 
         return pedidos;
     }
-    // Método para buscar pedidos por fecha
+    
+    // 11. Método para buscar pedidos por fecha
     public List<Pedido> buscarPedidosPorFecha(LocalDate fecha) {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido WHERE DATE(fechaHora) = ?";
