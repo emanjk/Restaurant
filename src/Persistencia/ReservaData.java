@@ -36,8 +36,8 @@ public class ReservaData {
             LocalDateTime fechaHoraReserva = reserva.getFechaHora();
             LocalDateTime ahora = LocalDateTime.now();
 
-            // Verifica si han pasado 3 horas desde la fecha de la reserva y está activa
-            if (ChronoUnit.HOURS.between(fechaHoraReserva, ahora) >= 3 && reserva.isEstado()) {
+            // Verifica si han pasado 2 horas desde la fecha de la reserva y está activa
+            if (ChronoUnit.HOURS.between(fechaHoraReserva, ahora) >= 2 && reserva.isEstado()) {
                 // Cambia el estado de la reserva y libera la mesa
                 reserva.setEstado(false);
                 modificarReserva(reserva);
@@ -95,13 +95,13 @@ public class ReservaData {
                 reservas.add(reserva);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar reservas: " + ex.getMessage());
+            
         }
 
         return reservas;
     }
 
-    // 4. Método para verificar disponibilidad de la mesa en un rango de tiempo de 3 horas
+    // 4. Método para verificar disponibilidad de la mesa en un rango de tiempo de 2 horas
     public boolean verificarDisponibilidad(int idMesa, LocalDateTime fechaHora) {
         Mesa mesa = mesaData.buscarMesa(idMesa);
 
@@ -112,7 +112,7 @@ public class ReservaData {
 
         String sql = "SELECT COUNT(*) FROM reserva WHERE idMesa = ? AND estado = true " +
                      "AND (fechaHora BETWEEN ? AND ?)";
-        LocalDateTime fechaHoraFin = fechaHora.plusHours(3);
+        LocalDateTime fechaHoraFin = fechaHora.plusHours(2);
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idMesa);
@@ -143,7 +143,33 @@ public class ReservaData {
     }
 
     // 6. Método para modificar una reserva
-    public void modificarReserva(Reserva reserva) {
+    public boolean modificarReserva(Reserva reserva) {
+        // Verificar disponibilidad de la mesa
+        if (!verificarDisponibilidad(reserva.getMesa().getIdMesa(), reserva.getFechaHora())) {
+            
+            return false;
+        }
+
+        // Verificar que la mesa exista en la base de datos
+        Mesa mesaSeleccionada = mesaData.buscarMesa(reserva.getMesa().getIdMesa());
+        if (mesaSeleccionada == null) {
+            JOptionPane.showMessageDialog(null, "La mesa seleccionada no existe.");
+            return false;
+        }
+
+        // Verificar que la mesa esté en el sector especificado
+        if (!mesaSeleccionada.getSector().equalsIgnoreCase(reserva.getSector())) {
+            JOptionPane.showMessageDialog(null, "La mesa seleccionada no pertenece al sector especificado.");
+            return false;
+        }
+
+        // Verificar que la mesa esté en situación "libre" y en estado activo
+        if (!mesaSeleccionada.isEstado() || !"libre".equalsIgnoreCase(mesaSeleccionada.getSituacion())) {
+            JOptionPane.showMessageDialog(null, "La mesa seleccionada no está disponible (no está libre o no está habilitada).");
+            return false;
+        }
+
+        // Si pasa todas las verificaciones, proceder con la modificación
         String sql = "UPDATE reserva SET idMesa = ?, nombreCliente = ?, telefono = ?, comensales = ?, sector = ?, fechaHora = ?, estado = ? WHERE idReserva = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, reserva.getMesa().getIdMesa());
@@ -156,11 +182,14 @@ public class ReservaData {
             ps.setInt(8, reserva.getIdReserva());
 
             ps.executeUpdate();
-            System.out.println("Reserva actualizada exitosamente.");
+            JOptionPane.showMessageDialog(null, "Reserva actualizada exitosamente.");
+            return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al actualizar la reserva: " + e.getMessage());
+            return false;
         }
     }
+
 
     // 7. Método para obtener reservas por estado
     public List<Reserva> obtenerReservasPorEstado(boolean estado) {
@@ -174,7 +203,7 @@ public class ReservaData {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar reservas por estado: " + ex.getMessage());
+            
         }
         return reservas;
     }
@@ -222,7 +251,7 @@ public class ReservaData {
         String sql = "SELECT * FROM reserva WHERE nombreCliente LIKE ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, "%" + nombreCliente + "%");
+            ps.setString(1, nombreCliente + "%"); // Filtrar nombres que comienzan con el texto ingresado
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -287,7 +316,7 @@ public class ReservaData {
                 reservas.add(reserva);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener reservas por sector: " + ex.getMessage());
+            
         }
 
         return reservas;
@@ -307,7 +336,7 @@ public class ReservaData {
                 reservas.add(reserva);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener reservas por comensales: " + ex.getMessage());
+           
         }
 
         return reservas;
