@@ -144,12 +144,10 @@
         <Component class="javax.swing.JComboBox" name="jCBSector">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="3">
                 <StringItem index="0" value="Terraza"/>
                 <StringItem index="1" value="Patio"/>
                 <StringItem index="2" value="Comedor"/>
-                <StringItem index="3" value="Privado"/>
-                <StringItem index="4" value="Interior"/>
               </StringArray>
             </Property>
           </Properties>
@@ -331,12 +329,10 @@
             <Component class="javax.swing.JComboBox" name="jCBSector1">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
+                  <StringArray count="3">
                     <StringItem index="0" value="Terraza"/>
                     <StringItem index="1" value="Patio"/>
                     <StringItem index="2" value="Comedor"/>
-                    <StringItem index="3" value="Privado"/>
-                    <StringItem index="4" value="Interior"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -457,7 +453,7 @@
                           <Component id="jRON2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jROFF2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="163" max="32767" attributes="0"/>
                           <Component id="exit" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -507,12 +503,10 @@
         <Component class="javax.swing.JComboBox" name="filtroSec">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="3">
                 <StringItem index="0" value="Terraza"/>
                 <StringItem index="1" value="Patio"/>
                 <StringItem index="2" value="Comedor"/>
-                <StringItem index="3" value="Privado"/>
-                <StringItem index="4" value="Interior"/>
               </StringArray>
             </Property>
           </Properties>

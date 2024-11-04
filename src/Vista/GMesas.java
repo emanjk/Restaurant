@@ -45,12 +45,12 @@ public class GMesas extends javax.swing.JPanel {
         grupoEstado.add(jROFF);
         
         grupoEstado1 = new ButtonGroup();
-        grupoEstado.add(jRON1);
-        grupoEstado.add(jROFF1);
+        grupoEstado1.add(jRON1);
+        grupoEstado1.add(jROFF1);
         
         grupoEstado2 = new ButtonGroup();
-        grupoEstado.add(jRON2);
-        grupoEstado.add(jROFF2);
+        grupoEstado2.add(jRON2);
+        grupoEstado2.add(jROFF2);
         
         this.con = Conexion.getConexion(); // Obtener la conexión y guardarla
         this.mesaData = new MesaData(con);
@@ -117,7 +117,7 @@ public class GMesas extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 102, 0));
         jLabel1.setText("AGREGAR MESA");
 
-        jCBSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor", "Privado", "Interior" }));
+        jCBSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor" }));
 
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("SECTOR");
@@ -150,7 +150,7 @@ public class GMesas extends javax.swing.JPanel {
         jLabel9.setForeground(new java.awt.Color(255, 102, 0));
         jLabel9.setText("MODIFICAR MESA");
 
-        jCBSector1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor", "Privado", "Interior" }));
+        jCBSector1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor" }));
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("NRO");
@@ -317,7 +317,7 @@ public class GMesas extends javax.swing.JPanel {
             }
         });
 
-        filtroSec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor", "Privado", "Interior" }));
+        filtroSec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor" }));
         filtroSec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filtroSecActionPerformed(evt);
@@ -382,7 +382,7 @@ public class GMesas extends javax.swing.JPanel {
                         .addComponent(jRON2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jROFF2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
                         .addComponent(exit)))
                 .addContainerGap())
         );

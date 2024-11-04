@@ -64,7 +64,6 @@ public class MesaData {
         return mesa;
     }
 
-
     // 3. Modificar Mesa
     public void modificarMesa(Mesa mesa) {
         // Consulta SQL para actualizar la mesa
@@ -131,22 +130,21 @@ public class MesaData {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Mesa mesa = new Mesa(
-                    rs.getInt("idMesa"),
-                    rs.getInt("capacidad"),
-                    rs.getBoolean("estado"),
-                    rs.getString("sector"),
-                    rs.getString("situacion")
-                );
-                mesas.add(mesa); 
+                Mesa mesa = new Mesa();
+                mesa.setIdMesa(rs.getInt("idMesa"));
+                mesa.setCapacidad(rs.getInt("capacidad"));
+                mesa.setSector(rs.getString("sector"));
+                mesa.setSituacion(rs.getString("situacion"));
+                mesa.setEstado(rs.getBoolean("estado"));
+                mesas.add(mesa);
             }
         } catch (SQLException ex) {
-            System.out.println("Error al listar mesas por sector: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener mesas por sector: " + ex.getMessage());
         }
 
-            return mesas; 
-        }
-    
+        return mesas;
+    }
+
    
     // 6. Listar mesas por 'situacion'
     public List<Mesa> buscarMesasPorSituacion(String situacion) {
@@ -173,8 +171,7 @@ public class MesaData {
 
         return mesas;
     }
-    
-    
+        
     // 7. Alta lógica de una mesa
     public void altaLogicaMesa(int idMesa) {
         String sql = "UPDATE mesa SET estado = ? WHERE idMesa = ?";
@@ -212,9 +209,7 @@ public class MesaData {
             System.out.println("Error al realizar la baja lógica de la mesa: " + ex.getMessage());
         }
     }
-    
-    
-    
+  
     // 9. Listar mesas por estado
     public List<Mesa> listarMesasPorEstado(boolean estado) {
         List<Mesa> mesas = new ArrayList<>();
@@ -241,7 +236,7 @@ public class MesaData {
         return mesas;
     }
 
-    public void actualizarMesa(int idMesa, String situacion, boolean estado) {
+    public void actualizarDisponibilidadMesa(int idMesa, String situacion, boolean estado) {
         String sql = "UPDATE mesa SET situacion = ?, estado = ? WHERE idMesa = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -254,16 +249,6 @@ public class MesaData {
         }
     }
 
-    public void actualizarTodasLasMesas(String situacion, boolean estado) {
-        String sql = "UPDATE mesa SET situacion = ?, estado = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, situacion);
-            ps.setBoolean(2, estado);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar todas las mesas: " + ex.getMessage());
-        }
-    }
+  
 
 }

@@ -12,19 +12,15 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/ClienteReserva.java</file>
             <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Persistencia/ReservaData.java</file>
-            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Persistencia/MesaData.java</file>
             <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/GProductos.java</file>
             <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/GMesas.java</file>
             <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/GReservas.java</file>
+            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Persistencia/Conexion.java</file>
+            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/MeseroGestion.java</file>
             <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/Menu.java</file>
             <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/Admin.java</file>
             <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Modelo/Reserva.java</file>
-=======
-            <file>file:/C:/Users/Emanuel/Desktop/ULP/Laboratorio%20Programacion%20%20l/Proyectos_GitHub/Restaurant/src/Vista/MeseroGestion.java</file>
->>>>>>> 9abf5ab588cdd32314a0a73be254a31ee6e3d289
         </group>
     </open-files>
 </project-private>

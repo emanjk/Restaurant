@@ -81,9 +81,10 @@ public class Admin extends javax.swing.JInternalFrame {
         jBGMesero = new javax.swing.JButton();
         jBGProducto = new javax.swing.JButton();
         jBGPedidos = new javax.swing.JButton();
-        jBGReservas = new javax.swing.JButton();
+        jBSalir = new javax.swing.JButton();
         Resto = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jBGReservas1 = new javax.swing.JButton();
         barraUp = new javax.swing.JPanel();
         fecha = new javax.swing.JLabel();
 
@@ -135,10 +136,10 @@ public class Admin extends javax.swing.JInternalFrame {
             }
         });
 
-        jBGReservas.setText("RESERVAS");
-        jBGReservas.addActionListener(new java.awt.event.ActionListener() {
+        jBSalir.setText("SALIR");
+        jBSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBGReservasActionPerformed(evt);
+                jBSalirActionPerformed(evt);
             }
         });
 
@@ -149,6 +150,13 @@ public class Admin extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Felix Titling", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("RESTO");
+
+        jBGReservas1.setText("RESERVAS");
+        jBGReservas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGReservas1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout barraPanelLayout = new javax.swing.GroupLayout(barraPanel);
         barraPanel.setLayout(barraPanelLayout);
@@ -167,7 +175,8 @@ public class Admin extends javax.swing.JInternalFrame {
                             .addComponent(jBGMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBGProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBGPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBGReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBGReservas1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         barraPanelLayout.setVerticalGroup(
@@ -181,13 +190,15 @@ public class Admin extends javax.swing.JInternalFrame {
                 .addComponent(jBGMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(jBGMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(48, 48, 48)
                 .addComponent(jBGProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(59, 59, 59)
                 .addComponent(jBGPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jBGReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(jBGReservas1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87))
         );
 
         barraUp.setBackground(new java.awt.Color(255, 153, 102));
@@ -202,7 +213,7 @@ public class Admin extends javax.swing.JInternalFrame {
             .addGroup(barraUpLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addContainerGap(758, Short.MAX_VALUE))
         );
         barraUpLayout.setVerticalGroup(
             barraUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +318,11 @@ public class Admin extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jBGPedidosActionPerformed
 
-    private void jBGReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGReservasActionPerformed
+    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
+         this.setVisible(false); 
+    }//GEN-LAST:event_jBSalirActionPerformed
+
+    private void jBGReservas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGReservas1ActionPerformed
         if (connection == null) {
             JOptionPane.showMessageDialog(null, "No se pudo establecer conexión con la base de datos.");
             return;
@@ -329,7 +344,7 @@ public class Admin extends javax.swing.JInternalFrame {
         // Revalidar y repintar para asegurar que el nuevo panel se vea correctamente
         EscritorioAdmin.revalidate();
         EscritorioAdmin.repaint();
-    }//GEN-LAST:event_jBGReservasActionPerformed
+    }//GEN-LAST:event_jBGReservas1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -342,7 +357,8 @@ public class Admin extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBGMesero;
     private javax.swing.JButton jBGPedidos;
     private javax.swing.JButton jBGProducto;
-    private javax.swing.JButton jBGReservas;
+    private javax.swing.JButton jBGReservas1;
+    private javax.swing.JButton jBSalir;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

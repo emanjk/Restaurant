@@ -102,7 +102,8 @@
                               <Component id="jBGMesero" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
                               <Component id="jBGProducto" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
                               <Component id="jBGPedidos" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
-                              <Component id="jBGReservas" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
+                              <Component id="jBSalir" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
+                              <Component id="jBGReservas1" alignment="1" min="-2" pref="134" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -121,13 +122,15 @@
                   <Component id="jBGMesas" min="-2" pref="39" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   <Component id="jBGMesero" min="-2" pref="39" max="-2" attributes="0"/>
-                  <EmptySpace pref="46" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Component id="jBGProducto" min="-2" pref="39" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                   <Component id="jBGPedidos" min="-2" pref="38" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                  <Component id="jBGReservas" min="-2" pref="35" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                  <EmptySpace pref="77" max="32767" attributes="0"/>
+                  <Component id="jBGReservas1" min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  <Component id="jBSalir" min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -165,12 +168,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBGPedidosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jBGReservas">
+        <Component class="javax.swing.JButton" name="jBSalir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="RESERVAS"/>
+            <Property name="text" type="java.lang.String" value="SALIR"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBGReservasActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBSalirActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Resto">
@@ -195,6 +198,14 @@
             <Property name="text" type="java.lang.String" value="RESTO"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="jBGReservas1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="RESERVAS"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBGReservas1ActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="barraUp">
@@ -210,7 +221,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="fecha" min="-2" pref="396" max="-2" attributes="0"/>
-                  <EmptySpace pref="427" max="32767" attributes="0"/>
+                  <EmptySpace pref="758" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
