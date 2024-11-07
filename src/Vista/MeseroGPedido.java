@@ -162,7 +162,7 @@ public class MeseroGPedido extends javax.swing.JPanel {
     jPanel2.setLayout(jPanel2Layout);
     jPanel2Layout.setHorizontalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 0, Short.MAX_VALUE)
+      .addGap(0, 235, Short.MAX_VALUE)
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +191,7 @@ public class MeseroGPedido extends javax.swing.JPanel {
       .addGroup(jPanel3Layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(jLabel1)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(199, Short.MAX_VALUE))
     );
 
     add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 22, -1, 227));

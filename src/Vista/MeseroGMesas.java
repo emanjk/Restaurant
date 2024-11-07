@@ -587,10 +587,10 @@ private void cargaComboSector (){
     jcbSector.addItem(null);  
 
     // Agregar otros elementos al JComboBox
-    jcbSector.addItem("Patio");
-    jcbSector.addItem("Interior");
-    jcbSector.addItem("Privado");
+    jcbSector.addItem("Comedor");
     jcbSector.addItem("Terraza");
+    jcbSector.addItem("Patio");
+    
 }
 
 // 4. Cargar combo-situacion

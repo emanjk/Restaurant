@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import java.sql.Timestamp; //ver si importa
+
+
 
 public class ReservaData {
     //Atributo
@@ -200,6 +203,7 @@ public class ReservaData {
         return reservas;
     }
     
+    
     // 7. Obtener reservas por fecha y hora
     public List<Reserva> obtenerReservasPorFecha(LocalDateTime fechaHora) {
         List<Reserva> reservas = new ArrayList<>();
@@ -229,6 +233,7 @@ public class ReservaData {
         return reservas;
 }
 
+    
     
     // 8. verifificar la disponibilidad de una mesa (chequear)
     public boolean verificarDisponibilidad(int idMesa, LocalDateTime fechaHora) {
@@ -306,8 +311,65 @@ public class ReservaData {
            JOptionPane.showMessageDialog(null,"Error al eliminar la reserva: " + e.getMessage());
         }
     }
-            
-   
+      
+    
+    
+            //Agregadas Extras
+    // 12. Obtener reservas por sector
+    public List<Reserva> obtenerReservasPorSector(String sector) {
+     List<Reserva> reservas = new ArrayList<>();
+     String sql = "SELECT * FROM reserva WHERE sector = ?";
 
-  
+     try (PreparedStatement ps = con.prepareStatement(sql)) {
+         ps.setString(1, sector); // Establece el sector como parámetro
+         ResultSet rs = ps.executeQuery(); // Ejecuta la consulta
+
+         while (rs.next()) {
+             // Crear una reserva con los datos obtenidos
+             Reserva reserva = new Reserva(
+                 rs.getInt("idReserva"),                       // ID de la reserva
+                 mesaData.buscarMesa(rs.getInt("idMesa")),    // Buscar mesa por id (usando mesaData)
+                 rs.getString("nombreCliente"),               // Nombre del cliente
+                 rs.getString("telefono"),                    // Teléfono del cliente
+                 rs.getInt("comensales"),                     // Cantidad de comensales
+                 rs.getString("sector"),                      // Sector
+                 rs.getTimestamp("fechaHora").toLocalDateTime(), // Fecha y hora
+                 rs.getBoolean("estado")                      // Estado de la reserva
+             );
+             reservas.add(reserva); // Agregar la reserva a la lista
+         }
+     } catch (SQLException ex) {
+         JOptionPane.showMessageDialog(null, "Error al obtener reservas por sector: " + ex.getMessage());
+     }
+
+     return reservas; // Devolver la lista de reservas
+  }
+
+  public List<Reserva> obtenerReservasSoloPorFecha(LocalDate fecha) {
+    List<Reserva> reservas = new ArrayList<>();
+    String sql = "SELECT * FROM reserva WHERE DATE(fechaHora) = ?";  // Filtrar solo por fecha
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setDate(1, java.sql.Date.valueOf(fecha));  // Solo la parte de la fecha
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Reserva reserva = new Reserva(
+                rs.getInt("idReserva"),
+                mesaData.buscarMesa(rs.getInt("idMesa")),
+                rs.getString("nombreCliente"),
+                rs.getString("telefono"),
+                rs.getInt("comensales"),
+                rs.getString("sector"),
+                rs.getTimestamp("fechaHora").toLocalDateTime(),
+                rs.getBoolean("estado")
+            );
+            reservas.add(reserva);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar reservas por fecha: " + ex.getMessage());
+    }
+
+    return reservas;
+}
 }
