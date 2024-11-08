@@ -25,7 +25,8 @@ public class PedidoProductoData {
         this.con = connection; // Asigna la conexión proporcionada
     }
 
-    // Método para agregar un PedidoProducto
+    
+    // 1. Método para agregar un PedidoProducto
     public void agregarPedidoProducto(PedidoProducto pedidoProducto) {
         String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, subotal) VALUES (?, ?, ?, ?)";
 
@@ -42,7 +43,7 @@ public class PedidoProductoData {
         }
     }
 
-    // Método para obtener todos los PedidoProducto de un pedido específico
+    // 2. Método para obtener todos los PedidoProducto de un pedido específico
     public List<PedidoProducto> obtenerProductosPorPedido(Pedido pedido) {
         String sql = "SELECT * FROM pedidoproducto WHERE idPedido = ?";
         List<PedidoProducto> lista = new ArrayList<>();
@@ -72,7 +73,7 @@ public class PedidoProductoData {
         return lista;
     }
     
-    // Método para actualizar un PedidoProducto
+    // 3. Método para actualizar un PedidoProducto
     public void actualizarPedidoProducto(PedidoProducto pedidoProducto) {
         String sql = "UPDATE pedidoproducto SET cantidad = ?, subtotal = ? WHERE idPedidoProducto = ?";
 
@@ -92,7 +93,7 @@ public class PedidoProductoData {
         }
     }
     
-    // Método para obtener las ganancias entre dos fechas
+    // 4. Método para obtener las ganancias entre dos fechas
     public double obtenerGananciasEntreFechas(LocalDate fechaInicio, LocalDate fechaFin) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
@@ -116,7 +117,9 @@ public class PedidoProductoData {
 
         return ganancias;
     }
-        public double obtenerGananciasEntreHoras(LocalTime horaInicio, LocalTime horaFin) {
+    
+    // 5. 
+    public double obtenerGananciasEntreHoras(LocalTime horaInicio, LocalTime horaFin) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
                      "FROM pedidoproducto pp " +
@@ -140,6 +143,8 @@ public class PedidoProductoData {
         return ganancias;
     }
     
+        
+    // 6.    
     public double obtenerGananciasPorSector(String sector) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
@@ -163,6 +168,8 @@ public class PedidoProductoData {
         return ganancias;
     }
         
+    
+    // 7.
     public double obtenerGananciasPorMesero(int idMesero) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
@@ -186,7 +193,7 @@ public class PedidoProductoData {
     }
 
     
-    // Método para buscar un producto específico en un pedido
+    // 8. Método para buscar un producto específico en un pedido
     public PedidoProducto buscarProductoEnPedido(int idPedido, int idProducto) {
         PedidoProducto pedidoProducto = null;
         String sql = "SELECT * FROM pedidoproducto WHERE idPedido = ? AND idProducto = ?";
