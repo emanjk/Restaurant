@@ -10,33 +10,40 @@ public class Pedido {
     private Mesero mesero;
     private LocalDateTime fechaHora;
     private boolean estado;
-    private List<Producto> productos; // Lista de productos en el pedido
+    private List<PedidoProducto> productos; 
 
     // Constructor vacío
     public Pedido() {
         this.productos = new ArrayList<>(); // Inicialización de la lista de productos
     }
 
-    // Constructor sin idPedido
-    public Pedido(Mesa mesa, Mesero mesero, LocalDateTime fechaHora, boolean estado, List<Producto> productos) {
+    public Pedido(Mesa mesa, Mesero mesero, LocalDateTime fechaHora, boolean estado, List<PedidoProducto> productos) {
         this.mesa = mesa;
         this.mesero = mesero;
         this.fechaHora = fechaHora;
         this.estado = estado;
-        this.productos = productos != null ? productos : new ArrayList<>();
+        this.productos = productos;
     }
 
-    // Constructor con idPedido
-    public Pedido(int idPedido, Mesa mesa, Mesero mesero, LocalDateTime fechaHora, boolean estado, List<Producto> productos) {
+    public Pedido(int idPedido, Mesa mesa, Mesero mesero, LocalDateTime fechaHora, boolean estado, List<PedidoProducto> productos) {
         this.idPedido = idPedido;
         this.mesa = mesa;
         this.mesero = mesero;
         this.fechaHora = fechaHora;
         this.estado = estado;
-        this.productos = productos != null ? productos : new ArrayList<>();
+        this.productos = productos;
     }
 
-    // Getters y Setters
+    public Pedido(int idPedido, Mesa mesa, Mesero mesero, LocalDateTime fechaHora, boolean estado) {
+        this.idPedido = idPedido;
+        this.mesa = mesa;
+        this.mesero = mesero;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
+    }
+    
+    
+
     public int getIdPedido() {
         return idPedido;
     }
@@ -77,36 +84,24 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public List<Producto> getProductos() {
+    public List<PedidoProducto> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Producto> productos) {
+    public void setProductos(List<PedidoProducto> productos) {
         this.productos = productos;
-    }
-
-    // Métodos para manipular la lista de productos
-    public void agregarProducto(Producto producto) {
-        if (producto != null) {
-            productos.add(producto);
-        }
-    }
-
-    public void eliminarProducto(Producto producto) {
-        if (producto != null) {
-            productos.remove(producto);
-        }
     }
 
     @Override
     public String toString() {
-        return "Pedido{" +
-                "idPedido=" + idPedido +
-                ", mesa=" + mesa +
-                ", mesero=" + mesero +
-                ", fechaHora=" + fechaHora +
-                ", estado=" + (estado ? "Activo" : "Completado") +
-                ", productos=" + productos +
+        return "Pedido{" + 
+                "idPedido=" + idPedido + 
+                ", mesa=" + mesa + 
+                ", mesero=" + mesero + 
+                ", fechaHora=" + fechaHora + 
+                ", estado=" + (estado ? "Activo" : "Pagado") + 
+                ", productos=" + productos + 
                 '}';
     }
+
 }

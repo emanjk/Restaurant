@@ -9,29 +9,29 @@ public class PedidoProducto {
     private Producto producto; // Relación con Producto
     private int cantidad; // Cantidad de productos en el pedido
     private double subtotal; // Precio total por el producto en el pedido
+    private boolean estado;
 
     // Constructor vacío
     public PedidoProducto() {
     }
 
-    // Constructor con parámetros
-    public PedidoProducto(Pedido pedido, Producto producto, int cantidad, double subtotal) {
+    public PedidoProducto(Pedido pedido, Producto producto, int cantidad, double subtotal, boolean estado) {
         this.pedido = pedido;
         this.producto = producto;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
+        this.estado = estado;
     }
 
-    // Constructor con ID
-    public PedidoProducto(int idPedidoProducto, Pedido pedido, Producto producto, int cantidad, double precioTotal) {
+    public PedidoProducto(int idPedidoProducto, Pedido pedido, Producto producto, int cantidad, double subtotal, boolean estado) {
         this.idPedidoProducto = idPedidoProducto;
         this.pedido = pedido;
         this.producto = producto;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
+        this.estado = estado;
     }
 
-    // Getters y Setters
     public int getIdPedidoProducto() {
         return idPedidoProducto;
     }
@@ -72,15 +72,23 @@ public class PedidoProducto {
         this.subtotal = subtotal;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "PedidoProducto{" +
-                "idPedidoProducto=" + idPedidoProducto +
-                ", pedido=" + pedido.getIdPedido() +
-                ", producto=" + producto.getIdProducto() +
-                ", cantidad=" + cantidad +
-                ", precioTotal=" + subtotal +
-                '}';
+        return "PedidoProducto{" + 
+                "idPedidoProducto=" + idPedidoProducto + 
+                ", pedido=" + pedido.getIdPedido() + 
+                ", producto=" + producto.getIdProducto() + 
+                ", cantidad=" + cantidad + 
+                ", subtotal=" + subtotal + 
+                ", estado=" + (estado ? "Sumado" : "Restado");
     }
 }
 

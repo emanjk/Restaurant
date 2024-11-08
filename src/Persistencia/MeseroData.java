@@ -23,7 +23,6 @@ public class MeseroData {
         this.con = connection; // Asigna la conexión proporcionada
     }
     
-    
     // 1. Guardar Mesero nuevo
     public void guardarMesero(Mesero mesero) {
         String sql = "INSERT INTO mesero (idMesero, nombre, dni, telefono, email, fechaRegistro, turno, sector, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -110,8 +109,7 @@ public class MeseroData {
 
         return mesero;
     }
-    
-    
+   
    // 4. Modificar mesero
     public void modificarMesero(Mesero mesero){
         String sql = "UPDATE mesero SET nombre = ?, dni = ?, telefono = ?, email = ?, fechaRegistro = ?, turno = ?, sector = ?, estado = ? WHERE idMesero = ?";
@@ -143,7 +141,6 @@ public class MeseroData {
 
 
     }
-
 
     // 5. Alta logica Mesero
     public void altaLogicaMesero(int id){
@@ -237,5 +234,27 @@ public class MeseroData {
         }
         }
     
+    public int buscarMeseroPorId1(int idMesero) {
+        int resultadoId = -1; // Inicializamos el resultado como -1, para indicar que no se encontró el mesero.
+
+        String sql = "SELECT idMesero FROM mesero WHERE idMesero = ?"; // Modificamos la consulta para que solo obtenga el ID.
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) { 
+            ps.setInt(1, idMesero); // Establecemos el parámetro en la consulta SQL con el valor de `idMesero`.
+
+            ResultSet rs = ps.executeQuery(); // Ejecutamos la consulta y almacenamos los resultados en un ResultSet.
+
+            if (rs.next()) { // Si el ResultSet tiene un registro (indica que encontró un mesero con ese ID).
+                resultadoId = rs.getInt("idMesero"); // Asignamos el ID del mesero al resultado.
+            } else {
+                System.out.println("No se encontró un mesero con el ID: " + idMesero); // Si no se encontró, muestra un mensaje.
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el mesero por ID: " + ex.getMessage()); // Maneja errores de SQL.
+        }
+
+        return resultadoId; // Devuelve el ID del mesero si se encontró, o -1 si no se encontró.
+    }
+
 }
 

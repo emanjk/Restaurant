@@ -1,7 +1,6 @@
 
 package Persistencia;
 import Modelo.Pedido;
-import Modelo.Producto;
 import Modelo.Mesa;
 import Modelo.Mesero;
 
@@ -27,8 +26,6 @@ public class PedidoData {
         this.con = connection; // Asigna la conexión proporcionada
     }
 
-    
-    
     // 1. Método para crear un nuevo pedido
     public void crearPedido(Pedido pedido) {
         String sql = "INSERT INTO pedido (idMesa, idMesero, fechaHora, estado) VALUES (?, ?, ?, ?)";
@@ -46,36 +43,14 @@ public class PedidoData {
             if (rs.next()) {
                 pedido.setIdPedido(rs.getInt(1));
             }
-
-            // Guardar los productos del pedido
-            guardarProductosDelPedido(pedido);
-
             System.out.println("Pedido creado con éxito.");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al crear el pedido: " + ex.getMessage());
         }
     }
 
-    // 2. Método para guardar los productos de un pedido en la tabla intermedia
-    private void guardarProductosDelPedido(Pedido pedido) {
-        String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, precioTotal) VALUES (?, ?, ?, ?)";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            for (Producto producto : pedido.getProductos()) {
-                ps.setInt(1, pedido.getIdPedido());
-                ps.setInt(2, producto.getIdProducto());
-                ps.setInt(3, producto.getStock()); // Se asume que 'stock' representa la cantidad pedida
-                ps.setDouble(4, producto.getPrecio() * producto.getStock());
-
-                ps.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al guardar los productos del pedido: " + ex.getMessage());
-        }
-    }
-
     // 3. Método para buscar un pedido por ID
-    public Pedido buscarPedido(int idPedido) {
+    public Pedido buscarPedidoPorId(int idPedido) {
         Pedido pedido = null;
         String sql = "SELECT * FROM pedido WHERE idPedido = ?";
 
@@ -84,24 +59,14 @@ public class PedidoData {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                // Obtener la mesa por ID
                 Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
-
-                // Obtener el mesero por ID
-                int idMesero = rs.getInt("idMesero"); // Se asume que 'idMesero' es la columna en la tabla 'pedido'
-                Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
-
-                // Obtener fecha y hora
+                Mesero mesero = new MeseroData(con).buscarMeseroPorId(rs.getInt("idMesero"));
                 LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
-
-                // Obtener el estado del pedido
                 boolean estado = rs.getBoolean("estado");
 
-                // Obtener los productos asociados al pedido
-                List<Producto> productos = obtenerProductosPorPedido(idPedido);
 
-                // Crear un nuevo objeto Pedido con los datos obtenidos
-                pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+                // Crear el objeto Pedido con los datos obtenidos
+                pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar el pedido: " + ex.getMessage());
@@ -109,39 +74,7 @@ public class PedidoData {
 
         return pedido;
     }
-
-
-    // 4..Método para obtener los productos de un pedido específico
-    private List<Producto> obtenerProductosPorPedido(int idPedido) {
-        List<Producto> productos = new ArrayList<>();
-        String sql = "SELECT p.* FROM producto p " +
-                     "JOIN pedidoproducto pp ON p.idProducto = pp.idProducto " +
-                     "WHERE pp.idPedido = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idPedido);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Producto producto = new Producto(
-                    rs.getInt("idProducto"),
-                    rs.getInt("codigo"),
-                    rs.getString("nombre"),
-                    rs.getString("tipo"),
-                    rs.getString("descripcion"),
-                    rs.getDouble("precio"),
-                    rs.getInt("stock"),
-                    rs.getBoolean("estado")
-                );
-                productos.add(producto);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener los productos del pedido: " + ex.getMessage());
-        }
-
-        return productos;
-    }
-
+    
     // 5. Método para modificar un pedido
     public void modificarPedido(Pedido pedido) {
         String sql = "UPDATE pedido SET idMesa = ?, idMesero = ?, fechaHora = ?, estado = ? WHERE idPedido = ?";
@@ -155,10 +88,6 @@ public class PedidoData {
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                // Modificar los productos del pedido
-                eliminarProductosDelPedido(pedido.getIdPedido());
-                guardarProductosDelPedido(pedido);
-
                 System.out.println("Pedido modificado con éxito.");
             } else {
                 System.out.println("No se encontró el pedido con ID: " + pedido.getIdPedido());
@@ -168,19 +97,6 @@ public class PedidoData {
         }
     }
 
-    // 6. Método para eliminar los productos de un pedido antes de actualizarlos
-    private void eliminarProductosDelPedido(int idPedido) {
-        String sql = "DELETE FROM pedidoproducto WHERE idPedido = ?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idPedido);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar productos del pedido: " + ex.getMessage());
-        }
-    }
-
-    
     // 7. Método para eliminar un pedido (baja lógica)
     public void eliminarPedido(int idPedido) {
         String sql = "UPDATE pedido SET estado = false WHERE idPedido = ?";
@@ -225,12 +141,9 @@ public class PedidoData {
 
                     // Obtener el estado del pedido
                     boolean estado = rs.getBoolean("estado");
-
-                    // Obtener los productos asociados al pedido
-                    List<Producto> productos = obtenerProductosPorPedido(idPedido);
-
+                    
                     // Crear un nuevo objeto Pedido con los datos obtenidos
-                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
 
                     // Agregar el pedido a la lista
                     pedidos.add(pedido);
@@ -269,11 +182,8 @@ public class PedidoData {
                     // Obtener el estado del pedido
                     boolean estado = rs.getBoolean("estado");
 
-                    // Obtener los productos asociados al pedido
-                    List<Producto> productos = obtenerProductosPorPedido(idPedido);
-
                     // Crear un nuevo objeto Pedido con los datos obtenidos
-                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
 
                     // Agregar el pedido a la lista
                     pedidos.add(pedido);
@@ -287,7 +197,7 @@ public class PedidoData {
     }
     
     // 10. Método para obtener todos los pedidos
-    public List<Pedido> obtenerTodosLosPedidos() {
+    public List<Pedido> listarPedidos() {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido";
 
@@ -311,11 +221,8 @@ public class PedidoData {
                 // Obtener el estado del pedido
                 boolean estado = rs.getBoolean("estado");
 
-                // Obtener los productos asociados al pedido
-                List<Producto> productos = obtenerProductosPorPedido(idPedido);
-
                 // Crear un nuevo objeto Pedido con los datos obtenidos
-                Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+                Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
 
                 // Agregar el pedido a la lista
                 pedidos.add(pedido);
@@ -355,11 +262,8 @@ public class PedidoData {
                     // Obtener el estado del pedido
                     boolean estado = rs.getBoolean("estado");
 
-                    // Obtener los productos asociados al pedido
-                    List<Producto> productos = obtenerProductosPorPedido(idPedido);
-
                     // Crear un nuevo objeto Pedido con los datos obtenidos
-                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado, productos);
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
 
                     // Agregar el pedido a la lista
                     pedidos.add(pedido);
@@ -372,6 +276,95 @@ public class PedidoData {
         return pedidos;
     }
 
-    
+    public List<Pedido> buscarPedidosPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE DATE(fechaHora) BETWEEN ? AND ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            // Convertir LocalDate a java.sql.Date para la consulta SQL
+            ps.setDate(1, java.sql.Date.valueOf(fechaInicio));
+            ps.setDate(2, java.sql.Date.valueOf(fechaFin));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int idPedido = rs.getInt("idPedido");
+                    Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+                    int idMesero = rs.getInt("idMesero");
+                    Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
+                    LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+                    boolean estado = rs.getBoolean("estado");
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar los pedidos por rango de fechas: " + ex.getMessage());
+        }
+
+        return pedidos;
+    }
+
+    public List<Pedido> buscarPedidosPorEstado(boolean estado) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido WHERE estado = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, estado); // `true` para activos, `false` para completados
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    // Obtener el ID del pedido
+                    int idPedido = rs.getInt("idPedido");
+
+                    // Obtener la mesa por ID
+                    Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+
+                    // Obtener el mesero por ID
+                    int idMesero = rs.getInt("idMesero");
+                    Mesero mesero = new MeseroData(con).buscarMeseroPorId(idMesero);
+
+                    // Obtener fecha y hora
+                    LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+
+                    // Crear un nuevo objeto Pedido con los datos obtenidos
+                    Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
+
+                    // Agregar el pedido a la lista
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar los pedidos por estado: " + ex.getMessage());
+        }
+
+        return pedidos;
+    }
+
+    public List<Pedido> obtenerPedidosPorSector(String sector) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT p.* FROM pedido p " +
+                     "JOIN mesa m ON p.idMesa = m.idMesa " +
+                     "WHERE m.sector = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, sector);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idPedido = rs.getInt("idPedido");
+                Mesa mesa = new MesaData(con).buscarMesa(rs.getInt("idMesa"));
+                Mesero mesero = new MeseroData(con).buscarMeseroPorId(rs.getInt("idMesero"));
+                LocalDateTime fechaHora = rs.getTimestamp("fechaHora").toLocalDateTime();
+                boolean estado = rs.getBoolean("estado");
+
+                Pedido pedido = new Pedido(idPedido, mesa, mesero, fechaHora, estado);
+                pedidos.add(pedido);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los pedidos por sector: " + ex.getMessage());
+        }
+
+        return pedidos;
+    }
 }
 

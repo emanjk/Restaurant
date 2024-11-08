@@ -5,10 +5,8 @@ import Modelo.Mesero;
 import Persistencia.MesaData;
 import Persistencia.MeseroData;
 import Persistencia.PedidoData;
-
 import java.sql.Connection;
 import Persistencia.Conexion;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -242,7 +240,7 @@ private void armarCabecera(){
 //2. Cargar datos a la 'tabla'
 private void cargarDatos(){
   modelo.setRowCount(0); // Limpiar las filas existentes del modelo
-    List<Pedido> pedidos = pedidoData.obtenerTodosLosPedidos(); // Obtener la lista de pedidos
+    List<Pedido> pedidos = pedidoData.listarPedidos(); // Obtener la lista de pedidos
 
     for (Pedido p : pedidos) {
         modelo.addRow(new Object[]{

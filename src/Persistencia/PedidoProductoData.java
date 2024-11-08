@@ -1,5 +1,6 @@
 
 package Persistencia;
+
 import Modelo.Pedido;
 import Modelo.Producto;
 import Modelo.PedidoProducto;
@@ -27,13 +28,14 @@ public class PedidoProductoData {
 
     // Método para agregar un PedidoProducto
     public void agregarPedidoProducto(PedidoProducto pedidoProducto) {
-        String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, subotal) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, subtotal, estado) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pedidoProducto.getPedido().getIdPedido());
             ps.setInt(2, pedidoProducto.getProducto().getIdProducto());
             ps.setInt(3, pedidoProducto.getCantidad());
             ps.setDouble(4, pedidoProducto.getSubtotal());
+            ps.setBoolean(5, pedidoProducto.isEstado());
 
             ps.executeUpdate();
             System.out.println("PedidoProducto agregado exitosamente.");
@@ -41,6 +43,42 @@ public class PedidoProductoData {
             System.out.println("Error al agregar PedidoProducto: " + e.getMessage());
         }
     }
+
+    // Método para obtener todos los PedidoProducto
+    public List<PedidoProducto> obtenerPedidosProductos() {
+        List<PedidoProducto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM pedidoproducto";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Crear un nuevo PedidoProducto y asignar sus valores desde la base de datos
+                PedidoProducto pedidoProducto = new PedidoProducto();
+                pedidoProducto.setIdPedidoProducto(rs.getInt("idPedidoProducto"));
+
+                // Cargar el pedido asociado
+                Pedido pedido = new PedidoData(con).buscarPedidoPorId(rs.getInt("idPedido"));
+                pedidoProducto.setPedido(pedido);
+
+                // Cargar el producto asociado
+                Producto producto = new ProductoData(con).buscarProductoPorId(rs.getInt("idProducto"));
+                pedidoProducto.setProducto(producto);
+
+                // Asignar otros campos
+                pedidoProducto.setCantidad(rs.getInt("cantidad"));
+                pedidoProducto.setSubtotal(rs.getDouble("subtotal"));
+                pedidoProducto.setEstado(rs.getBoolean("estado"));
+
+                // Añadir a la lista
+                lista.add(pedidoProducto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener todos los PedidoProducto: " + e.getMessage());
+        }
+        return lista;
+    }
+
 
     // Método para obtener todos los PedidoProducto de un pedido específico
     public List<PedidoProducto> obtenerProductosPorPedido(Pedido pedido) {
@@ -56,13 +94,13 @@ public class PedidoProductoData {
                 pedidoProducto.setIdPedidoProducto(rs.getInt("idPedidoProducto"));
                 pedidoProducto.setPedido(pedido);
 
-                
-                String nombre = rs.getString("Nombre");
-                Producto producto = (Producto) new ProductoData(con).buscarProductoPorNombre(nombre);
+                int idProducto = rs.getInt("idProducto");
+                Producto producto = new ProductoData(con).buscarProductoPorId(idProducto);
 
                 pedidoProducto.setProducto(producto);
                 pedidoProducto.setCantidad(rs.getInt("cantidad"));
-                pedidoProducto.setSubtotal(rs.getDouble("precioTotal"));
+                pedidoProducto.setSubtotal(rs.getDouble("subtotal"));
+                pedidoProducto.setEstado(rs.getBoolean("estado"));
 
                 lista.add(pedidoProducto);
             }
@@ -74,12 +112,13 @@ public class PedidoProductoData {
     
     // Método para actualizar un PedidoProducto
     public void actualizarPedidoProducto(PedidoProducto pedidoProducto) {
-        String sql = "UPDATE pedidoproducto SET cantidad = ?, subtotal = ? WHERE idPedidoProducto = ?";
+        String sql = "UPDATE pedidoproducto SET cantidad = ?, subtotal = ?, estado = ? WHERE idPedidoProducto = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, pedidoProducto.getCantidad());
             ps.setDouble(2, pedidoProducto.getSubtotal());
-            ps.setInt(3, pedidoProducto.getIdPedidoProducto());
+            ps.setBoolean(3, pedidoProducto.isEstado());
+            ps.setInt(4, pedidoProducto.getIdPedidoProducto());
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
@@ -98,10 +137,9 @@ public class PedidoProductoData {
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
                      "FROM pedidoproducto pp " +
                      "JOIN pedido p ON pp.idPedido = p.idPedido " +
-                     "WHERE DATE(p.fechaHora) BETWEEN ? AND ?";
+                     "WHERE DATE(p.fechaHora) BETWEEN ? AND ? AND pp.estado = true";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            // Convertir LocalDate a java.sql.Date para la consulta SQL
             ps.setDate(1, java.sql.Date.valueOf(fechaInicio));
             ps.setDate(2, java.sql.Date.valueOf(fechaFin));
 
@@ -116,15 +154,15 @@ public class PedidoProductoData {
 
         return ganancias;
     }
-        public double obtenerGananciasEntreHoras(LocalTime horaInicio, LocalTime horaFin) {
+
+    public double obtenerGananciasEntreHoras(LocalTime horaInicio, LocalTime horaFin) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
                      "FROM pedidoproducto pp " +
                      "JOIN pedido p ON pp.idPedido = p.idPedido " +
-                     "WHERE TIME(p.fechaHora) BETWEEN ? AND ?";
+                     "WHERE TIME(p.fechaHora) BETWEEN ? AND ? AND pp.estado = true";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            // Convertir LocalTime a java.sql.Time para la consulta SQL
             ps.setTime(1, java.sql.Time.valueOf(horaInicio));
             ps.setTime(2, java.sql.Time.valueOf(horaFin));
 
@@ -139,14 +177,14 @@ public class PedidoProductoData {
 
         return ganancias;
     }
-    
+
     public double obtenerGananciasPorSector(String sector) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
                      "FROM pedidoproducto pp " +
                      "JOIN pedido p ON pp.idPedido = p.idPedido " +
                      "JOIN mesa m ON p.idMesa = m.idMesa " +
-                     "WHERE m.sector = ?";
+                     "WHERE m.sector = ? AND pp.estado = true";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, sector);
@@ -168,7 +206,7 @@ public class PedidoProductoData {
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
                      "FROM pedidoproducto pp " +
                      "JOIN pedido p ON pp.idPedido = p.idPedido " +
-                     "WHERE p.idMesero = ?";
+                     "WHERE p.idMesero = ? AND pp.estado = true";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idMesero);
@@ -185,8 +223,6 @@ public class PedidoProductoData {
         return ganancias;
     }
 
-    
-    // Método para buscar un producto específico en un pedido
     public PedidoProducto buscarProductoEnPedido(int idPedido, int idProducto) {
         PedidoProducto pedidoProducto = null;
         String sql = "SELECT * FROM pedidoproducto WHERE idPedido = ? AND idProducto = ?";
@@ -200,24 +236,24 @@ public class PedidoProductoData {
                 pedidoProducto = new PedidoProducto();
                 pedidoProducto.setIdPedidoProducto(rs.getInt("idPedidoProducto"));
 
-                // Buscar el pedido asociado
-                Pedido pedido = new PedidoData(con).buscarPedido(idPedido);
+                Pedido pedido = new PedidoData(con).buscarPedidoPorId(idPedido);
                 pedidoProducto.setPedido(pedido);
 
-                // Buscar el producto asociado
                 Producto producto = new ProductoData(con).buscarProductoPorId(idProducto);
                 pedidoProducto.setProducto(producto);
 
                 pedidoProducto.setCantidad(rs.getInt("cantidad"));
                 pedidoProducto.setSubtotal(rs.getDouble("subtotal"));
+                pedidoProducto.setEstado(rs.getBoolean("estado"));
             }
         } catch (SQLException e) {
             System.out.println("Error al buscar el producto en el pedido: " + e.getMessage());
         }
         return pedidoProducto;
     }
-
-
-
 }
+
+
+
+
 

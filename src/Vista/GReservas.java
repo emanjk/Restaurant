@@ -25,10 +25,8 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
-import java.time.temporal.ChronoUnit;
 import javax.swing.ButtonGroup;
 import javax.swing.SpinnerListModel;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -39,18 +37,8 @@ public class GReservas extends javax.swing.JPanel {
     private ButtonGroup grupoEstado2;
     private ReservaData reservaData; 
     private MesaData mesaData;
-    private DefaultTableModel modelo= new DefaultTableModel(){ 
-        public boolean isCellEditable(int fila, int column){
-           
-            return false;// evita la modificacion de datos en las celdas
-        }
-    }; 
-    private DefaultTableModel modelo1= new DefaultTableModel(){ 
-        public boolean isCellEditable(int fila, int column){
-           
-            return false;// evita la modificacion de datos en las celdas
-        }
-    }; 
+    private DefaultTableModel modelo;
+    private DefaultTableModel modelo1; 
     /**
      * Creates new form GReservas
      */
@@ -70,6 +58,21 @@ public class GReservas extends javax.swing.JPanel {
         // Inicializar reservaData y mesaData con la conexión
         this.reservaData = new ReservaData(connection);
         this.mesaData = new MesaData(connection);
+        
+        // Inicialización de modelos de tabla
+        this.modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false; // Evita la modificación de datos en las celdas
+            }
+        };
+
+        this.modelo1 = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false; // Evita la modificación de datos en las celdas
+            }
+        };
 
         configureDateTimePickers();
         jSIdMesa.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
