@@ -190,7 +190,6 @@ public class ReservaData {
         }
     }
 
-
     // 7. Método para obtener reservas por estado
     public List<Reserva> obtenerReservasPorEstado(boolean estado) {
         List<Reserva> reservas = new ArrayList<>();

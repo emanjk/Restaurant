@@ -5,7 +5,6 @@
 package Vista;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.time.LocalDate;
 import javax.swing.JPanel;
 import java.sql.Connection;
@@ -25,31 +24,23 @@ public class Admin extends javax.swing.JInternalFrame {
     public Admin() {
     initComponents();
     this.connection = Conexion.getConexion();
-    
-    // Código para ajustar dinámicamente el tamaño y eliminar el espacio en blanco
     ajustarComponentes();
-
-    jBGProducto.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jBGProductoActionPerformed(evt);
-        }
-    });
+    mostrarFechaActual();
+    configurarFrame();
     
-    LocalDate now = LocalDate.now();
-    int year = now.getYear();
-    int dia = now.getDayOfMonth();
-    int month = now.getMonthValue();
-    String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-    fecha.setText("Hoy es " + dia + " de " + meses[month - 1] + " de " + year);
+    }
+    private void configurarFrame() {
+        this.setBorder(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+    }
 
-    // Quitar borde del JInternalFrame
-    this.setBorder(null);
-    ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-}
+    private void mostrarFechaActual() {
+        LocalDate now = LocalDate.now();
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        fecha.setText(String.format("Hoy es %d de %s de %d", now.getDayOfMonth(), meses[now.getMonthValue() - 1], now.getYear()));
+    }
 
-    // Método para ajustar componentes después de la inicialización
     private void ajustarComponentes() {
-        // Ajusta el tamaño de EscritorioAdmin para que ocupe todo el espacio disponible
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 ajustarEscritorio();
@@ -58,13 +49,23 @@ public class Admin extends javax.swing.JInternalFrame {
     }
 
     private void ajustarEscritorio() {
-        // Ajustar tamaño de EscritorioAdmin según el tamaño del JInternalFrame
-        barraUp.setSize(getWidth() - barraPanel.getWidth(), barraUp.getHeight());
-        EscritorioAdmin.setSize(getWidth() - barraPanel.getWidth(), getHeight() - barraUp.getHeight());
+        int anchoDisponible = getWidth() - barraPanel.getWidth();
+        int altoDisponible = getHeight() - barraUp.getHeight();
+        barraUp.setSize(anchoDisponible, barraUp.getHeight());
+        EscritorioAdmin.setSize(anchoDisponible, altoDisponible);
         EscritorioAdmin.setLocation(barraPanel.getWidth(), barraUp.getHeight());
     }
 
-           
+    private void cargarPanel(JPanel panel) {
+        EscritorioAdmin.removeAll();
+        EscritorioAdmin.repaint();
+        EscritorioAdmin.add(panel, BorderLayout.CENTER);
+        panel.setVisible(true);
+        panel.setSize(EscritorioAdmin.getWidth(), EscritorioAdmin.getHeight());
+        panel.setLocation(0, 0);
+        EscritorioAdmin.revalidate();
+        EscritorioAdmin.repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,11 +81,12 @@ public class Admin extends javax.swing.JInternalFrame {
         jBGMesas = new javax.swing.JButton();
         jBGMesero = new javax.swing.JButton();
         jBGProducto = new javax.swing.JButton();
-        jBGPedidos = new javax.swing.JButton();
+        jBGanancias = new javax.swing.JButton();
         jBSalir = new javax.swing.JButton();
         Resto = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jBGReservas1 = new javax.swing.JButton();
+        jBGReservas = new javax.swing.JButton();
+        jBGPedidos = new javax.swing.JButton();
         barraUp = new javax.swing.JPanel();
         fecha = new javax.swing.JLabel();
 
@@ -129,10 +131,10 @@ public class Admin extends javax.swing.JInternalFrame {
             }
         });
 
-        jBGPedidos.setText("PEDIDOS");
-        jBGPedidos.addActionListener(new java.awt.event.ActionListener() {
+        jBGanancias.setText("GANANCIAS");
+        jBGanancias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBGPedidosActionPerformed(evt);
+                jBGananciasActionPerformed(evt);
             }
         });
 
@@ -151,10 +153,17 @@ public class Admin extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("RESTO");
 
-        jBGReservas1.setText("RESERVAS");
-        jBGReservas1.addActionListener(new java.awt.event.ActionListener() {
+        jBGReservas.setText("RESERVAS");
+        jBGReservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBGReservas1ActionPerformed(evt);
+                jBGReservasActionPerformed(evt);
+            }
+        });
+
+        jBGPedidos.setText("PEDIDOS");
+        jBGPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGPedidosActionPerformed(evt);
             }
         });
 
@@ -174,9 +183,10 @@ public class Admin extends javax.swing.JInternalFrame {
                             .addComponent(Resto, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBGMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBGProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBGPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBGanancias, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBGReservas1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jBGReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBGPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         barraPanelLayout.setVerticalGroup(
@@ -192,10 +202,12 @@ public class Admin extends javax.swing.JInternalFrame {
                 .addComponent(jBGMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addComponent(jBGProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(38, 38, 38)
                 .addComponent(jBGPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
-                .addComponent(jBGReservas1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jBGanancias, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jBGReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54)
                 .addComponent(jBSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(87, 87, 87))
@@ -252,99 +264,41 @@ public class Admin extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBGMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGMesasActionPerformed
-        // Crear una instancia de GMesas
-        GMesas mesasPanel = new GMesas();
-
-        // Eliminar todos los componentes anteriores en el EscritorioAdmin
-        EscritorioAdmin.removeAll();
-        EscritorioAdmin.repaint();
-
-        // Agregar el panel GMesas al EscritorioAdmin
-        EscritorioAdmin.add(mesasPanel, BorderLayout.CENTER);
-
-        // Configurar el tamaño y la visibilidad del panel
-        mesasPanel.setVisible(true);
-        mesasPanel.setSize(EscritorioAdmin.getWidth(), EscritorioAdmin.getHeight());
-        mesasPanel.setLocation(0, 0);
-
-        // Revalidar y repintar para asegurar que el nuevo panel se vea correctamente
-        EscritorioAdmin.revalidate();
-        EscritorioAdmin.repaint();
+        cargarPanel(new GMesas());
     }//GEN-LAST:event_jBGMesasActionPerformed
 
     private void jBGMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGMeseroActionPerformed
-        GMeseros meserosFrame = new GMeseros (); 
-        EscritorioAdmin.add(meserosFrame,BorderLayout.CENTER);
-        meserosFrame.setVisible(true);
-        meserosFrame.setSize(780, 560);
-        meserosFrame.setLocation(0, 0);
-        EscritorioAdmin.removeAll();
-        EscritorioAdmin.revalidate();
-        EscritorioAdmin.repaint();
-
+        cargarPanel(new GMeseros());
     }//GEN-LAST:event_jBGMeseroActionPerformed
 
     private void jBGProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGProductoActionPerformed
-        // Crear una instancia del panel GProductos
-        GProductos productosPanel = new GProductos();
-
-        // Remover todos los componentes anteriores en el escritorio y limpiar
-        EscritorioAdmin.removeAll();
-        EscritorioAdmin.repaint();
-
-        // Agregar el panel GProductos al EscritorioAdmin
-        EscritorioAdmin.add(productosPanel, BorderLayout.CENTER);
-
-        // Configurar tamaño y visibilidad del panel
-        productosPanel.setVisible(true);
-        productosPanel.setSize(EscritorioAdmin.getWidth(), EscritorioAdmin.getHeight());
-        productosPanel.setLocation(0, 0);
-
-        // Revalidar y repintar para asegurar que el nuevo panel se vea correctamente
-        EscritorioAdmin.revalidate();
-        EscritorioAdmin.repaint();
-
+        cargarPanel(new GProductos());
     }//GEN-LAST:event_jBGProductoActionPerformed
 
-    private void jBGPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGPedidosActionPerformed
-        GPedidos pedidosFrame = new GPedidos ();
-        EscritorioAdmin.add(pedidosFrame,BorderLayout.CENTER);
-        pedidosFrame.setVisible(true);
-        pedidosFrame.setSize(780, 560);
-        pedidosFrame.setLocation(0, 0);
-        EscritorioAdmin.removeAll();
-        EscritorioAdmin.revalidate();
-        EscritorioAdmin.repaint();
-
-    }//GEN-LAST:event_jBGPedidosActionPerformed
+    private void jBGananciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGananciasActionPerformed
+        cargarPanel(new GGanancias());
+    }//GEN-LAST:event_jBGananciasActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
-         this.setVisible(false); 
+        this.dispose(); 
+        Menu menu = new Menu(); 
+        menu.setVisible(true); 
     }//GEN-LAST:event_jBSalirActionPerformed
 
-    private void jBGReservas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGReservas1ActionPerformed
+    private void jBGReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGReservasActionPerformed
         if (connection == null) {
             JOptionPane.showMessageDialog(null, "No se pudo establecer conexión con la base de datos.");
             return;
         }
-        GReservas reservasFrame = new GReservas (connection); 
-        // Remover todos los componentes anteriores en el escritorio y limpiar
-        
-        EscritorioAdmin.removeAll();
-        EscritorioAdmin.repaint();
+         cargarPanel(new GReservas(connection));
+    }//GEN-LAST:event_jBGReservasActionPerformed
 
-        // Agregar el panel GProductos al EscritorioAdmin
-        EscritorioAdmin.add(reservasFrame, BorderLayout.CENTER);
-
-        // Configurar tamaño y visibilidad del panel
-        reservasFrame.setVisible(true);
-        reservasFrame.setSize(EscritorioAdmin.getWidth(), EscritorioAdmin.getHeight());
-        reservasFrame.setLocation(0, 0);
-
-        // Revalidar y repintar para asegurar que el nuevo panel se vea correctamente
-        EscritorioAdmin.revalidate();
-        EscritorioAdmin.repaint();
-    }//GEN-LAST:event_jBGReservas1ActionPerformed
+    private void jBGPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGPedidosActionPerformed
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo establecer conexión con la base de datos.");
+            return;
+        }cargarPanel(new GPedidos(connection ));
+    }//GEN-LAST:event_jBGPedidosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -357,7 +311,8 @@ public class Admin extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBGMesero;
     private javax.swing.JButton jBGPedidos;
     private javax.swing.JButton jBGProducto;
-    private javax.swing.JButton jBGReservas1;
+    private javax.swing.JButton jBGReservas;
+    private javax.swing.JButton jBGanancias;
     private javax.swing.JButton jBSalir;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

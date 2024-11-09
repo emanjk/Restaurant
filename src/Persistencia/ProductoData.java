@@ -47,8 +47,7 @@ public class ProductoData {
             JOptionPane.showMessageDialog(null, "Error al guardar el producto: " + e.getMessage());
         }
     }
-
-    
+  
     // 2. Buscar 'producto' por ID
     public Producto buscarProductoPorId(int idProducto) {
         String sql = "SELECT * FROM producto WHERE idProducto = ?";
@@ -77,8 +76,7 @@ public class ProductoData {
 
         return producto; // Retorna 'producto' o 'null' si no lo encontro.
 }
-    
- 
+  
     //3. Buscar producto por codigo
     public Producto buscarProductoPorCodigo(int codigo) {
         String sql = "SELECT * FROM producto WHERE codigo = ?";
@@ -98,7 +96,6 @@ public class ProductoData {
 
         return producto; // Retorna el producto o null si no lo encontró
     }
-    
     
     // 4. Modificar 'producto'
     public void modificarProducto(Producto producto){
@@ -125,8 +122,7 @@ public class ProductoData {
         }
     }
    
-    
-     // 5. Buscar 'producto' por nombre (LIKE)
+    // 5. Buscar 'producto' por nombre (LIKE)
     public List<Producto> buscarProductoPorNombre(String nombre) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE nombre LIKE ?";
@@ -146,7 +142,6 @@ public class ProductoData {
         return productos;
     }
 
-    
     // 6. Buscar 'producto' por precio (Rango)
     public List<Producto> buscarProductoPorPrecio(double precioMin, double precioMax) {
         List<Producto> productos = new ArrayList<>();
@@ -168,7 +163,6 @@ public class ProductoData {
         return productos;
     }
 
-    
     // 7. Buscar 'producto' por tipo
     public List<Producto> buscarProductoPorTipo(String tipo) {
         List<Producto> productos = new ArrayList<>();
@@ -189,7 +183,6 @@ public class ProductoData {
         return productos;
     }
 
-    
     // 8. Buscar 'producto' por stock
     public List<Producto> buscarProductoPorStock(int stockMin, int stockMax) {
         List<Producto> productos = new ArrayList<>();
@@ -211,7 +204,6 @@ public class ProductoData {
         return productos;
     }
 
-    
     // 9. Método auxiliar para crear un objeto Producto desde el ResultSet
     private Producto crearProductoDesdeResultSet(ResultSet resultSet) throws SQLException {
         return new Producto(
@@ -225,7 +217,6 @@ public class ProductoData {
             resultSet.getBoolean("estado")
         );
     }
-    
     
     // 10. Método para listar todos los productos ordenados por tipo
     public List<Producto> mostrarMenu() {
@@ -248,7 +239,6 @@ public class ProductoData {
         return productos;
     }
     
-
     // 11. Alta logica producto
     public void altaLogicaProducto(int id){
         String sql = "UPDATE producto SET estado = ? WHERE idProducto = ?";
@@ -267,7 +257,6 @@ public class ProductoData {
             JOptionPane.showMessageDialog(null, "Error al activar el producto: " + e.getMessage());
         }
     }
-    
     
     // 12. Baja logica producto
     public void bajaLogicaProducto(int id){
@@ -289,7 +278,6 @@ public class ProductoData {
 
     }
     
-    
     //13. Eliminar producto
     public void eliminarProducto(int id){
         String sql = "DELETE FROM producto WHERE idProducto = ?";
@@ -309,7 +297,7 @@ public class ProductoData {
     }
     
     //14. Listar tipos de productos 
-        public List<String> mostrarTipos() {
+    public List<String> mostrarTipos() {
         List<String> tipos = new ArrayList<>();
         String sql = "SELECT tipo FROM producto";
 
@@ -329,7 +317,7 @@ public class ProductoData {
         return tipos;
     }
         
-        // Método para listar todos los productos
+    //15. Método para listar todos los productos
     public List<Producto> listarProductos() {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto";
@@ -350,7 +338,7 @@ public class ProductoData {
         return productos;
     }
 
-    
+    //16.
     public List<Producto> listarProductosPorEstado(boolean estado) {
         List<Producto> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE estado = ?";
@@ -372,6 +360,25 @@ public class ProductoData {
 
         return productos;
     }
+    
+    //17.
+    public List<String> obtenerNombresDeProductos() {
+        List<String> nombresProductos = new ArrayList<>();
+        String sql = "SELECT nombre FROM producto";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                nombresProductos.add(rs.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener nombres de productos: " + e.getMessage());
+        }
+
+        return nombresProductos;
+    }
+
 }
     
     

@@ -895,12 +895,6 @@ public class GReservas extends javax.swing.JPanel {
         }
     }
      
-    private void filtrarPorNombreCliente(String nombre) {
-        borrarFilas();
-        List<Reserva> reservas = reservaData.obtenerReservaPorNombre(nombre);
-        cargarReservasEnTabla(reservas);
-    }
-    
     private void filtrarReservaPorComensales(int comensales) {
         // Limpiar la tabla antes de agregar nuevos resultados
         borrarFilas();
