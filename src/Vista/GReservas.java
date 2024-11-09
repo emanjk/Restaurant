@@ -9,7 +9,6 @@ import Modelo.Reserva;
 import Persistencia.Conexion;
 import Persistencia.MesaData;
 import Persistencia.ReservaData;
-import java.sql.Connection;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
