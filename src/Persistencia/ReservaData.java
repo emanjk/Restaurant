@@ -3,6 +3,7 @@ package Persistencia;
 import Modelo.Mesa;
 import Modelo.Reserva;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -341,5 +342,66 @@ public class ReservaData {
         return reservas;
     }
 
+    
+    
+                              //del copy
+    
+    //  Obtener reservas por fecha y hora
+    public List<Reserva> obtenerReservasPorFecha(LocalDateTime fechaHora) {
+        List<Reserva> reservas = new ArrayList<>();
+        String sql = "SELECT * FROM reserva WHERE fechaHora = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTimestamp(1, java.sql.Timestamp.valueOf(fechaHora)); // Conversión a Timestamp
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reserva reserva = new Reserva(
+                    rs.getInt("idReserva"),
+                   mesaData.buscarMesa(rs.getInt("idMesa")), // Método que debes implementar
+                    rs.getString("nombreCliente"),
+                    rs.getString("telefono"),
+                    rs.getInt("comensales"),
+                    rs.getString("sector"),
+                    rs.getTimestamp("fechaHora").toLocalDateTime(),
+                    rs.getBoolean("estado")
+                );
+                reservas.add(reserva);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar reservas por fecha: " + ex.getMessage());
+        }
+
+        return reservas;
+}
+
+    // Obtener reserva solo por fecha
+    public List<Reserva> obtenerReservasSoloPorFecha(LocalDate fecha) {
+    List<Reserva> reservas = new ArrayList<>();
+    String sql = "SELECT * FROM reserva WHERE DATE(fechaHora) = ?";  // Filtrar solo por fecha
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setDate(1, java.sql.Date.valueOf(fecha));  // Solo la parte de la fecha
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Reserva reserva = new Reserva(
+                rs.getInt("idReserva"),
+                mesaData.buscarMesa(rs.getInt("idMesa")),
+                rs.getString("nombreCliente"),
+                rs.getString("telefono"),
+                rs.getInt("comensales"),
+                rs.getString("sector"),
+                rs.getTimestamp("fechaHora").toLocalDateTime(),
+                rs.getBoolean("estado")
+            );
+            reservas.add(reserva);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar reservas por fecha: " + ex.getMessage());
+    }
+
+    return reservas;
+}
 
 }
