@@ -26,7 +26,9 @@ public class PedidoProductoData {
         this.con = connection; // Asigna la conexión proporcionada
     }
 
-    // Método para agregar un PedidoProducto
+    
+    
+    // 1. Agregar un PedidoProducto
     public void agregarPedidoProducto(PedidoProducto pedidoProducto) {
         String sql = "INSERT INTO pedidoproducto (idPedido, idProducto, cantidad, subtotal, estado) VALUES (?, ?, ?, ?, ?)";
 
@@ -44,7 +46,7 @@ public class PedidoProductoData {
         }
     }
 
-    // Método para obtener todos los PedidoProducto
+    // 2. Obtener todos los PedidoProducto
     public List<PedidoProducto> obtenerPedidosProductos() {
         List<PedidoProducto> lista = new ArrayList<>();
         String sql = "SELECT * FROM pedidoproducto";
@@ -80,7 +82,7 @@ public class PedidoProductoData {
     }
 
 
-    // Método para obtener todos los PedidoProducto de un pedido específico
+    // 3 obtener todos los PedidoProducto de un pedido específico
     public List<PedidoProducto> obtenerProductosPorPedido(Pedido pedido) {
         String sql = "SELECT * FROM pedidoproducto WHERE idPedido = ?";
         List<PedidoProducto> lista = new ArrayList<>();
@@ -110,7 +112,7 @@ public class PedidoProductoData {
         return lista;
     }
     
-    // Método para actualizar un PedidoProducto
+    // 4. Método para actualizar un PedidoProducto
     public void actualizarPedidoProducto(PedidoProducto pedidoProducto) {
         String sql = "UPDATE pedidoproducto SET cantidad = ?, subtotal = ?, estado = ? WHERE idPedidoProducto = ?";
 
@@ -131,7 +133,7 @@ public class PedidoProductoData {
         }
     }
     
-    // Método para obtener las ganancias entre dos fechas
+    // 5. Método para obtener las ganancias entre dos fechas
     public double obtenerGananciasEntreFechas(LocalDate fechaInicio, LocalDate fechaFin) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
@@ -155,6 +157,9 @@ public class PedidoProductoData {
         return ganancias;
     }
 
+    
+    
+    // 6. Obtener ganancias entre dos horas
     public double obtenerGananciasEntreHoras(LocalTime horaInicio, LocalTime horaFin) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
@@ -178,6 +183,7 @@ public class PedidoProductoData {
         return ganancias;
     }
 
+    // 7. Obtener ganacias por Sector
     public double obtenerGananciasPorSector(String sector) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
@@ -201,6 +207,7 @@ public class PedidoProductoData {
         return ganancias;
     }
         
+    // 8. Obtener ganancias por Mesero
     public double obtenerGananciasPorMesero(int idMesero) {
         double ganancias = 0.0;
         String sql = "SELECT SUM(pp.subtotal) AS totalGanancias " +
@@ -223,6 +230,8 @@ public class PedidoProductoData {
         return ganancias;
     }
 
+    
+    //9.
     public PedidoProducto buscarProductoEnPedido(int idPedido, int idProducto) {
         PedidoProducto pedidoProducto = null;
         String sql = "SELECT * FROM pedidoproducto WHERE idPedido = ? AND idProducto = ?";

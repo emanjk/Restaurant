@@ -12,6 +12,8 @@ public class Pedido {
     private boolean estado;
     private List<PedidoProducto> productos; 
 
+    
+    
     // Constructor vacío
     public Pedido() {
         this.productos = new ArrayList<>(); // Inicialización de la lista de productos

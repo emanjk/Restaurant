@@ -49,8 +49,6 @@ public class MeseroGReservas extends javax.swing.JPanel {
     jLabel6 = new javax.swing.JLabel();
     jScrollPane1 = new javax.swing.JScrollPane();
     jtReservas = new javax.swing.JTable();
-    jLabel2 = new javax.swing.JLabel();
-    jSeparator1 = new javax.swing.JSeparator();
     jLabel7 = new javax.swing.JLabel();
     jcbSector = new javax.swing.JComboBox<>();
     jPanel2 = new javax.swing.JPanel();
@@ -68,13 +66,15 @@ public class MeseroGReservas extends javax.swing.JPanel {
     jLabel3 = new javax.swing.JLabel();
     jbMostrarTodo = new javax.swing.JButton();
 
+    setMinimumSize(new java.awt.Dimension(973, 490));
     setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium", 3, 18)); // NOI18N
     jLabel6.setForeground(new java.awt.Color(0, 204, 0));
     jLabel6.setText("Gestion  Reservas");
-    add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, -1, -1));
+    add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, -1, -1));
 
+    jtReservas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
     jtReservas.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
         {null, null, null, null},
@@ -88,12 +88,7 @@ public class MeseroGReservas extends javax.swing.JPanel {
     ));
     jScrollPane1.setViewportView(jtReservas);
 
-    add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 780, 180));
-
-    jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium", 3, 18)); // NOI18N
-    jLabel2.setText("LISTA DE RESERVAS");
-    add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 170, -1));
-    add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 200, 10));
+    add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 570, 330));
 
     jLabel7.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
     jLabel7.setForeground(new java.awt.Color(204, 0, 0));
@@ -106,19 +101,22 @@ public class MeseroGReservas extends javax.swing.JPanel {
         jcbSectorActionPerformed(evt);
       }
     });
-    add(jcbSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 100, -1));
+    add(jcbSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 90, -1));
 
     jPanel2.setBackground(new java.awt.Color(255, 204, 153));
     jPanel2.setForeground(new java.awt.Color(255, 204, 153));
+    jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
     jLabel8.setForeground(new java.awt.Color(255, 102, 0));
     jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel8.setText("Filtrar Reservas");
+    jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, -1, 37));
 
     jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(0, 0, 0));
     jLabel1.setText("Por estado: ");
+    jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 90, 20));
 
     jrbAlta.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
     jrbAlta.setForeground(new java.awt.Color(0, 0, 0));
@@ -128,6 +126,7 @@ public class MeseroGReservas extends javax.swing.JPanel {
         jrbAltaActionPerformed(evt);
       }
     });
+    jPanel2.add(jrbAlta, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
 
     jrbBaja.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
     jrbBaja.setForeground(new java.awt.Color(0, 0, 0));
@@ -137,28 +136,34 @@ public class MeseroGReservas extends javax.swing.JPanel {
         jrbBajaActionPerformed(evt);
       }
     });
+    jPanel2.add(jrbBaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, -1));
 
     jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
     jLabel4.setForeground(new java.awt.Color(0, 0, 0));
     jLabel4.setText("Fecha:");
+    jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
     jdcFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
       public void propertyChange(java.beans.PropertyChangeEvent evt) {
         jdcFechaPropertyChange(evt);
       }
     });
+    jPanel2.add(jdcFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 70, -1));
 
     jSeparator2.setForeground(new java.awt.Color(204, 204, 204));
+    jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 200, 10));
 
     jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
     jLabel9.setForeground(new java.awt.Color(0, 0, 0));
     jLabel9.setText("Nombre: ");
+    jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
     jtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyReleased(java.awt.event.KeyEvent evt) {
         jtNombreKeyReleased(evt);
       }
     });
+    jPanel2.add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 170, -1));
 
     jbBuscar.setBackground(new java.awt.Color(51, 204, 0));
     jbBuscar.setForeground(new java.awt.Color(255, 255, 255));
@@ -168,10 +173,13 @@ public class MeseroGReservas extends javax.swing.JPanel {
         jbBuscarActionPerformed(evt);
       }
     });
+    jPanel2.add(jbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 70, -1));
+    jPanel2.add(jsHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 70, -1));
 
     jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
     jLabel3.setForeground(new java.awt.Color(0, 0, 0));
     jLabel3.setText("Hora");
+    jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 40, 20));
 
     jbMostrarTodo.setText("Mostrar todo");
     jbMostrarTodo.addActionListener(new java.awt.event.ActionListener() {
@@ -179,111 +187,36 @@ public class MeseroGReservas extends javax.swing.JPanel {
         jbMostrarTodoActionPerformed(evt);
       }
     });
+    jPanel2.add(jbMostrarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addGap(260, 260, 260)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel8))))
-          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jrbAlta)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jrbBaja))
-          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel9)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jsHora, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jbMostrarTodo)))
-        .addGap(290, 290, 290))
-    );
-    jPanel2Layout.setVerticalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel2Layout.createSequentialGroup()
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addGap(30, 30, 30)
-            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(8, 8, 8)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jrbAlta)
-          .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jrbBaja))
-        .addGap(20, 20, 20)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel9))
-        .addGap(22, 22, 22)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel4)
-          .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jsHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jbBuscar)))
-        .addGap(18, 18, 18)
-        .addComponent(jbMostrarTodo)
-        .addContainerGap())
-    );
-
-    add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 750, 220));
+    add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 340, 330));
   }// </editor-fold>//GEN-END:initComponents
 
   
   
   // 1. Filtrar reservas por 'Alta'
   private void jrbAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbAltaActionPerformed
-       
-        
+             
+        if(jcbSector.getSelectedItem()==null){
+          JOptionPane.showMessageDialog(null, "Seleccione su sector asignado.", "Error", JOptionPane.ERROR_MESSAGE);
+          jrbAlta.setSelected(false);
+          return ;   
+        }
+
+        String sectorSeleccionado = (String) jcbSector.getSelectedItem();
         
         if (jrbAlta.isSelected()) {
         jrbBaja.setSelected(false); // Desmarcar el radio button 'Baja'
         
 
-        // Obtener el sector seleccionado
-        String sectorSeleccionado = (String) jcbSector.getSelectedItem();
-        if (sectorSeleccionado == null || sectorSeleccionado.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Seleccione su sector asignado.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevas reservas
-
-        // Obtener reservas 'Alta' en el sector seleccionado
         List<Reserva> reservasAlta = reservaData.obtenerReservasPorSector(sectorSeleccionado);
-        
-        // Filtrar las reservas con estado 'Alta' (estado = true)
         reservasAlta = reservasAlta.stream()
                                    .filter(reserva -> reserva.isEstado()) // Filtra solo las reservas en estado "Alta"
                                    .collect(Collectors.toList());
 
         if (reservasAlta.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay reservas 'Alta' para el sector seleccionado.");
+            JOptionPane.showMessageDialog(null, "No hay reservas para el sector seleccionado.");
         } else {
             // Cargar las reservas 'Alta' en la tabla
             for (Reserva reserva : reservasAlta) {
@@ -421,13 +354,16 @@ public class MeseroGReservas extends javax.swing.JPanel {
   
   // 5. Filtrar por 'Fecha y Hora'
   private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+    if(jcbSector.getSelectedItem()==null){
+      JOptionPane.showMessageDialog(null, "Seleccione su sector asignado ", "Error", JOptionPane.ERROR_MESSAGE);
+      return ;
+    }
+    
     if(jdcFecha.getDate()==null ){
       JOptionPane.showMessageDialog(null, "Seleccione una fecha a buscar ", "Error", JOptionPane.ERROR_MESSAGE);
       return ;
     }
-    
-    
-    
+
     Date fechaSeleccionada = jdcFecha.getDate(); 
     Date horaSeleccionada = (Date) jsHora.getValue();
     // Convertir la fecha seleccionada a LocalDateTime (sin hora)
@@ -499,17 +435,24 @@ public class MeseroGReservas extends javax.swing.JPanel {
   }//GEN-LAST:event_jdcFechaPropertyChange
 
   
-  // 7. Mostrar todas las reservas
+  
+  // 7. Mostrar todas las reservas (segun el sector seleccionado)
   private void jbMostrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMostrarTodoActionPerformed
-      // Obtener todas las reservas desde la base de datos
-    List<Reserva> todasLasReservas = reservaData.listarReservas();
+    String sectorSeleccionado = (String) jcbSector.getSelectedItem();
+
+    if (sectorSeleccionado == null || sectorSeleccionado.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Seleccione su sector asignado", "Error", JOptionPane.ERROR_MESSAGE);
+        return; 
+    }
+
+    List<Reserva> reservasPorSector = reservaData.obtenerReservasPorSector(sectorSeleccionado);
 
     // Limpiar la tabla antes de cargar las nuevas reservas
     DefaultTableModel modelo = (DefaultTableModel) jtReservas.getModel();
     modelo.setRowCount(0);  // Esto elimina todas las filas actuales
 
-    // Cargar todas las reservas en la tabla
-    for (Reserva reserva : todasLasReservas) {
+    // Cargar las reservas filtradas en la tabla
+    for (Reserva reserva : reservasPorSector) {
         modelo.addRow(new Object[] {
             reserva.getIdReserva(),
             reserva.getMesa().getIdMesa(),
@@ -531,7 +474,6 @@ public class MeseroGReservas extends javax.swing.JPanel {
   
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel6;
@@ -540,7 +482,6 @@ public class MeseroGReservas extends javax.swing.JPanel {
   private javax.swing.JLabel jLabel9;
   private javax.swing.JPanel jPanel2;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JSeparator jSeparator1;
   private javax.swing.JSeparator jSeparator2;
   private javax.swing.JButton jbBuscar;
   private javax.swing.JButton jbMostrarTodo;

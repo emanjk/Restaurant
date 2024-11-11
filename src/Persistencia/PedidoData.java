@@ -26,6 +26,8 @@ public class PedidoData {
         this.con = connection; // Asigna la conexión proporcionada
     }
 
+    
+    
     // 1. Método para crear un nuevo pedido
     public void crearPedido(Pedido pedido) {
         String sql = "INSERT INTO pedido (idMesa, idMesero, fechaHora, estado) VALUES (?, ?, ?, ?)";
@@ -49,6 +51,7 @@ public class PedidoData {
         }
     }
 
+    
     // 3. Método para buscar un pedido por ID
     public Pedido buscarPedidoPorId(int idPedido) {
         Pedido pedido = null;
@@ -276,6 +279,7 @@ public class PedidoData {
         return pedidos;
     }
 
+    // 12.
     public List<Pedido> buscarPedidosPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido WHERE DATE(fechaHora) BETWEEN ? AND ?";
@@ -304,6 +308,7 @@ public class PedidoData {
         return pedidos;
     }
 
+    // 13.
     public List<Pedido> buscarPedidosPorEstado(boolean estado) {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido WHERE estado = ?";
@@ -340,6 +345,7 @@ public class PedidoData {
         return pedidos;
     }
 
+    // 14.
     public List<Pedido> obtenerPedidosPorSector(String sector) {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT p.* FROM pedido p " +
@@ -366,5 +372,25 @@ public class PedidoData {
 
         return pedidos;
     }
+
+    //metodo adicional
+   public int[] obtenerRangoMesasPorSector(String sector) {
+      int[] rango = new int[2]; 
+      String sql = "SELECT MIN(idMesa) AS minMesa, MAX(idMesa) AS maxMesa FROM mesa WHERE sector = ?";
+
+      try (PreparedStatement ps = con.prepareStatement(sql)) {
+          ps.setString(1, sector);
+          ResultSet rs = ps.executeQuery();
+
+          if (rs.next()) {
+              rango[0] = rs.getInt("minMesa"); // Valor mínimo
+              rango[1] = rs.getInt("maxMesa"); // Valor máximo
+          }
+      } catch (SQLException ex) {
+          JOptionPane.showMessageDialog(null, "Error al obtener el rango de mesas: " + ex.getMessage());
+      }
+      return rango;
+}
+
 }
 
