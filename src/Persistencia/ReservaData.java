@@ -102,6 +102,7 @@ public class ReservaData {
         return reservas;
     }
 
+    
     // 4. Método para verificar disponibilidad de la mesa en un rango de tiempo de 2 horas
     public boolean verificarDisponibilidad(int idMesa, LocalDateTime fechaHora) {
         Mesa mesa = mesaData.buscarMesa(idMesa);
@@ -128,6 +129,8 @@ public class ReservaData {
 
         return false;
     }
+    
+    
 
     // 5. Método auxiliar para crear una Reserva desde el ResultSet
     private Reserva crearReservaDesdeResultSet(ResultSet rs) throws SQLException {
@@ -403,5 +406,8 @@ public class ReservaData {
 
     return reservas;
 }
+
+    
+   
 
 }
