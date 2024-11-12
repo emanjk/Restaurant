@@ -320,14 +320,28 @@ public class GMesas extends javax.swing.JPanel {
 
     private void jBGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardar1ActionPerformed
         int capacidad = (int)jSCapacidad.getValue();
+        String situacion = (String) jCBSituacion.getSelectedItem();
+        String sector = (String) jCBSector.getSelectedItem();
         
-        if (capacidad!=0){
+        if(sector==null || situacion==null  ){
+        JOptionPane.showMessageDialog(this, "Debe seleccionar todos los campos de sector y situacion");
+        } else {
+        if (capacidad==0){
+        JOptionPane.showMessageDialog(this, "No se puede crear una mesa sin capacidad");
+        } else {
+        if(jROFF.isSelected() && situacion=="Reservada" ){
+        JOptionPane.showMessageDialog(this, "No se puede reservar una mesa deshabilitada");
+        } else {
+        if(jROFF.isSelected() && situacion=="Ocupada" ){
+        JOptionPane.showMessageDialog(this, "No se puede ocupar una mesa deshabilitada");
+        } else {
         Mesa mesa = configurarMesa(new Mesa());
         mesaData.guardarMesa(mesa);
         cargarDatos();
         JOptionPane.showMessageDialog(this, "Mesa guardada correctamente.");
-        }else{
-        JOptionPane.showMessageDialog(this, "No se puede crear una mesa sin capacidad"); 
+        }
+        }
+        }
         }
     }//GEN-LAST:event_jBGuardar1ActionPerformed
 
