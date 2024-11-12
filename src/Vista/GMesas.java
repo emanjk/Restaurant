@@ -335,12 +335,17 @@ public class GMesas extends javax.swing.JPanel {
         int idMesa = (int) jSId1.getValue();
         Mesa mesa = mesaData.buscarMesa(idMesa);
         String situacion = (String) jCBSituacion.getSelectedItem();
+        String sector = (String) jCBSector.getSelectedItem();
         int capacidad = (int)jSCapacidad.getValue();
+        
         
 
         if (mesa == null) {
             JOptionPane.showMessageDialog(this, "No se encontró la mesa con el ID especificado.");
         } else {
+            if(sector==null || situacion==null  ){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar todos los campos de sector y situacion");
+            } else {
             if(jROFF.isSelected() && situacion=="Reservada" ){
             JOptionPane.showMessageDialog(this, "No se puede reservar una mesa deshabilitada");
             } else {
@@ -354,6 +359,7 @@ public class GMesas extends javax.swing.JPanel {
             mesaData.modificarMesa(mesa);
             cargarDatos();
             JOptionPane.showMessageDialog(this, "Mesa modificada correctamente.");
+            }
             }
             }
             }
