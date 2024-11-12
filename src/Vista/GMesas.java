@@ -319,16 +319,23 @@ public class GMesas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardar1ActionPerformed
-         Mesa mesa = configurarMesa(new Mesa());
+        int capacidad = (int)jSCapacidad.getValue();
+        
+        if (capacidad!=0){
+        Mesa mesa = configurarMesa(new Mesa());
         mesaData.guardarMesa(mesa);
         cargarDatos();
         JOptionPane.showMessageDialog(this, "Mesa guardada correctamente.");
+        }else{
+        JOptionPane.showMessageDialog(this, "No se puede crear una mesa sin capacidad"); 
+        }
     }//GEN-LAST:event_jBGuardar1ActionPerformed
 
     private void jBModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificar1ActionPerformed
         int idMesa = (int) jSId1.getValue();
         Mesa mesa = mesaData.buscarMesa(idMesa);
         String situacion = (String) jCBSituacion.getSelectedItem();
+        int capacidad = (int)jSCapacidad.getValue();
         
 
         if (mesa == null) {
@@ -339,11 +346,15 @@ public class GMesas extends javax.swing.JPanel {
             } else {
             if(jROFF.isSelected() && situacion=="Ocupada" ){
             JOptionPane.showMessageDialog(this, "No se puede ocupar una mesa deshabilitada");
+            } else {
+            if(capacidad == 0 ){
+            JOptionPane.showMessageDialog(this, "No se puede crear una mesa sin capacidad");
             } else { 
             mesa = configurarMesa(mesa);
             mesaData.modificarMesa(mesa);
             cargarDatos();
             JOptionPane.showMessageDialog(this, "Mesa modificada correctamente.");
+            }
             }
             }
     }//GEN-LAST:event_jBModificar1ActionPerformed
