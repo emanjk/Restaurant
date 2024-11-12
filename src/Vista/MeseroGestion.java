@@ -75,14 +75,14 @@ public class MeseroGestion extends javax.swing.JInternalFrame {
     jPContenedor.setLayout(jPContenedorLayout);
     jPContenedorLayout.setHorizontalGroup(
       jPContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 1024, Short.MAX_VALUE)
+      .addGap(0, 1074, Short.MAX_VALUE)
     );
     jPContenedorLayout.setVerticalGroup(
       jPContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGap(0, 574, Short.MAX_VALUE)
     );
 
-    jPanel1.add(jPContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 1030, 580));
+    jPanel1.add(jPContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 1080, 580));
 
     jLabel3.setFont(new java.awt.Font("Roboto", 1, 20)); // NOI18N
     jLabel3.setForeground(new java.awt.Color(255, 102, 0));
@@ -173,7 +173,7 @@ public class MeseroGestion extends javax.swing.JInternalFrame {
     jLabel4.setText("Mesero");
     jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 0, 56, -1));
 
-    getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 610));
+    getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1310, 610));
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
@@ -194,7 +194,7 @@ public class MeseroGestion extends javax.swing.JInternalFrame {
    jbGestionReservas.setBackground(UIManager.getColor("Button.background"));
    
    MeseroGMesas mgm = new MeseroGMesas ();
-   mgm.setSize(990,540);
+   mgm.setSize(1020,600);
    mgm.setLocation(0,0);
    
    jPContenedor.removeAll();
@@ -217,7 +217,7 @@ public class MeseroGestion extends javax.swing.JInternalFrame {
     
     
    MeseroGPedido mgp = new MeseroGPedido ();
-   mgp.setSize(990,540);
+   mgp.setSize(1020,600);
    mgp.setLocation(0,0);
    
    jPContenedor.removeAll();
@@ -238,7 +238,7 @@ public class MeseroGestion extends javax.swing.JInternalFrame {
     
     
    MeseroGReservas mgr = new MeseroGReservas ();
-   mgr.setSize(990,540);
+   mgr.setSize(1020,600);
    mgr.setLocation(0,0);
    
    jPContenedor.removeAll();
