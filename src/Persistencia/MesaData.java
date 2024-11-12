@@ -249,6 +249,20 @@ public class MesaData {
         }
     }
 
-  
+    public List<String> obtenerSectoresUnicos() {
+        List<String> sectores = new ArrayList<>();
+        String sql = "SELECT DISTINCT sector FROM mesa WHERE sector IS NOT NULL";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                sectores.add(rs.getString("sector"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener sectores únicos: " + e.getMessage());
+        }
+
+        return sectores;
+    }
 
 }
