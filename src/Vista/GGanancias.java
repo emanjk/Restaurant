@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Roma
  */
+
 public class GGanancias extends javax.swing.JPanel {
     private Connection con; 
     private PedidoProductoData pedidoProductoData; 
