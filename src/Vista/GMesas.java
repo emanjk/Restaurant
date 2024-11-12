@@ -71,7 +71,6 @@ public class GMesas extends javax.swing.JPanel {
         jTMesas = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 153));
-        jPanel1.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Felix Titling", 3, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 0));
@@ -79,18 +78,14 @@ public class GMesas extends javax.swing.JPanel {
 
         jCBSector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terraza", "Patio", "Comedor" }));
 
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("SECTOR");
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("CAPACIDAD");
 
         jCBSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupada", "Reservada" }));
 
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("ESTADO");
 
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("SITUACION");
 
         jRON.setText("Alta");
@@ -111,7 +106,6 @@ public class GMesas extends javax.swing.JPanel {
             }
         });
 
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("NRO");
 
         jSId1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -216,13 +210,10 @@ public class GMesas extends javax.swing.JPanel {
             }
         });
 
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("POR SECTOR");
 
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("POR ESTADO");
 
-        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("POR SITUACION");
 
         filtroSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Ocupada", "Reservada" }));
@@ -337,17 +328,27 @@ public class GMesas extends javax.swing.JPanel {
     private void jBModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificar1ActionPerformed
         int idMesa = (int) jSId1.getValue();
         Mesa mesa = mesaData.buscarMesa(idMesa);
+        String situacion = (String) jCBSituacion.getSelectedItem();
+        
 
-        if (mesa != null) {
+        if (mesa == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la mesa con el ID especificado.");
+        } else {
+            if(jROFF.isSelected() && situacion=="Reservada" ){
+            JOptionPane.showMessageDialog(this, "No se puede reservar una mesa deshabilitada");
+            } else {
+            if(jROFF.isSelected() && situacion=="Ocupada" ){
+            JOptionPane.showMessageDialog(this, "No se puede ocupar una mesa deshabilitada");
+            } else { 
             mesa = configurarMesa(mesa);
             mesaData.modificarMesa(mesa);
             cargarDatos();
             JOptionPane.showMessageDialog(this, "Mesa modificada correctamente.");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró la mesa con el ID especificado.");
-        }
+            }
+            }
     }//GEN-LAST:event_jBModificar1ActionPerformed
-
+    }
+    
     private void jROFF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jROFF2ActionPerformed
         cargarMesas("estado", false);
     }//GEN-LAST:event_jROFF2ActionPerformed
