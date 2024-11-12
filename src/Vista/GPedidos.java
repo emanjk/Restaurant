@@ -25,8 +25,7 @@ import Persistencia.MeseroData;
 import Persistencia.ProductoData;
 import java.sql.Connection;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+
     
 
 /**
@@ -71,7 +70,6 @@ public class GPedidos extends javax.swing.JPanel {
         configurarTablas();
         configureDateTimePickers();
         configurarSpinners();
-        cargarNombresMeseros();
         configurarListenerComboBoxMesero();
         configurarListenerSpinnerMesero();
         limpiarCamposYTablas();
@@ -451,7 +449,7 @@ public class GPedidos extends javax.swing.JPanel {
 
         jLabel20.setFont(new java.awt.Font("Felix Titling", 3, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 102, 51));
-        jLabel20.setText("PEDIDOS DEL PRODUCTO:");
+        jLabel20.setText("PRODUCTOS DEL PEDIDO:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

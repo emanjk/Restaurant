@@ -276,7 +276,7 @@ public class Admin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBGProductoActionPerformed
 
     private void jBGananciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGananciasActionPerformed
-        cargarPanel(new GGanancias());
+        cargarPanel(new GGanancias(connection));
     }//GEN-LAST:event_jBGananciasActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
