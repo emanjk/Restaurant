@@ -3,12 +3,10 @@ package Persistencia;
 
 import Modelo.Mesero;
 import java.sql.Connection;
-/*Clases de la API JDBC*/
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date ;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -231,5 +229,60 @@ public class MeseroData {
         return mesero;
     }
 
+    public List<Mesero> listarMeserosPorEstado(boolean estado) {
+        List<Mesero> meseros = new ArrayList<>();
+        String sql = "SELECT * FROM mesero WHERE estado = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, estado);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    meseros.add(crearMeseroDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar meseros por estado: " + ex.getMessage());
+        }
+
+        return meseros;
+    }
+
+    public List<Mesero> listarMeserosPorSector(String sector) {
+        List<Mesero> meseros = new ArrayList<>();
+        String sql = "SELECT * FROM mesero WHERE sector = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, sector);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    meseros.add(crearMeseroDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar meseros por sector: " + ex.getMessage());
+        }
+
+        return meseros;
+    }
+
+    public List<Mesero> listarMeserosPorTurno(String turno) {
+        List<Mesero> meseros = new ArrayList<>();
+        String sql = "SELECT * FROM mesero WHERE turno = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, turno);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    meseros.add(crearMeseroDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar meseros por turno: " + ex.getMessage());
+        }
+
+        return meseros;
+    }
+    
+    
 }
 
