@@ -101,8 +101,8 @@ public class MeseroGReservas extends javax.swing.JPanel {
     jPanel2.setForeground(new java.awt.Color(255, 204, 153));
     jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-    jLabel8.setForeground(new java.awt.Color(204, 51, 0));
+    jLabel8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+    jLabel8.setForeground(new java.awt.Color(255, 102, 0));
     jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel8.setText("Filtrar Reservas");
     jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, -1, 37));

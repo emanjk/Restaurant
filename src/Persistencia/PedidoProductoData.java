@@ -200,6 +200,12 @@ public class PedidoProductoData {
         return pedidoProducto;
     }
     
+    
+    
+    
+    
+    
+    
     // 6. Método para obtener las ganancias entre dos fechas
     public double obtenerGananciasEntreFechas(LocalDate fechaInicio, LocalDate fechaFin) {
         double ganancias = 0.0;
@@ -423,7 +429,7 @@ public class PedidoProductoData {
         return resumen;
     }
 
-    // En tu método obtenerFechaMasAntigua:
+    // 14. En tu método obtenerFechaMasAntigua:
     public LocalDate obtenerFechaMasAntigua() {
         String sql = "SELECT MIN(fechaHora) AS fechaMasAntigua FROM pedido";
         LocalDate fechaMasAntigua = null;
@@ -444,11 +450,12 @@ public class PedidoProductoData {
         return fechaMasAntigua;
     }
     
+    // 15.
     private LocalDate convertirASqlDateALocalDate(java.sql.Date fecha) {
         return fecha.toLocalDate();
     }
 
-    
+    // 16.
     public double obtenerGananciasTotales() {
         double gananciaTotal = 0.0;
         LocalDate fechaMasAntigua = obtenerFechaMasAntigua();
@@ -477,6 +484,7 @@ public class PedidoProductoData {
         return gananciaTotal;
     }
     
+    // 17.
     public List<Map<String, Object>> obtenerGananciasPorProductoEnSectorYFechas(String sector, LocalDate fechaInicio, LocalDate fechaFin) {
         List<Map<String, Object>> lista = new ArrayList<>();
         String sql = "SELECT p.nombre AS producto, SUM(pp.cantidad) AS cantidadVendida, SUM(pp.subtotal) AS totalGanancias " +
