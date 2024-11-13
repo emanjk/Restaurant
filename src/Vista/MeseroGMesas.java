@@ -69,8 +69,8 @@ public class MeseroGMesas extends javax.swing.JPanel {
     jPanel2.setBackground(new java.awt.Color(255, 204, 153));
     jPanel2.setForeground(new java.awt.Color(204, 204, 204));
 
-    jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-    jLabel2.setForeground(new java.awt.Color(204, 51, 0));
+    jLabel2.setFont(new java.awt.Font("Roboto", 3, 18)); // NOI18N
+    jLabel2.setForeground(new java.awt.Color(255, 102, 0));
     jLabel2.setText("Modificar Situacion");
 
     jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -159,14 +159,14 @@ public class MeseroGMesas extends javax.swing.JPanel {
         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(26, Short.MAX_VALUE))
+        .addContainerGap(15, Short.MAX_VALUE))
     );
 
     jPanel3.setBackground(new java.awt.Color(255, 204, 153));
     jPanel3.setForeground(new java.awt.Color(204, 204, 204));
 
-    jLabel7.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-    jLabel7.setForeground(new java.awt.Color(204, 0, 0));
+    jLabel7.setFont(new java.awt.Font("Roboto", 3, 18)); // NOI18N
+    jLabel7.setForeground(new java.awt.Color(255, 102, 0));
     jLabel7.setText("Visualización de Mesas");
 
     jcbMostrarSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Reservado", "Ocupado", "Libre", "" }));
@@ -213,7 +213,7 @@ public class MeseroGMesas extends javax.swing.JPanel {
             .addComponent(jLabel9)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jcbMostrarSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(11, Short.MAX_VALUE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     jPanel3Layout.setVerticalGroup(
       jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,7 +230,7 @@ public class MeseroGMesas extends javax.swing.JPanel {
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jbMesasPorSector, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel10))
-        .addContainerGap(67, Short.MAX_VALUE))
+        .addContainerGap(49, Short.MAX_VALUE))
     );
 
     jtMesas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -267,19 +267,18 @@ public class MeseroGMesas extends javax.swing.JPanel {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
             .addGap(840, 840, 840)
-            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(14, 14, 14))
+            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(17, 17, 17))))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(17, 17, 17))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,15 +290,14 @@ public class MeseroGMesas extends javax.swing.JPanel {
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jLabel1)))
-        .addGap(7, 7, 7)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
           .addGroup(layout.createSequentialGroup()
             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(23, 23, 23)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 13, Short.MAX_VALUE))
-          .addComponent(jScrollPane1))
-        .addContainerGap())
+            .addContainerGap())))
     );
   }// </editor-fold>//GEN-END:initComponents
 

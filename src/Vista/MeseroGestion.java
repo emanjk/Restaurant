@@ -106,6 +106,11 @@ public class MeseroGestion extends javax.swing.JInternalFrame {
     });
 
     jbDetallePedido.setText("Detalle Pedido");
+    jbDetallePedido.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jbDetallePedidoActionPerformed(evt);
+      }
+    });
 
     jBSalir.setBackground(new java.awt.Color(0, 102, 204));
     jBSalir.setForeground(new java.awt.Color(255, 255, 255));
@@ -246,6 +251,25 @@ public class MeseroGestion extends javax.swing.JInternalFrame {
    jPContenedor.revalidate();
    jPContenedor.repaint();
   }//GEN-LAST:event_jbGestionReservasActionPerformed
+
+  
+  // 4. Boton 'Detalle del pedido'
+  private void jbDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDetallePedidoActionPerformed
+     jbDetallePedido.setBackground(new Color(140, 235, 140)); 
+   // Resetear color de fondo de los demás botones.
+   jbGestionPedidos.setBackground(UIManager.getColor("Button.background"));
+   jbGestionMesas.setBackground(UIManager.getColor("Button.background"));
+   jbGestionReservas.setBackground(UIManager.getColor("Button.background"));
+    
+   MeseroGDetallePedido mgdp = new MeseroGDetallePedido();
+   mgdp.setSize(1020,600);
+   mgdp.setLocation(0,0);
+   
+   jPContenedor.removeAll();
+   jPContenedor.add(mgdp, BorderLayout.CENTER);
+   jPContenedor.revalidate();
+   jPContenedor.repaint();
+  }//GEN-LAST:event_jbDetallePedidoActionPerformed
 
   
   

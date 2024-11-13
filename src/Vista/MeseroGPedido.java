@@ -133,8 +133,8 @@ public class MeseroGPedido extends javax.swing.JPanel {
 
     jPanel3.setBackground(new java.awt.Color(255, 204, 153));
 
-    jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-    jLabel1.setForeground(new java.awt.Color(204, 51, 0));
+    jLabel1.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+    jLabel1.setForeground(new java.awt.Color(255, 102, 0));
     jLabel1.setText("Registrar Nuevo Pedido");
 
     jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
@@ -226,12 +226,12 @@ public class MeseroGPedido extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jrbActivo))
               .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addComponent(jbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jrbInactivo))))
+              .addComponent(jrbInactivo)
+              .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
         .addContainerGap(26, Short.MAX_VALUE))
     );
     jPanel3Layout.setVerticalGroup(
@@ -253,7 +253,7 @@ public class MeseroGPedido extends javax.swing.JPanel {
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLabel5)
           .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(18, 18, 18)
+        .addGap(26, 26, 26)
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel8)
           .addComponent(jrbActivo)
@@ -262,7 +262,7 @@ public class MeseroGPedido extends javax.swing.JPanel {
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jbCancelar)
           .addComponent(jbAgregar))
-        .addGap(19, 19, 19))
+        .addGap(15, 15, 15))
     );
 
     jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
@@ -278,8 +278,8 @@ public class MeseroGPedido extends javax.swing.JPanel {
 
     jPanel4.setBackground(new java.awt.Color(255, 204, 153));
 
-    jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-    jLabel7.setForeground(new java.awt.Color(204, 51, 0));
+    jLabel7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+    jLabel7.setForeground(new java.awt.Color(255, 102, 0));
     jLabel7.setText(" Actualizar Estado  ");
 
     jSeparator2.setForeground(new java.awt.Color(204, 204, 204));
@@ -347,28 +347,25 @@ public class MeseroGPedido extends javax.swing.JPanel {
       jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel4Layout.createSequentialGroup()
         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(jPanel4Layout.createSequentialGroup()
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsNumeroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jsNumeroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jsNumeroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
           .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
             .addGap(48, 48, 48)
-            .addComponent(jLabel7)
-            .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLabel7))
           .addGroup(jPanel4Layout.createSequentialGroup()
             .addContainerGap()
             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(jdcFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       .addGroup(jPanel4Layout.createSequentialGroup()
         .addContainerGap()
@@ -434,13 +431,13 @@ public class MeseroGPedido extends javax.swing.JPanel {
         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jbModificar)
           .addComponent(jButton3))
-        .addContainerGap(9, Short.MAX_VALUE))
+        .addContainerGap(12, Short.MAX_VALUE))
     );
 
     jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
-    jLabel14.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-    jLabel14.setForeground(new java.awt.Color(204, 51, 0));
+    jLabel14.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+    jLabel14.setForeground(new java.awt.Color(255, 102, 0));
     jLabel14.setText("Consultar Pedidos");
 
     jLabel15.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -606,9 +603,9 @@ public class MeseroGPedido extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGap(18, 18, 18)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(97, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(115, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -620,18 +617,16 @@ public class MeseroGPedido extends javax.swing.JPanel {
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jLabel2)))
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
               .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(30, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(27, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
 

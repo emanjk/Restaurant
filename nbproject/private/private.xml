@@ -12,12 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/segov/OneDrive/Documentos/GitHub/Restaurant/src/Vista/GProductos.java</file>
-            <file>file:/C:/Users/segov/OneDrive/Documentos/GitHub/Restaurant/src/Persistencia/ProductoData.java</file>
-            <file>file:/C:/Users/segov/OneDrive/Documentos/GitHub/Restaurant/src/Vista/ClienteVerMenu.java</file>
-            <file>file:/C:/Users/segov/OneDrive/Documentos/GitHub/Restaurant/src/Vista/Admin.java</file>
-            <file>file:/C:/Users/segov/OneDrive/Documentos/GitHub/Restaurant/src/Vista/ClienteMenu.java</file>
-            <file>file:/C:/Users/segov/OneDrive/Documentos/GitHub/Restaurant/src/Vista/Menu.java</file>
+            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/GMeseros.java</file>
+            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/GProductos.java</file>
+            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Vista/GMesas.java</file>
+            <file>file:/C:/Users/Tomas/Documents/ROMA/Laboratorio%20de%20Programacion/transversal/Restaurant/src/Persistencia/MeseroData.java</file>
         </group>
     </open-files>
 </project-private>
