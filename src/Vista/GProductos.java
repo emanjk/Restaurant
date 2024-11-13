@@ -285,6 +285,12 @@ public class GProductos extends javax.swing.JPanel {
 
         jLabel28.setText("PRECIO MIN:");
 
+        PrecioMin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrecioMinActionPerformed(evt);
+            }
+        });
+
         jLabel29.setText("STOCK MIN:");
 
         jLabel30.setText("NOMBRE");
@@ -297,6 +303,11 @@ public class GProductos extends javax.swing.JPanel {
 
         jLabel15.setText("ESTADO");
 
+        PrecioMax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrecioMaxActionPerformed(evt);
+            }
+        });
         PrecioMax.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 PrecioMaxKeyReleased(evt);
@@ -639,6 +650,14 @@ public class GProductos extends javax.swing.JPanel {
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_jBLimpiarActionPerformed
+
+    private void PrecioMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrecioMinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PrecioMinActionPerformed
+
+    private void PrecioMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrecioMaxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PrecioMaxActionPerformed
     
     private void cargarProductoPorCodigo() {
     modelo.setRowCount(0);

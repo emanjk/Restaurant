@@ -21,7 +21,7 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
     
     private static Connection con; // Conexión a la base de datos
     private ProductoData productoData; // Variable para hacer: consultas, inserciones o actualizar en la BDS-restotf - Producto.
-    public static DefaultTableModel modelo = new DefaultTableModel(); // Se utilizará para gestionar las columnas y filas de la tabla, usando sus metodos.
+    private DefaultTableModel modelo; // Se utilizará para gestionar las columnas y filas de la tabla, usando sus metodos.
     
     
     
@@ -52,7 +52,7 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jtPrecioMinimo = new javax.swing.JTextField();
         jtPrecioMaximo = new javax.swing.JTextField();
-        jbFiltrar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jbBebida = new javax.swing.JButton();
         jbTrago = new javax.swing.JButton();
         jbDesayuno = new javax.swing.JButton();
@@ -87,8 +87,8 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 204, 153));
 
-        jButton3.setBackground(new java.awt.Color(255, 0, 0));
-        jButton3.setText("Salir");
+        jButton3.setBackground(new java.awt.Color(0, 204, 204));
+        jButton3.setText("Volver al inicio");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -110,11 +110,16 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
                 jtPrecioMaximoActionPerformed(evt);
             }
         });
+        jtPrecioMaximo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtPrecioMaximoKeyReleased(evt);
+            }
+        });
 
-        jbFiltrar.setText("Filtrar");
-        jbFiltrar.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setIcon(new javax.swing.ImageIcon("D:\\Users\\segov\\Escritorio\\menu.png")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbFiltrarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -125,22 +130,29 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jbFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtPrecioMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtPrecioMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(80, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jtPrecioMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jtPrecioMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jtPrecioMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,10 +160,8 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtPrecioMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(117, 117, 117)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
 
@@ -206,26 +216,25 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
                                 .addComponent(jbBebida, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                                 .addComponent(jbTrago, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(61, 61, 61)
                                 .addComponent(jbDesayuno, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                                 .addComponent(jbAlmuerzo)
                                 .addGap(55, 55, 55)
                                 .addComponent(jbCena, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(7, 7, 7)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(22, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1)))
+                        .addGap(12, 12, 12))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,12 +248,12 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
                     .addComponent(jbDesayuno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbAlmuerzo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbCena, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,10 +293,10 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
         // Agregar una fila con los detalles del producto a la tabla
         modelo.addRow(new Object[]{
             producto.getCodigo(),
+            producto.getTipo(),
             producto.getNombre(),
             producto.getPrecio(),
             producto.getDescripcion(),
-            producto.getStock(),
             
         });
        
@@ -304,10 +313,10 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
         // Agregar una fila con los detalles del producto a la tabla
         modelo.addRow(new Object[]{
             producto.getCodigo(),
+            producto.getTipo(),
             producto.getNombre(),
             producto.getPrecio(),
             producto.getDescripcion(),
-            producto.getStock(),
             
         });
        
@@ -324,11 +333,10 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
         // Agregar una fila con los detalles del producto a la tabla
         modelo.addRow(new Object[]{
             producto.getCodigo(),
+            producto.getTipo(),
             producto.getNombre(),
             producto.getPrecio(),
             producto.getDescripcion(),
-            producto.getStock(),
-            
         });
        
         }      
@@ -344,10 +352,11 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
         // Agregar una fila con los detalles del producto a la tabla
         modelo.addRow(new Object[]{
             producto.getCodigo(),
+            producto.getTipo(),
             producto.getNombre(),
             producto.getPrecio(),
             producto.getDescripcion(),
-            producto.getStock(),
+            
             
         });
        
@@ -365,58 +374,52 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
         // Agregar una fila con los detalles del producto a la tabla
         modelo.addRow(new Object[]{
             producto.getCodigo(),
+            producto.getTipo(),
             producto.getNombre(),
             producto.getPrecio(),
             producto.getDescripcion(),
-            producto.getStock(),
             
         });
        
         }                                        
 
     }//GEN-LAST:event_jbBebidaActionPerformed
-
-    private void jbFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFiltrarActionPerformed
     
-        try{
-        //Validar que los campos no esten vacíos
-        if (jtPrecioMinimo.getText().isEmpty() || jtPrecioMinimo.getText().isEmpty() ){
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos de precio requeridos.");
-                return; 
-        } else {
-            
-        // Obtener los valores de precio ingresados por consola
-        double precioMinimo = Double.parseDouble(jtPrecioMinimo.getText());
-        double precioMaximo = Double.parseDouble(jtPrecioMinimo.getText());
-        
-        // Limpiar cualquier dato anterior en la tabla:
+    
+    private void jtPrecioMaximoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtPrecioMaximoKeyReleased
         modelo.setRowCount(0);
-        // Armar la lista de productos por rango de precio requerido
-        List<Producto> productos = productoData.buscarProductoPorPrecio(precioMinimo, precioMaximo);
-        
-        if (productos.isEmpty()){
-            JOptionPane.showMessageDialog(this, "No hay productos en ese rango de precios");
-            return; 
+        String textoMin = jtPrecioMinimo.getText().trim();
+        String textoMax = jtPrecioMaximo.getText().trim();
+
+        if (!textoMin.isEmpty() && !textoMax.isEmpty()) {
+            try {
+                double precioMin = Double.parseDouble(textoMin);
+                double precioMax = Double.parseDouble(textoMax);
+                List<Producto> productosFiltrados = productoData.buscarProductoPorPrecio(precioMin, precioMax);
+
+                for (Producto p : productosFiltrados) {
+                    modelo.addRow(new Object[]{
+                        
+                        p.getCodigo(),
+                        p.getTipo(),
+                        p.getNombre(),
+                        p.getPrecio(),
+                        p.getDescripcion(),
+                        
+                    });
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Por favor ingresa valores numéricos válidos para el rango de precio.");
+            }
         }
-        
-        // Recorrer la lista de productos y agregar cada producto a la tabla
-        for (Producto producto : productos) {
-        modelo.addRow(new Object[]{
-            producto.getCodigo(),
-            producto.getNombre(),
-            producto.getPrecio(),
-            producto.getDescripcion(),
-            producto.getStock(),
-            
-             });
-        }
-        }
-        }catch(NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Error en el formato de los datos numéricos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }//GEN-LAST:event_jbFiltrarActionPerformed
-        jtPrecioMinimo.setText("");
-        jtPrecioMaximo.setText("");
-    }
+                            
+    }//GEN-LAST:event_jtPrecioMaximoKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+
         
 //METODOS PARA MI TABLA DE PRODUCTOS
 
@@ -431,10 +434,10 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
 
     if (modelo.getColumnCount() == 0) {
         modelo.addColumn("Codigo");
+        modelo.addColumn("Tipo");
         modelo.addColumn("Nombre");
         modelo.addColumn("Precio");
         modelo.addColumn("Descripcion");
-        modelo.addColumn("Stock");
         // Configurar el modelo en la tabla
         jtMenuProductos.setModel(modelo);
         jtMenuProductos.getTableHeader().setReorderingAllowed(false); /*que no pueda mover las columnas*/
@@ -458,10 +461,10 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
         // Agregar una fila con los detalles del producto a la tabla
         modelo.addRow(new Object[]{
             producto.getCodigo(),
+            producto.getTipo(),
             producto.getNombre(),
             producto.getPrecio(),
             producto.getDescripcion(),
-            producto.getStock(),
             
         });
        
@@ -477,6 +480,7 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -489,7 +493,6 @@ public class ClienteVerMenu extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbBebida;
     private javax.swing.JButton jbCena;
     private javax.swing.JButton jbDesayuno;
-    private javax.swing.JButton jbFiltrar;
     private javax.swing.JButton jbTrago;
     private javax.swing.JTable jtMenuProductos;
     private javax.swing.JTextField jtPrecioMaximo;
