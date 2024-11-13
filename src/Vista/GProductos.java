@@ -102,24 +102,19 @@ public class GProductos extends javax.swing.JPanel {
         jTPR = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 153));
-        jPanel1.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Felix Titling", 3, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 102, 0));
         jLabel1.setText("AGREGAR  Producto");
 
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("DESCRIPCION");
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("CODIGO");
 
         jCBTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bebida", "Trago", "Desayuno", "Merienda", "Almuerzo", "Cena" }));
 
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("ESTADO");
 
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("TIPO");
 
         jRON.setText("Alta");
@@ -133,13 +128,10 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("NOMBRE");
 
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("PRECIO");
 
-        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
         jLabel18.setText("STOCK");
 
         jSId1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -148,7 +140,6 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("ID");
 
         jBModificar1.setText("MODIFICAR");
@@ -283,7 +274,6 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
         jLabel27.setText("TIPO");
 
         jCBTipo2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bebida", "Trago", "Desayuno", "Merienda", "Almuerzo", "Cena" }));
@@ -293,13 +283,10 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
         jLabel28.setText("PRECIO MIN:");
 
-        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
         jLabel29.setText("STOCK MIN:");
 
-        jLabel30.setForeground(new java.awt.Color(0, 0, 0));
         jLabel30.setText("NOMBRE");
 
         jTFNombre2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -308,7 +295,6 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("ESTADO");
 
         PrecioMax.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -317,10 +303,8 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel31.setForeground(new java.awt.Color(0, 0, 0));
         jLabel31.setText("PRECIO MAX:");
 
-        jLabel32.setForeground(new java.awt.Color(0, 0, 0));
         jLabel32.setText("STOCK MAX:");
 
         StockMax.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -329,7 +313,6 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("ID");
 
         jSId2.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -338,7 +321,6 @@ public class GProductos extends javax.swing.JPanel {
             }
         });
 
-        jLabel33.setForeground(new java.awt.Color(0, 0, 0));
         jLabel33.setText("CODIGO");
 
         jTFCodigo2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -401,7 +383,7 @@ public class GProductos extends javax.swing.JPanel {
                                 .addComponent(jRON2)
                                 .addGap(18, 18, 18)
                                 .addComponent(jROFF2)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 102, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -472,11 +454,14 @@ public class GProductos extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,8 +470,8 @@ public class GProductos extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -547,7 +532,8 @@ public class GProductos extends javax.swing.JPanel {
 
             for (Producto p : productosFiltrados) { // Agrega cada producto encontrado a la tabla.
                 modelo.addRow(new Object[]{
-                    p.getIdProducto(),        
+                    p.getIdProducto(),  
+                    p.getCodigo(),
                     p.getNombre(),    
                     p.getDescripcion(),         
                     p.getTipo(),
@@ -573,6 +559,7 @@ public class GProductos extends javax.swing.JPanel {
                 for (Producto p : productosFiltrados) {
                     modelo.addRow(new Object[]{
                         p.getIdProducto(),
+                        p.getCodigo(),
                         p.getNombre(),
                         p.getDescripcion(),
                         p.getTipo(),
@@ -719,7 +706,8 @@ public class GProductos extends javax.swing.JPanel {
 
             for (Producto p : pr) {
                 modelo.addRow(new Object[]{
-                    p.getIdProducto(),         
+                    p.getIdProducto(),
+                    p.getCodigo(),
                     p.getNombre(),    
                     p.getDescripcion(),         
                     p.getTipo(),
@@ -764,6 +752,7 @@ public class GProductos extends javax.swing.JPanel {
         for (Producto p : productos) {
             modelo.addRow(new Object[]{
                 p.getIdProducto(),     // ID del producto
+                p.getCodigo(),         // Codigo del producto
                 p.getNombre(),         // Nombre del producto
                 p.getTipo(),           // Tipo de producto
                 p.getDescripcion(),    // Descripción
@@ -919,7 +908,7 @@ public class GProductos extends javax.swing.JPanel {
             }
         };
 
-        String[] columnas = {"ID", "NOMBRE", "TIPO", "DESCRIPCION", "PRECIO", "STOCK", "ESTADO"};
+        String[] columnas = {"ID", "CODIGO", "NOMBRE", "TIPO", "DESCRIPCION", "PRECIO", "STOCK", "ESTADO"};
         for (String col : columnas) {
             modelo.addColumn(col);
         }
@@ -934,7 +923,8 @@ public class GProductos extends javax.swing.JPanel {
 
         for (Producto p : pr) {
             modelo.addRow(new Object[]{
-                p.getIdProducto(),        
+                p.getIdProducto(),
+                p.getCodigo(),
                 p.getNombre(),    
                 p.getDescripcion(),         
                 p.getTipo(),
