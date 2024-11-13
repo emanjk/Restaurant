@@ -67,12 +67,10 @@ public class MeseroGReservas extends javax.swing.JPanel {
     jbMostrarTodo = new javax.swing.JButton();
 
     setMinimumSize(new java.awt.Dimension(973, 490));
-    setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium", 3, 18)); // NOI18N
     jLabel6.setForeground(new java.awt.Color(0, 204, 0));
     jLabel6.setText("Gestion  Reservas");
-    add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, -1, -1));
 
     jtReservas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
     jtReservas.setModel(new javax.swing.table.DefaultTableModel(
@@ -88,12 +86,9 @@ public class MeseroGReservas extends javax.swing.JPanel {
     ));
     jScrollPane1.setViewportView(jtReservas);
 
-    add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 570, 330));
-
-    jLabel7.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+    jLabel7.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
     jLabel7.setForeground(new java.awt.Color(204, 0, 0));
     jLabel7.setText(" Sector:");
-    add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
     jcbSector.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
     jcbSector.addActionListener(new java.awt.event.ActionListener() {
@@ -101,14 +96,13 @@ public class MeseroGReservas extends javax.swing.JPanel {
         jcbSectorActionPerformed(evt);
       }
     });
-    add(jcbSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 90, -1));
 
     jPanel2.setBackground(new java.awt.Color(255, 204, 153));
     jPanel2.setForeground(new java.awt.Color(255, 204, 153));
     jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-    jLabel8.setForeground(new java.awt.Color(255, 102, 0));
+    jLabel8.setForeground(new java.awt.Color(204, 51, 0));
     jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabel8.setText("Filtrar Reservas");
     jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, -1, 37));
@@ -189,7 +183,41 @@ public class MeseroGReservas extends javax.swing.JPanel {
     });
     jPanel2.add(jbMostrarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
-    add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 340, 330));
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
+    layout.setHorizontalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel7)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(665, 665, 665)
+            .addComponent(jLabel6))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(24, 24, 24))
+    );
+    layout.setVerticalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(8, 8, 8)
+            .addComponent(jLabel6))
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel7)
+            .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(18, 18, 18)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(132, Short.MAX_VALUE))
+    );
   }// </editor-fold>//GEN-END:initComponents
 
   
@@ -538,23 +566,23 @@ private void armarCabecera(){
 // 2. Cargar datos a la 'tabla'
 private void cargarDatos(){
   modelo.setRowCount(0); // Limpiar las filas existentes del modelo
+  jtReservas.setBackground(new java.awt.Color(153, 204, 255));
+  // Obtener la lista de reservas
+  List<Reserva> reservas = reservaData.listarReservas(); 
 
-    // Obtener la lista de reservas
-    List<Reserva> reservas = reservaData.listarReservas(); 
-
-    // Recorrer la lista de reservas y agregar cada una al modelo
-    for (Reserva r : reservas) {
-        modelo.addRow(new Object[]{
-            r.getIdReserva(),                        // ID de la Reserva
-            r.getMesa().getIdMesa(),                 // ID de la Mesa (asumiendo que Mesa tiene un método getIdMesa())
-            r.getNombreCliente(),                     // Nombre del Cliente
-            r.getTelefono(),                          // Teléfono del Cliente
-            r.getComensales(),                       // Cantidad de Comensales
-            r.getSector(),                            // Sector de la Reserva
-            r.getFechaHora(),                        // Fecha y Hora de la Reserva
-            r.isEstado() ? "Activo" : "Inactivo"    // Estado de la Reserva como texto
-        });
-    }
+  // Recorrer la lista de reservas y agregar cada una al modelo
+  for (Reserva r : reservas) {
+      modelo.addRow(new Object[]{
+          r.getIdReserva(),                        // ID de la Reserva
+          r.getMesa().getIdMesa(),                 // ID de la Mesa (asumiendo que Mesa tiene un método getIdMesa())
+          r.getNombreCliente(),                     // Nombre del Cliente
+          r.getTelefono(),                          // Teléfono del Cliente
+          r.getComensales(),                       // Cantidad de Comensales
+          r.getSector(),                            // Sector de la Reserva
+          r.getFechaHora(),                        // Fecha y Hora de la Reserva
+          r.isEstado() ? "Activo" : "Inactivo"    // Estado de la Reserva como texto
+      });
+  }
 }
 
 
