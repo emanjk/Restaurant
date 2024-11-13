@@ -767,9 +767,15 @@ public class GPedidos extends javax.swing.JPanel {
     }//GEN-LAST:event_jROFFActionPerformed
 
     private void jCBSectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBSectorActionPerformed
-        String selectedSector = jCBSector.getSelectedItem().toString();
-        actualizarSpinnersConMesas(selectedSector);
-        filtrarPedidoPorSector(selectedSector);
+        if (jCBSector.getSelectedItem() != null) {
+            String selectedSector  = jCBSector.getSelectedItem().toString();
+            actualizarSpinnersConMesas(selectedSector);
+            filtrarPedidoPorSector(selectedSector);  
+            System.out.println("Sector seleccionado: " + selectedSector );
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona un sector válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jCBSectorActionPerformed
 
     private void jDate2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDate2PropertyChange
