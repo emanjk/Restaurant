@@ -764,7 +764,6 @@ public class GProductos extends javax.swing.JPanel {
         for (Producto p : productos) {
             modelo.addRow(new Object[]{
                 p.getIdProducto(),     // ID del producto
-                p.getCodigo(),         // Código del producto
                 p.getNombre(),         // Nombre del producto
                 p.getTipo(),           // Tipo de producto
                 p.getDescripcion(),    // Descripción

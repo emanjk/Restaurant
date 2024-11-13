@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel; // (1).modelo-tabla
 
 public class MeseroGMesas extends javax.swing.JPanel {
@@ -47,13 +48,10 @@ public class MeseroGMesas extends javax.swing.JPanel {
     jcbSituacion = new javax.swing.JComboBox<>();
     jLabel5 = new javax.swing.JLabel();
     jbModificar = new javax.swing.JButton();
-    jButton8 = new javax.swing.JButton();
+    jbCancelar = new javax.swing.JButton();
     jSeparator1 = new javax.swing.JSeparator();
     jPanel3 = new javax.swing.JPanel();
     jLabel7 = new javax.swing.JLabel();
-    jLabel8 = new javax.swing.JLabel();
-    jrbAlta = new javax.swing.JRadioButton();
-    jrbBaja = new javax.swing.JRadioButton();
     jcbMostrarSituacion = new javax.swing.JComboBox<>();
     jLabel9 = new javax.swing.JLabel();
     jbMesasPorSector = new javax.swing.JButton();
@@ -64,18 +62,15 @@ public class MeseroGMesas extends javax.swing.JPanel {
     jLabel1 = new javax.swing.JLabel();
     jcbSector = new javax.swing.JComboBox<>();
 
-    setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
     jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium", 3, 18)); // NOI18N
     jLabel6.setForeground(new java.awt.Color(0, 204, 0));
     jLabel6.setText("Gestion  Mesas");
-    add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 10, -1, -1));
 
     jPanel2.setBackground(new java.awt.Color(255, 204, 153));
     jPanel2.setForeground(new java.awt.Color(204, 204, 204));
 
     jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-    jLabel2.setForeground(new java.awt.Color(255, 102, 0));
+    jLabel2.setForeground(new java.awt.Color(204, 51, 0));
     jLabel2.setText("Modificar Situacion");
 
     jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -101,10 +96,10 @@ public class MeseroGMesas extends javax.swing.JPanel {
       }
     });
 
-    jButton8.setText("Cancelar");
-    jButton8.addActionListener(new java.awt.event.ActionListener() {
+    jbCancelar.setText("Cancelar");
+    jbCancelar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton8ActionPerformed(evt);
+        jbCancelarActionPerformed(evt);
       }
     });
 
@@ -116,83 +111,65 @@ public class MeseroGMesas extends javax.swing.JPanel {
     jPanel2Layout.setHorizontalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel2Layout.createSequentialGroup()
+        .addGap(19, 19, 19)
+        .addComponent(jbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(27, 27, 27))
+      .addGroup(jPanel2Layout.createSequentialGroup()
         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jsNumeroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jbModificar)
-                .addGap(45, 45, 45)
-                .addComponent(jButton8))))
+            .addGap(12, 12, 12)
+            .addComponent(jLabel4)
+            .addGap(12, 12, 12)
+            .addComponent(jsNumeroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(jPanel2Layout.createSequentialGroup()
-            .addGap(64, 64, 64)
+            .addGap(12, 12, 12)
+            .addComponent(jLabel5)
+            .addGap(6, 6, 6)
+            .addComponent(jcbSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGap(22, 22, 22)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGap(62, 62, 62)
             .addComponent(jLabel2)))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-        .addGap(0, 22, Short.MAX_VALUE)
-        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18))
+        .addContainerGap(14, Short.MAX_VALUE))
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel2Layout.createSequentialGroup()
         .addGap(11, 11, 11)
         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(6, 6, 6)
         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel4)
+        .addGap(6, 6, 6)
+        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGap(3, 3, 3)
+            .addComponent(jLabel4))
           .addComponent(jsNumeroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(24, 24, 24)
-        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel5)
+        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGap(3, 3, 3)
+            .addComponent(jLabel5))
           .addComponent(jcbSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+        .addGap(32, 32, 32)
         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(24, 24, 24))
+          .addComponent(jbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(26, Short.MAX_VALUE))
     );
-
-    add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 56, 290, -1));
 
     jPanel3.setBackground(new java.awt.Color(255, 204, 153));
     jPanel3.setForeground(new java.awt.Color(204, 204, 204));
 
     jLabel7.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-    jLabel7.setForeground(new java.awt.Color(255, 102, 0));
-    jLabel7.setText("Filtrar Mesas");
+    jLabel7.setForeground(new java.awt.Color(204, 0, 0));
+    jLabel7.setText("Visualización de Mesas");
 
-    jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-    jLabel8.setText("Por estado:");
-
-    jrbAlta.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-    jrbAlta.setText(" Alta");
-    jrbAlta.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jrbAltaActionPerformed(evt);
-      }
-    });
-
-    jrbBaja.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-    jrbBaja.setText("Baja");
-    jrbBaja.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jrbBajaActionPerformed(evt);
-      }
-    });
-
-    jcbMostrarSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reservada", "Ocupada", "Libre", "" }));
+    jcbMostrarSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Reservado", "Ocupado", "Libre", "" }));
     jcbMostrarSituacion.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jcbMostrarSituacionActionPerformed(evt);
@@ -200,9 +177,9 @@ public class MeseroGMesas extends javax.swing.JPanel {
     });
 
     jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-    jLabel9.setText("Por situacion: ");
+    jLabel9.setText("Filtrar por Situación:");
 
-    jbMesasPorSector.setText("Mostrar todas");
+    jbMesasPorSector.setText("Mostrar");
     jbMesasPorSector.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jbMesasPorSectorActionPerformed(evt);
@@ -210,7 +187,7 @@ public class MeseroGMesas extends javax.swing.JPanel {
     });
 
     jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-    jLabel10.setText("Segun su sector: ");
+    jLabel10.setText("Mostrar todas las mesas:");
 
     jSeparator2.setForeground(new java.awt.Color(204, 204, 204));
 
@@ -221,58 +198,40 @@ public class MeseroGMesas extends javax.swing.JPanel {
       .addGroup(jPanel3Layout.createSequentialGroup()
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGap(81, 81, 81)
-            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap()
+            .addComponent(jLabel10)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jbMesasPorSector, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGap(51, 51, 51)
+            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGap(28, 28, 28)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jrbAlta)
-                .addGap(18, 18, 18)
-                .addComponent(jrbBaja))
-              .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbMesasPorSector))
-              .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbMostrarSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-        .addGap(0, 0, Short.MAX_VALUE))
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-        .addContainerGap(28, Short.MAX_VALUE)
-        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(22, 22, 22))
+            .addComponent(jLabel9)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jcbMostrarSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(11, Short.MAX_VALUE))
     );
     jPanel3Layout.setVerticalGroup(
       jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel3Layout.createSequentialGroup()
-        .addContainerGap()
+        .addGap(6, 6, 6)
         .addComponent(jLabel7)
         .addGap(5, 5, 5)
         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jrbAlta)
-          .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jrbBaja))
-        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGap(24, 24, 24)
-            .addComponent(jLabel9))
-          .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGap(21, 21, 21)
-            .addComponent(jcbMostrarSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(18, 18, 18)
+        .addGap(17, 17, 17)
         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jbMesasPorSector)
+          .addComponent(jcbMostrarSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel9))
+        .addGap(28, 28, 28)
+        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jbMesasPorSector, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel10))
-        .addContainerGap(64, Short.MAX_VALUE))
+        .addContainerGap(67, Short.MAX_VALUE))
     );
-
-    add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 290, 220));
 
     jtMesas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
     jtMesas.setModel(new javax.swing.table.DefaultTableModel(
@@ -288,12 +247,9 @@ public class MeseroGMesas extends javax.swing.JPanel {
     ));
     jScrollPane1.setViewportView(jtMesas);
 
-    add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 600, 400));
-
-    jLabel1.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+    jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(204, 0, 0));
     jLabel1.setText(" Sector:");
-    add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 64, -1));
 
     jcbSector.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
     jcbSector.addActionListener(new java.awt.event.ActionListener() {
@@ -301,123 +257,154 @@ public class MeseroGMesas extends javax.swing.JPanel {
         jcbSectorActionPerformed(evt);
       }
     });
-    add(jcbSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 90, -1));
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
+    layout.setHorizontalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addGap(10, 10, 10)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(840, 840, 840)
+            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(14, 14, 14))
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(17, 17, 17))))
+    );
+    layout.setVerticalGroup(
+      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(8, 8, 8)
+            .addComponent(jLabel6))
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jcbSector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel1)))
+        .addGap(7, 7, 7)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(23, 23, 23)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 13, Short.MAX_VALUE))
+          .addComponent(jScrollPane1))
+        .addContainerGap())
+    );
   }// </editor-fold>//GEN-END:initComponents
 
   
-  // 1. Modificar 
+  
+  
+  
+  // 1. Modificar situacion de una Mesa
   private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+     if (jcbSector.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Seleccione su sector asignado", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    } else {
+        String situacion = (String) jcbSituacion.getSelectedItem();
 
-    if(jcbSector.getSelectedItem()==null){
-      JOptionPane.showMessageDialog(this, "Seleccione su sector asignado","Error", JOptionPane.ERROR_MESSAGE);
-      return;
-    
-    }else{
-    
-    String situacion = (String) jcbSituacion.getSelectedItem();
+        // Verifica si la situación es válida
+        if (situacion == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione la situación actual de la mesa");
+            return;
+        }
 
-    // Verifica si el sector es válido (no debe ser "Mostrar por sector")
-    if (situacion==null) {
-      JOptionPane.showMessageDialog(this, "Seleccione la situacion actual de la mesa","Error", JOptionPane.ERROR_MESSAGE);
-      return;
+        int idMesa = (int) jsNumeroMesa.getValue();
+        String nuevaSituacion = (String) jcbSituacion.getSelectedItem();
+
+        // Buscar la mesa en la BD
+        Mesa buscarMesa = mesaData.buscarMesa(idMesa);
+
+        if (buscarMesa == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró la mesa N° " + idMesa, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {     
+            if (!buscarMesa.isEstado()) { 
+                JOptionPane.showMessageDialog(this, "La mesa N° " + idMesa + " no está habilitada. No se puede modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //Confirmar Modificacion
+            int confirmacion = JOptionPane.showOptionDialog(this, 
+            "¿Está seguro que desea modificar la situación de la mesa N° " + idMesa + "?", 
+            "Confirmación", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE, 
+            null, // Icono
+            new Object[] {"Sí", "No"}, // Personalización de los botones
+            "Sí"); 
+
+            //Verificar lo seleccionado
+            if (confirmacion == JOptionPane.NO_OPTION || confirmacion == JOptionPane.CLOSED_OPTION) {
+                return; 
+            }
+
+           
+            Mesa mesaSituacion = new Mesa(buscarMesa.getIdMesa(), buscarMesa.getCapacidad(), buscarMesa.isEstado(), buscarMesa.getSector(), nuevaSituacion);
+            mesaData.modificarMesa(mesaSituacion);
+            JOptionPane.showMessageDialog(null, "La mesa N° " + buscarMesa.getIdMesa() + " fue modificada con éxito!");
+
+            jsNumeroMesa.setValue(1); // Reseteamos el Spinner
+            jcbSituacion.setSelectedIndex(0); // Reseteamos el ComboBox
+
+            modelo.setRowCount(0); 
+            String sector = (String) jcbSector.getSelectedItem();
+            List<Mesa> mesas = mesaData.listarMesasPorSector(sector); // Obtener las mesas del sector
+            
+            for (Mesa m : mesas) {
+                if (m.isEstado()) { 
+                    modelo.addRow(new Object[] {
+                        m.getIdMesa(),
+                        m.getCapacidad(),
+                        "Habilitada",
+                        m.getSector(),
+                        m.getSituacion(),
+                    });
+                }
+            }
+        }
     }
-
-    int idMesa = (int) jsNumeroMesa.getValue();
-    String nuevaSituacion = (String) jcbSituacion.getSelectedItem();
-
-    Mesa buscarMesa = mesaData.buscarMesa(idMesa); // Verificamos si se encuentra la mesa en la BD.
-
-    if (buscarMesa == null) {
-      JOptionPane.showMessageDialog(null, "No se encontró la mesa N° " + idMesa, "Error", JOptionPane.ERROR_MESSAGE);
-      return;
-    }else{
-
-      Mesa mesaSituacion = new Mesa(buscarMesa.getIdMesa(), buscarMesa.getCapacidad(), buscarMesa.isEstado(), buscarMesa.getSector(), nuevaSituacion);
-      mesaData.modificarMesa(mesaSituacion);
-      JOptionPane.showMessageDialog(null, "La mesa N° "+ buscarMesa.getIdMesa()+" Fue modificada con exito! " );
-      jsNumeroMesa.setValue(1); //reseteamos
-      jcbSituacion.setSelectedIndex(0); //reseteamos
-
-      modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
-      String sector = (String) jcbSector.getSelectedItem();
-      List<Mesa> mesas = mesaData.listarMesasPorSector(sector); // Obtener las mesas del sector
-      for (Mesa m : mesas) {
-        modelo.addRow(new Object[]{
-          m.getIdMesa(),
-          m.getCapacidad(),
-          m.isEstado(),
-          m.getSector(),
-          m.getSituacion(),
-        });
-      }
-
-    }
-    }
+        
+            
+         
   }//GEN-LAST:event_jbModificarActionPerformed
 
-  private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-    jsNumeroMesa.setValue(1);
+  // 2. Boton 'Cancelar'
+  private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+    if(jcbSector.getSelectedItem()==null){
+      JOptionPane.showMessageDialog(this, "Seleccione su sector asignado", "Error", JOptionPane.ERROR_MESSAGE);
+      jcbSituacion.setSelectedIndex(0);
+      return;
+    
+    }
     jcbSituacion.setSelectedIndex(0);
-  }//GEN-LAST:event_jButton8ActionPerformed
+    
+    
+  }//GEN-LAST:event_jbCancelarActionPerformed
 
-  private void jrbAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbAltaActionPerformed
-
-    if (jrbAlta.isSelected()) {
-      jrbBaja.setSelected(false);
-
-      // Obtener el sector seleccionado del JComboBox
-      String sectorSeleccionado = (String) jcbSector.getSelectedItem();
-
-      modelo.setRowCount(0);
-      // Obtener todas las mesas con estado false
-
-      List<Mesa> mesasConEstadoFalse = mesaData.listarMesasPorEstado(true);
-
-      // Filtrar las mesas por el sector seleccionado
-      for (Mesa m : mesasConEstadoFalse) {
-        if (m.getSector().equals(sectorSeleccionado)) {
-          modelo.addRow(new Object[]{
-            m.getIdMesa(),
-            m.getCapacidad(),
-            m.isEstado(),
-            m.getSector(),
-            m.getSituacion(),
-          });
-        }
-      }
-    }
-
-  }//GEN-LAST:event_jrbAltaActionPerformed
-
-  private void jrbBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbBajaActionPerformed
-
-    if (jrbBaja.isSelected()) {
-      jrbAlta.setSelected(false);
-      String sectorSeleccionado = (String) jcbSector.getSelectedItem();
-      modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
-
-      // Obtener todas las mesas con estado false
-      List<Mesa> mesasConEstadoFalse = mesaData.listarMesasPorEstado(false);
-
-      // Filtrar las mesas por el sector seleccionado
-      for (Mesa m : mesasConEstadoFalse) {
-        if (m.getSector().equals(sectorSeleccionado)) {
-          modelo.addRow(new Object[]{
-            m.getIdMesa(),
-            m.getCapacidad(),
-            m.isEstado(),
-            m.getSector(),
-            m.getSituacion(),
-          });
-        }
-      }
-    }
-  }//GEN-LAST:event_jrbBajaActionPerformed
-
+  
+  // 3. Mostrar 'Mesas' por situacion(Libre, Ocupado, Reservado)
   private void jcbMostrarSituacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMostrarSituacionActionPerformed
+    if(jcbSector.getSelectedItem()==null){
+      JOptionPane.showMessageDialog(this, "Seleccione su sector asignado", "Error", JOptionPane.ERROR_MESSAGE);
+      return;
+    }
+    
+    
     String situacionSeleccionada = (String) jcbMostrarSituacion.getSelectedItem();
-
-    if (situacionSeleccionada == null) { // Cambié aquí para verificar el valor seleccionado
+    if (situacionSeleccionada == null) { 
       JOptionPane.showMessageDialog(null, "Seleccione una situación válida");
       return;
     }
@@ -428,63 +415,97 @@ public class MeseroGMesas extends javax.swing.JPanel {
     List<Mesa> mesas = mesaData.buscarMesasPorSituacion(situacionSeleccionada); // Obtener las mesas por situación
 
     // Filtrar por sector antes de agregar a la tabla
+    System.out.println("Situación seleccionada: " + situacionSeleccionada);
+
     for (Mesa m : mesas) {
-      if (m.getSector().equals(sectorSeleccionado)) { // Verificar si coincide el sector
-        modelo.addRow(new Object[]{
-          m.getIdMesa(),
-          m.getCapacidad(),
-          m.isEstado(),
-          m.getSector(),
-          m.getSituacion(),
-        });
+      if (m.getSector().equalsIgnoreCase(sectorSeleccionado) && m.isEstado()) { // Verificar sector y que la mesa esté habilitada
+          modelo.addRow(new Object[]{
+              m.getIdMesa(),
+              m.getCapacidad(),
+              "Habilitada", // Siempre mostrar como habilitada porque son las únicas mesas visibles
+              m.getSector(),
+              m.getSituacion(),
+          });
       }
     }
   }//GEN-LAST:event_jcbMostrarSituacionActionPerformed
 
+  
+  
+  // Mostrar 'Mesas' por sector asignado
   private void jbMesasPorSectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMesasPorSectorActionPerformed
-    jrbAlta.setSelected(false);
-    jrbBaja.setSelected(false);
-
     String sectorSeleccionado = (String) jcbSector.getSelectedItem();
-    if(sectorSeleccionado == null){
-      JOptionPane.showMessageDialog(null, "Seleccione su sector asignado");
-      return;
-    }else {
-      modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
-      List<Mesa> mesas = mesaData.listarMesasPorSector(sectorSeleccionado); // Obtener las mesas del sector
-      for (Mesa m : mesas) {
-        modelo.addRow(new Object[]{
-          m.getIdMesa(),
-          m.getCapacidad(),
-          m.isEstado(),
-          m.getSector(),
-          m.getSituacion(),
-        });
-      }
+    
+    if(sectorSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Seleccione su sector asignado", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    } else {
+        modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+
+        // Obtener las mesas del sector seleccionado
+        List<Mesa> mesas = mesaData.listarMesasPorSector(sectorSeleccionado);
+
+        // Filtrar solo las mesas habilitadas
+        for (Mesa m : mesas) {
+            if (m.isEstado()) {  // Solo mesas habilitadas
+                modelo.addRow(new Object[] {
+                    m.getIdMesa(),
+                    m.getCapacidad(),
+                    "Habilitada",  
+                    m.getSector(),
+                    m.getSituacion(),
+                });
+            }
+        }
     }
+    
+    
   }//GEN-LAST:event_jbMesasPorSectorActionPerformed
 
+  
+  // Sector seleccionado
   private void jcbSectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSectorActionPerformed
-    jrbAlta.setSelected(false);
-    jrbBaja.setSelected(false);
 
     String sectorSeleccionado = (String) jcbSector.getSelectedItem();
-    if(sectorSeleccionado == null){
-      JOptionPane.showMessageDialog(null, "Seleccione su sector asignado");
-      return;
-    }else {
-      modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
-      List<Mesa> mesas = mesaData.listarMesasPorSector(sectorSeleccionado); // Obtener las mesas del sector
-      for (Mesa m : mesas) {
-        modelo.addRow(new Object[]{
-          m.getIdMesa(),
-          m.getCapacidad(),
-          m.isEstado(),
-          m.getSector(),
-          m.getSituacion(),
-        });
-      }
+    if (sectorSeleccionado == null) {
+        JOptionPane.showMessageDialog(null, "Seleccione su sector asignado");
+        return;
     }
+
+    // Limpiar la tabla antes de cargar nuevos datos
+    DefaultTableModel modelo = (DefaultTableModel) jtMesas.getModel();
+    modelo.setRowCount(0);
+
+    // Obtener las mesas del sector
+    List<Mesa> mesas = mesaData.listarMesasPorSector(sectorSeleccionado);
+    
+    if (mesas.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "No hay mesas disponibles en este sector.", "Información", JOptionPane.INFORMATION_MESSAGE);
+        jsNumeroMesa.setModel(new SpinnerNumberModel(0, 0, 0, 1)); 
+        return;
+    }
+
+    // Cargar solo mesas habilitadas en la tabla
+    for (Mesa m : mesas) {
+        if (m.isEstado()) { // Solo agregar mesas con estado 'true' o habilitadas
+            modelo.addRow(new Object[]{
+                m.getIdMesa(),
+                m.getCapacidad(),
+                "Habilitada", // Mostrar como texto
+                m.getSector(),
+                m.getSituacion(),
+            });
+        }
+    }
+
+    // Obtener el rango de números de mesa del sector
+    int minMesa = mesas.stream().filter(Mesa::isEstado).mapToInt(Mesa::getIdMesa).min().orElse(0); // Filtrar mesas habilitadas
+    int maxMesa = mesas.stream().filter(Mesa::isEstado).mapToInt(Mesa::getIdMesa).max().orElse(0); // Filtrar mesas habilitadas
+
+    // Configurar el modelo del Spinner
+    SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(minMesa, minMesa, maxMesa, 1);
+    jsNumeroMesa.setModel(modeloSpinner);
+
   }//GEN-LAST:event_jcbSectorActionPerformed
 
   
@@ -496,7 +517,6 @@ public class MeseroGMesas extends javax.swing.JPanel {
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton jButton8;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel2;
@@ -504,20 +524,18 @@ public class MeseroGMesas extends javax.swing.JPanel {
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
-  private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
   private javax.swing.JPanel jPanel2;
   private javax.swing.JPanel jPanel3;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JSeparator jSeparator1;
   private javax.swing.JSeparator jSeparator2;
+  private javax.swing.JButton jbCancelar;
   private javax.swing.JButton jbMesasPorSector;
   private javax.swing.JButton jbModificar;
   private javax.swing.JComboBox<String> jcbMostrarSituacion;
   private javax.swing.JComboBox<String> jcbSector;
   private javax.swing.JComboBox<String> jcbSituacion;
-  private javax.swing.JRadioButton jrbAlta;
-  private javax.swing.JRadioButton jrbBaja;
   private javax.swing.JSpinner jsNumeroMesa;
   private javax.swing.JTable jtMesas;
   // End of variables declaration//GEN-END:variables
@@ -544,19 +562,24 @@ private void armarCabecera(){
 
  }
 
+
 //2. Cargar datos a la 'tabla'
 private void cargarDatos(){
- modelo.setRowCount(0);
-    List<Mesa> mesas = mesaData.listarMesas();
-    for (Mesa m : mesas) {
-        modelo.addRow(new Object[]{
-            m.getIdMesa(),
-            m.getCapacidad(),
-            m.isEstado(),
-            m.getSector(),
-            m.getSituacion(),
-        });
-    }
+  modelo.setRowCount(0);
+  List<Mesa> mesas = mesaData.listarMesas();
+  jtMesas.setBackground(new java.awt.Color(153, 204, 255));  
+  
+  for (Mesa m : mesas) {
+      if (m.isEstado()) { // Solo agregar mesas con estado 'habilitada'
+          modelo.addRow(new Object[]{
+              m.getIdMesa(),
+              m.getCapacidad(),
+              "Habilitada", // Mostrar como texto "Habilitada"
+              m.getSector(),
+              m.getSituacion(),
+          });
+      }
+  }
 }
 
 
@@ -572,6 +595,7 @@ private void cargaComboSector (){
     
 }
 
+
 // 4. Cargar combo-situacion
 private void cargaComboSituacion (){
     // Agregar un elemento nulo como primer elemento
@@ -579,7 +603,7 @@ private void cargaComboSituacion (){
     jcbSituacion.addItem("Reservado");
     jcbSituacion.addItem("Ocupado");
     jcbSituacion.addItem("Libre");
-   
+  
 }
 
 
