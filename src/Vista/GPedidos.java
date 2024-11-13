@@ -73,10 +73,10 @@ public class GPedidos extends javax.swing.JPanel {
         configurarListenerComboBoxMesero();
         configurarListenerSpinnerMesero();
         limpiarCamposYTablas();
-        
+        agregarListeners();
+        configurarTablaProductos();
         cargarPedidosEnTabla(pedidoData.listarPedidos());
         cargarProductosEnTabla(pedidoProductoData.obtenerPedidosProductos());
-        
         configurarSeleccionPedidos();
        
     }
@@ -1045,52 +1045,12 @@ public class GPedidos extends javax.swing.JPanel {
     private javax.swing.JTable jTPedido;
     private javax.swing.JTable jTProd;
     // End of variables declaration//GEN-END:variables
-    
-    private void armarCabeceraPedidos() {
-        modeloPedidos = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Hace que todas las celdas no sean editables
-            }
-        };
-
-        // Agregar columnas al modelo de la tabla
-        modeloPedidos.addColumn("IDPedido");
-        modeloPedidos.addColumn("IDMesa");
-        modeloPedidos.addColumn("IDMesero");
-        modeloPedidos.addColumn("Fecha y Hora");
-        modeloPedidos.addColumn("Estado");
-
-        // Establecer el modelo de la tabla y opciones
-        jTPedido.setModel(modeloPedidos);
-        jTPedido.getTableHeader().setReorderingAllowed(false); // Impide mover las columnas
-    }
 
     private void cargarDatosPedidos() {
         List<Pedido> pedidos = pedidoData.listarPedidos();  
         cargarPedidosEnTabla(pedidos);
     }
-        
-    private void armarCabeceraProd() {
-        modeloProductos = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Hace que todas las celdas no sean editables
-            }
-        };
-
-        // Agregar columnas al modelo de la tabla
-        modeloProductos.addColumn("ID");
-        modeloProductos.addColumn("IDPedido");
-        modeloProductos.addColumn("IDProducto");
-        modeloProductos.addColumn("Cantidad");
-        modeloProductos.addColumn("Subtotal");
-        modeloProductos.addColumn("ESTADO");
-        
-        jTProd.setModel(modeloProductos);// Establecer el modelo de la tabla y opciones
-        jTProd.getTableHeader().setReorderingAllowed(false); // Impide mover las columnas
-    }
-
+     
     private void cargarDatosProd() {
         modeloProductos.setRowCount(0); 
         List<PedidoProducto> producto = pedidoProductoData.obtenerPedidosProductos(); 

@@ -12,13 +12,16 @@ import java.sql.Date ;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 public class MeseroData {
     // Atributo
     private Connection con; // Conexión a la base de datos
-
-    // Constructor
+    private static final String[] SECTORES = {"Terraza", "Patio", "Comedor"};
+    private static final String[] TURNOS = {"Mañana", "Tarde"};
+    
+// Constructor
     public MeseroData(Connection connection) {
         this.con = connection; // Asigna la conexión proporcionada
     }
@@ -230,6 +233,81 @@ public class MeseroData {
 
         return mesero;
     }
+    
+    public List<Mesero> listarMeserosPorEstado(boolean estado) {
+        List<Mesero> meseros = new ArrayList<>();
+        String sql = "SELECT * FROM mesero WHERE estado = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, estado);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    meseros.add(crearMeseroDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar meseros por estado: " + ex.getMessage());
+        }
+
+        return meseros;
+    }
+
+    public List<Mesero> listarMeserosPorSector(String sector) {
+        List<Mesero> meseros = new ArrayList<>();
+        String sql = "SELECT * FROM mesero WHERE sector = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, sector);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    meseros.add(crearMeseroDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar meseros por sector: " + ex.getMessage());
+        }
+
+        return meseros;
+    }
+
+    public List<Mesero> listarMeserosPorTurno(String turno) {
+        List<Mesero> meseros = new ArrayList<>();
+        String sql = "SELECT * FROM mesero WHERE turno = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, turno);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    meseros.add(crearMeseroDesdeResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar meseros por turno: " + ex.getMessage());
+        }
+
+        return meseros;
+    }
+    
+    public void asignarSectoresYTurnosAleatoriamente() {
+        List<Mesero> meseros = listarMeseros();
+        Random random = new Random();
+
+        for (Mesero mesero : meseros) {
+            // Selección aleatoria de sector y turno
+            String sector = SECTORES[random.nextInt(SECTORES.length)];
+            String turno = TURNOS[random.nextInt(TURNOS.length)];
+
+            // Asignamos sector y turno al mesero
+            mesero.setSector(sector);
+            mesero.setTurno(turno);
+
+            // Actualizamos el mesero en la base de datos
+            modificarMesero(mesero);
+        }
+
+        System.out.println("Asignación aleatoria de sectores y turnos completada.");
+    }
+
 
 }
 
