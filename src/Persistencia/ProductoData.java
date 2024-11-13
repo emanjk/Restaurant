@@ -379,6 +379,29 @@ public class ProductoData {
         return nombresProductos;
     }
 
+    
+    // Metodo adicional
+    
+    public Producto buscarProductoPorNombreExacto(String nombre) {
+    Producto producto = null; // Inicializamos el producto en null
+    String sql = "SELECT * FROM producto WHERE nombre = ?"; // Consulta SQL
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, nombre); // Reemplazamos el parámetro de la consulta con el nombre del producto
+        ResultSet resultSet = ps.executeQuery();
+
+        // Si se encuentra un resultado, se asigna el producto
+        if (resultSet.next()) {
+            producto = crearProductoDesdeResultSet(resultSet);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar producto por nombre exacto: " + ex.getMessage());
+    }
+
+    return producto; // Devolvemos el producto encontrado o null si no existe
+}
+    
+    
 }
     
     
