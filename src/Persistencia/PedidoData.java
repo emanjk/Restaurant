@@ -373,7 +373,7 @@ public class PedidoData {
         return pedidos;
     }
 
-    //metodo adicionales (emanuel)
+    //metodo adicional
    public int[] obtenerRangoMesasPorSector(String sector) {
       int[] rango = new int[2]; 
       String sql = "SELECT MIN(idMesa) AS minMesa, MAX(idMesa) AS maxMesa FROM mesa WHERE sector = ?";
@@ -392,28 +392,5 @@ public class PedidoData {
       return rango;
 }
 
-   public boolean modificarPedido2(Pedido pedido) {
-    String sql = "UPDATE pedido SET idMesa = ?, idMesero = ?, fechaHora = ?, estado = ? WHERE idPedido = ?";
-    boolean actualizado = false;
-
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setInt(1, pedido.getMesa().getIdMesa());
-        ps.setInt(2, pedido.getMesero().getIdMesero());
-        ps.setTimestamp(3, Timestamp.valueOf(pedido.getFechaHora()));
-        ps.setBoolean(4, pedido.isEstado());
-        ps.setInt(5, pedido.getIdPedido());
-
-        int exito = ps.executeUpdate();
-        if (exito == 1) {
-            actualizado = true;
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al modificar el pedido: " + ex.getMessage());
-    }
-
-    return actualizado;
-}
-   
-   
 }
 
