@@ -380,7 +380,7 @@ public class ProductoData {
     }
 
     
-    // Metodo adicional
+    // Metodo adicional (emanuel)
     
     public Producto buscarProductoPorNombreExacto(String nombre) {
     Producto producto = null; // Inicializamos el producto en null
@@ -400,8 +400,8 @@ public class ProductoData {
 
     return producto; // Devolvemos el producto encontrado o null si no existe
 }
-    
-    
+   
+      
 }
     
     

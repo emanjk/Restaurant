@@ -52,17 +52,20 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
     this.productoData = new ProductoData(con);
     this.meseroData = new MeseroData(con);
     
+    
     cargaComboSector ();
     armarCabeceraPedido();  
     cargarDatosPedidos();
     armarCabeceraProductos();
     cargarDatosProductos();
+    cargarComboTipoProducto();
     
     armarCabeceraPedidoProducto();
     cargarDatosPedidosProductos();
     confiSpinner();
-    
     cargarComboProductos();
+    
+    camposNoDisponibles();
   }
 
   
@@ -96,6 +99,8 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
     jSeparator4 = new javax.swing.JSeparator();
     jLabel10 = new javax.swing.JLabel();
     jcProductos = new javax.swing.JComboBox<>();
+    jLabel13 = new javax.swing.JLabel();
+    jcbTipoProducto = new javax.swing.JComboBox<>();
     jLabel11 = new javax.swing.JLabel();
     jLabel12 = new javax.swing.JLabel();
     jScrollPane3 = new javax.swing.JScrollPane();
@@ -212,6 +217,19 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
     jLabel10.setForeground(new java.awt.Color(255, 102, 0));
     jLabel10.setText("Agregar productos al pedido");
 
+    jcProductos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+
+    jLabel13.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+    jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+    jLabel13.setText("TIPO PRODUCTO:");
+
+    jcbTipoProducto.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+    jcbTipoProducto.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jcbTipoProductoActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -224,24 +242,11 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
         .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jrbActivo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jrbInactivo))
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(142, 142, 142)
+            .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(0, 0, Short.MAX_VALUE))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addGap(0, 9, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,27 +256,41 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
                 .addContainerGap())))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
               .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                      .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(jtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addGap(84, 84, 84))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                      .addComponent(jLabel5)
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                      .addComponent(jsIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addGap(18, 18, 18)
-                      .addComponent(jbBuscar)))
                   .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(32, 32, 32)
-                    .addComponent(jbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(30, 30, 30)
-                    .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-              .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel5)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jsIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jbBuscar))
+                  .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(jbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jrbActivo)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jrbInactivo))
+                  .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel7)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel6)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jcProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel13)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jcbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 8, Short.MAX_VALUE)))
             .addContainerGap())))
     );
     jPanel1Layout.setVerticalGroup(
@@ -290,6 +309,10 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel10)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel13)
+          .addComponent(jcbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel6)
@@ -302,16 +325,17 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel8)
           .addComponent(jtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(25, 25, 25)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGap(24, 24, 24)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(jLabel9)
-          .addComponent(jrbActivo)
-          .addComponent(jrbInactivo))
+          .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jrbActivo)
+            .addComponent(jrbInactivo)))
         .addGap(18, 18, 18)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jbAgregar)
           .addComponent(jbCancelar))
-        .addContainerGap(136, Short.MAX_VALUE))
+        .addContainerGap(105, Short.MAX_VALUE))
     );
 
     add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 280, 480));
@@ -385,80 +409,90 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
 
   // 3.Agregar pedido
   private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
-    if (jcbSector.getSelectedItem() == null) {
-      JOptionPane.showMessageDialog(this, "Seleccione su sector asignado.", "Error", JOptionPane.ERROR_MESSAGE);
-      return;
+   if (jcbSector.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Seleccione su sector asignado.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
     if ((Integer) jsIdPedido.getValue() <= 0) {
-      JOptionPane.showMessageDialog(this, "Ingrese un ID de pedido válido.", "Error", JOptionPane.ERROR_MESSAGE);
-      return;
+        JOptionPane.showMessageDialog(this, "Ingrese un ID de pedido válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
     if ((Integer) jsCantidad.getValue() <= 0) {
-      JOptionPane.showMessageDialog(this, "Ingrese una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
-      return;
+        JOptionPane.showMessageDialog(this, "Ingrese una cantidad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
     String nombreProducto = (String) jcProductos.getSelectedItem();
     if (nombreProducto == null || nombreProducto.trim().isEmpty()) {
-      JOptionPane.showMessageDialog(this, "Seleccione un producto válido.", "Error", JOptionPane.ERROR_MESSAGE);
-      return;
+        JOptionPane.showMessageDialog(this, "Seleccione un producto válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
     if (jtPrecio.getText().isEmpty()) {
-      JOptionPane.showMessageDialog(this, "Ingrese un precio.", "Error", JOptionPane.ERROR_MESSAGE);
-      return;
+        JOptionPane.showMessageDialog(this, "Ingrese un precio.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
     double precio;
     try {
-      precio = Double.parseDouble(jtPrecio.getText());
+        precio = Double.parseDouble(jtPrecio.getText());
     } catch (NumberFormatException e) {
-      JOptionPane.showMessageDialog(this, "Ingrese un precio válido.", "Error", JOptionPane.ERROR_MESSAGE);
-      jtPrecio.requestFocus();
-      return;
-    }
-
-    int response = JOptionPane.showConfirmDialog(this,
-      "¿Está seguro de agregar este producto al pedido?",
-      "Confirmar", JOptionPane.YES_NO_OPTION);
-
-    if (response == JOptionPane.YES_OPTION) {
-      Producto producto = productoData.buscarProductoPorNombreExacto(nombreProducto);
-
-      if (producto == null) {
-        JOptionPane.showMessageDialog(this, "No se encontró el producto seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Ingrese un precio válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        jtPrecio.requestFocus();
         return;
-      }
-
-      PedidoProducto pedidoProducto = new PedidoProducto();
-      Pedido pedido = new Pedido();
-      pedido.setIdPedido((Integer) jsIdPedido.getValue());
-      pedidoProducto.setPedido(pedido);
-      pedidoProducto.setProducto(producto);
-      pedidoProducto.setCantidad((Integer) jsCantidad.getValue());
-      pedidoProducto.setSubtotal(precio * pedidoProducto.getCantidad());
-      pedidoProducto.setEstado(jrbActivo.isSelected());
-
-      pedidoProductoData.agregarPedidoProducto(pedidoProducto);
-
-      DefaultTableModel model = (DefaultTableModel) jtPedidoProducto.getModel();
-      Object[] newRow = {
-        pedidoProducto.getIdPedidoProducto(),
-        pedidoProducto.getPedido().getIdPedido(),
-        pedidoProducto.getProducto().getIdProducto(),
-        pedidoProducto.getCantidad(),
-        pedidoProducto.getSubtotal(),
-        pedidoProducto.isEstado() ? "Activo" : "Inactivo"
-      };
-
-      model.addRow(newRow);
-      limpiarCampos();
-      JOptionPane.showMessageDialog(this, "El producto fue agregado al pedido.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-      JOptionPane.showMessageDialog(this, "Operación cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    // Cambiar las opciones de confirmación a "Agregar" y "Cancelar"
+    Object[] options = {"Agregar", "Cancelar"};
+    int response = JOptionPane.showOptionDialog(this,
+        "¿Está seguro de agregar este producto al pedido?",
+        "Confirmar",
+        JOptionPane.DEFAULT_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null, // Icono personalizado
+        options, // Las opciones personalizadas
+        options[0] // Selección predeterminada (Agregar)
+    );
+
+    if (response == 0) { // 0 corresponde a "Agregar"
+        Producto producto = productoData.buscarProductoPorNombreExacto(nombreProducto);
+
+        if (producto == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el producto seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        PedidoProducto pedidoProducto = new PedidoProducto();
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido((Integer) jsIdPedido.getValue());
+        pedidoProducto.setPedido(pedido);
+        pedidoProducto.setProducto(producto);
+        pedidoProducto.setCantidad((Integer) jsCantidad.getValue());
+        pedidoProducto.setSubtotal(precio * pedidoProducto.getCantidad());
+        pedidoProducto.setEstado(jrbActivo.isSelected());
+
+        pedidoProductoData.agregarPedidoProducto(pedidoProducto);
+
+        DefaultTableModel model = (DefaultTableModel) jtPedidoProducto.getModel();
+        Object[] newRow = {
+            pedidoProducto.getIdPedidoProducto(),
+            pedidoProducto.getPedido().getIdPedido(),
+            pedidoProducto.getProducto().getIdProducto(),
+            pedidoProducto.getCantidad(),
+            pedidoProducto.getSubtotal(),
+            pedidoProducto.isEstado() ? "Activo" : "Inactivo"
+        };
+
+        model.addRow(newRow);
+        limpiarCampos();
+        JOptionPane.showMessageDialog(this, "El producto fue agregado al pedido.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "Operación cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+    }
+   
+
 
   }//GEN-LAST:event_jbAgregarActionPerformed
 
@@ -466,8 +500,8 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
   private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
     // Verificar si se ha seleccionado un sector
     if (jcbSector.getSelectedItem() == null) {
-      JOptionPane.showMessageDialog(this, "Seleccione su sector asignado.", "Error", JOptionPane.ERROR_MESSAGE);
-      return;
+        JOptionPane.showMessageDialog(this, "Seleccione su sector asignado.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
     String sectorSeleccionado = (String) jcbSector.getSelectedItem();
@@ -475,8 +509,8 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
 
     // Verificar si el ID es válido (positivo)
     if (idPedido <= 0) {
-      JOptionPane.showMessageDialog(this, "Por favor, seleccione un ID de pedido válido.");
-      return;
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un ID de pedido válido.");
+        return;
     }
 
     // Obtener la lista de pedidos del sector seleccionado
@@ -485,20 +519,33 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
     // Buscar el pedido específico en la lista del sector
     Pedido pedidoEncontrado = null;
     for (Pedido pedido : pedidosDelSector) {
-      if (pedido.getIdPedido() == idPedido) {
-        pedidoEncontrado = pedido;
-        break;
-      }
+        if (pedido.getIdPedido() == idPedido) {
+            pedidoEncontrado = pedido;
+            break;
+        }
     }
 
     if (pedidoEncontrado == null) {
-      // Mensaje si el pedido no pertenece al sector seleccionado
-      JOptionPane.showMessageDialog(this,
-        "El Pedido con ID " + idPedido + " no pertenece al sector '" + sectorSeleccionado + " o no existe. ",
-        "Pedido no encontrado",
-        JOptionPane.INFORMATION_MESSAGE);
-      return;
+        // Si no se encuentra el pedido, mostrar mensaje y deshabilitar los componentes
+        JOptionPane.showMessageDialog(this,
+            "El Pedido con ID " + idPedido + " no pertenece al sector '" + sectorSeleccionado + "' o no existe.",
+            "Pedido no encontrado",
+            JOptionPane.INFORMATION_MESSAGE);
+
+        // Deshabilitar los componentes
+        jcbTipoProducto.setEnabled(false);
+        jcProductos.setEnabled(false);
+        jsCantidad.setEnabled(false);
+        jtPrecio.setEnabled(false);
+
+        return;
     }
+
+    // Si el pedido es encontrado, habilitar los componentes
+    jcbTipoProducto.setEnabled(true);
+    jcProductos.setEnabled(true);
+    jsCantidad.setEnabled(true);
+    jtPrecio.setEnabled(true);
 
     // Limpiar la tabla de pedidos
     DefaultTableModel modeloPedidos = (DefaultTableModel) jtPedidos.getModel();
@@ -506,11 +553,11 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
 
     // Cargar el pedido encontrado en la tabla de pedidos
     modeloPedidos.addRow(new Object[]{
-      pedidoEncontrado.getIdPedido(),
-      pedidoEncontrado.getMesa().getIdMesa(),
-      pedidoEncontrado.getMesero().getIdMesero(),
-      pedidoEncontrado.getFechaHora(),
-      pedidoEncontrado.isEstado() ? "Activo" : "Inactivo"
+        pedidoEncontrado.getIdPedido(),
+        pedidoEncontrado.getMesa().getIdMesa(),
+        pedidoEncontrado.getMesero().getIdMesero(),
+        pedidoEncontrado.getFechaHora(),
+        pedidoEncontrado.isEstado() ? "Activo" : "Inactivo"
     });
 
     // 3. Obtener los productos del pedido encontrado
@@ -522,17 +569,24 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
 
     // Cargar los productos del pedido en la tabla
     for (PedidoProducto pedidoProducto : productosDelPedido) {
-      modeloProductos.addRow(new Object[]{
-        pedidoProducto.getIdPedidoProducto(), // idPedidoProducto
-        pedidoProducto.getPedido().getIdPedido(), // idPedido
-        pedidoProducto.getProducto().getIdProducto(), // idProducto
-        pedidoProducto.getCantidad(), // cantidad
-        pedidoProducto.getSubtotal(), // subtotal
-        pedidoProducto.isEstado() ? "Activo" : "Inactivo" // estado
-      });
+        modeloProductos.addRow(new Object[]{
+            pedidoProducto.getIdPedidoProducto(), // idPedidoProducto
+            pedidoProducto.getPedido().getIdPedido(), // idPedido
+            pedidoProducto.getProducto().getIdProducto(), // idProducto
+            pedidoProducto.getCantidad(), // cantidad
+            pedidoProducto.getSubtotal(), // subtotal
+            pedidoProducto.isEstado() ? "Activo" : "Inactivo" // estado
+        });
     }
+    
 
   }//GEN-LAST:event_jbBuscarActionPerformed
+
+  
+  // 3. Combo seleccionado
+  private void jcbTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoProductoActionPerformed
+     cargarComboProductosPorTipo();
+  }//GEN-LAST:event_jcbTipoProductoActionPerformed
 
   
   
@@ -542,6 +596,7 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
   private javax.swing.JLabel jLabel12;
+  private javax.swing.JLabel jLabel13;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
@@ -560,6 +615,7 @@ public class MeseroGDetallePedido extends javax.swing.JPanel {
   private javax.swing.JButton jbCancelar;
   private javax.swing.JComboBox<String> jcProductos;
   private javax.swing.JComboBox<String> jcbSector;
+  private javax.swing.JComboBox<String> jcbTipoProducto;
   private javax.swing.JRadioButton jrbActivo;
   private javax.swing.JRadioButton jrbInactivo;
   private javax.swing.JSpinner jsCantidad;
@@ -707,6 +763,24 @@ private void cargarDatosProductos(){
 }
 
 
+
+// 5. Cargar Tipo de Producto
+private void cargarComboTipoProducto(){
+    // Agregar los tipos de productos al JComboBox
+    jcbTipoProducto.addItem("Bebida");
+    jcbTipoProducto.addItem("Trago");
+    jcbTipoProducto.addItem("Desayuno");
+    jcbTipoProducto.addItem("Almuerzo");
+    jcbTipoProducto.addItem("Cena");
+    
+  
+}
+
+
+
+
+
+
 // 4. Cargar combo-sector
 private void cargaComboSector (){
     // Agregar un elemento nulo como primer elemento
@@ -718,6 +792,8 @@ private void cargaComboSector (){
     jcbSector.addItem("Patio");
     
 }
+
+
 
 
 // 5. Cargar combo Productos
@@ -741,9 +817,6 @@ private void cargarComboProductos(){
 }
 
 
-
-
-
 private void confiSpinner(){
   SpinnerNumberModel model = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
   SpinnerNumberModel model2 = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
@@ -758,4 +831,42 @@ private void limpiarCampos() {
     jtPrecio.setText(""); // Limpia el campo de texto
 }
 
+private void cargarComboProductosPorTipo() {
+    // Obtener el tipo seleccionado en el JComboBox
+    String tipoSeleccionado = (String) jcbTipoProducto.getSelectedItem();
+
+    // Obtener los productos filtrados por el tipo seleccionado utilizando el método buscarProductoPorTipo
+    List<Producto> productos = productoData.buscarProductoPorTipo(tipoSeleccionado);
+    
+    // Limpiar el JComboBox de productos antes de cargar los nuevos datos
+    jcProductos.removeAllItems();
+
+    // Verificar si hay productos para el tipo seleccionado
+    if (productos.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No hay productos disponibles para el tipo seleccionado.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Agregar los productos filtrados al JComboBox
+    for (Producto producto : productos) {
+        jcProductos.addItem(producto.getNombre()); // Agrega el nombre del producto al combo
+    }
+
 }
+
+
+private void camposNoDisponibles(){
+jcbTipoProducto.setEnabled(false);
+    jcProductos.setEnabled(false);
+    jsCantidad.setEnabled(false);
+    jtPrecio.setEnabled(false);
+}
+
+
+
+
+
+
+}
+
+
